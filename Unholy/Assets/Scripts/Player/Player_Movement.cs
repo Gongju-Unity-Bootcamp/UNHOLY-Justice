@@ -18,14 +18,16 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float moveSpeed = 3f;
 
     [Header("ETC")]
-    private Rigidbody rb;
+    private Rigidbody _rigidbody;
+    private CharacterController _characterController;
     private Vector3 moveDirection;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        _characterController = GetComponent<CharacterController>();
 
         playerActionMap = playerInput.actions.FindActionMap("Player");
         moveAction = playerActionMap.FindAction("Move");
@@ -61,7 +63,7 @@ public class Player_Movement : MonoBehaviour
             Vector3 flatMoveDirection = worldMoveDirection;
             flatMoveDirection.y = 0;
 
-            rb.AddForce(flatMoveDirection * moveSpeed * 10f, ForceMode.Force);
+            _characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
         }
     }
 }
