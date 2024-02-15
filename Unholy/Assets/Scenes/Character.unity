@@ -345,7 +345,6 @@ PrefabInstance:
     - {fileID: 7439713988500215787, guid: 7778632bf67024a46b1f78e3c03c216e, type: 3}
     - {fileID: 7439713988500215784, guid: 7778632bf67024a46b1f78e3c03c216e, type: 3}
     - {fileID: 3276053267084655111, guid: 7778632bf67024a46b1f78e3c03c216e, type: 3}
-    - {fileID: 4681256521139385223, guid: 7778632bf67024a46b1f78e3c03c216e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -360,15 +359,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6455139829038195398, guid: 7778632bf67024a46b1f78e3c03c216e,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1266191327}
-    - targetCorrespondingSourceObject: {fileID: 6455139829038195398, guid: 7778632bf67024a46b1f78e3c03c216e,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1266191318}
-    - targetCorrespondingSourceObject: {fileID: 6455139829038195398, guid: 7778632bf67024a46b1f78e3c03c216e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1266191328}
   m_SourcePrefab: {fileID: 100100000, guid: 7778632bf67024a46b1f78e3c03c216e, type: 3}
 --- !u!1 &844033286
 GameObject:
@@ -415,17 +406,9 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _sprintAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 60946448-07e8-4a1a-845c-3ef4fc8637ed
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   direction: {x: 0, y: 0}
   moveDirection: {x: 0, y: 0, z: 0}
+  moveSpeed: 0
 --- !u!143 &844033288
 CharacterController:
   m_ObjectHideFlags: 0
@@ -743,13 +726,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
-  m_LocalPosition: {x: 0, y: 3.5, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1160234425
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,17 +840,9 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _sprintAction:
-    m_Name: Sprint
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 98469140-7fec-4e61-989a-a617ba6431f2
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   direction: {x: 0, y: 0}
   moveDirection: {x: 0, y: 0, z: 0}
+  moveSpeed: 0
 --- !u!95 &1266191323
 Animator:
   serializedVersion: 5
@@ -889,34 +864,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1266191327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266191303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfe39bd499337414bbb80c00b9be4825, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0
-  walkSpeed: 10
-  sprintSpeed: 0
-  rotationSpeed: 15
---- !u!114 &1266191328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266191303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148cdc9333dfd854c936c05e2b660f76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1888004540
 GameObject:
   m_ObjectHideFlags: 0

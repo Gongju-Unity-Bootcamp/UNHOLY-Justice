@@ -11,12 +11,9 @@ public class PlayerController : MonoBehaviour
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
     public InputAction _moveAction;
-    public InputAction _sprintAction;
-
 
     [Header("Component")]
-    private PlayerBehaviour _playerBehaviour;
-
+    private Rigidbody _rigidbody;
 
     [Header("Position")]
     public Vector2 direction;
@@ -24,33 +21,20 @@ public class PlayerController : MonoBehaviour
     private float verticalMovement;
     private float horizontalMovement;
 
-
     [Header("Etc")]
-    internal bool isWalking = false;
-    internal bool isRotate = false;
-    internal bool isSprinting = false;
+    [SerializeField] private float moveSpeed;
+
 
 
     void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
-        _playerBehaviour = GetComponent<PlayerBehaviour>();
+        _rigidbody = GetComponent<Rigidbody>();
 
         _playerActionMap = _playerInput.actions.FindActionMap("Player");
         _moveAction = _playerInput.actions.FindAction("Move");
-        _sprintAction = _playerInput.actions.FindAction("Sprint");
 
-        InitializeInputSystem();
-    }
 
-    void Update()
-    {
-        _playerBehaviour.PlayerWalk(moveDirection);
-        _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
-    }
-
-    private void InitializeInputSystem()
-    {
         _moveAction.performed += context =>
         {
             direction = context.ReadValue<Vector2>();
@@ -60,17 +44,21 @@ public class PlayerController : MonoBehaviour
 
             moveDirection = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
             moveDirection.y = 0;
-
-            isWalking = true;
-            isRotate = true;
         };
 
         _moveAction.canceled += context =>
         {
             moveDirection = Vector3.zero;
-            
-            isWalking = false;
-            isRotate = false;
         };
+    }
+
+    void Update()
+    {
+        PlayerMove();
+    }
+
+    public void PlayerMove()
+    {
+        _rigidbody.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
     }
 }
