@@ -11,9 +11,12 @@ public class PlayerController : MonoBehaviour
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
     public InputAction _moveAction;
+    public InputAction _sprintAction;
+
 
     [Header("Component")]
-    private Rigidbody _rigidbody;
+    private PlayerBehaviour _playerBehaviour;
+
 
     [Header("Position")]
     public Vector2 direction;
@@ -21,15 +24,15 @@ public class PlayerController : MonoBehaviour
     private float verticalMovement;
     private float horizontalMovement;
 
-    [Header("Etc")]
-    [SerializeField] private float moveSpeed;
 
+    [Header("Etc")]
+    private bool isRotate = false;
 
 
     void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
-        _rigidbody = GetComponent<Rigidbody>();
+        _playerBehaviour = GetComponent<PlayerBehaviour>();
 
         _playerActionMap = _playerInput.actions.FindActionMap("Player");
         _moveAction = _playerInput.actions.FindAction("Move");
@@ -44,21 +47,22 @@ public class PlayerController : MonoBehaviour
 
             moveDirection = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
             moveDirection.y = 0;
+
+            isRotate = true;
         };
 
         _moveAction.canceled += context =>
         {
             moveDirection = Vector3.zero;
+            isRotate = false;
         };
     }
 
+
+
     void Update()
     {
-        PlayerMove();
-    }
-
-    public void PlayerMove()
-    {
-        _rigidbody.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
+        _playerBehaviour.PlayerWalk(moveDirection);
+        _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
     }
 }
