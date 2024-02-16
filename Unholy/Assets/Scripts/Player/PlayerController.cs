@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Etc")]
     private bool isRotate = false;
+    internal bool isWalking = false;
+
 
 
     void Awake()
@@ -37,7 +39,19 @@ public class PlayerController : MonoBehaviour
         _playerActionMap = _playerInput.actions.FindActionMap("Player");
         _moveAction = _playerInput.actions.FindAction("Move");
 
+        InitializeInputSystem();
+    }
 
+
+    void Update()
+    {
+        _playerBehaviour.PlayerWalk(moveDirection);
+        _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
+    }
+
+
+    private void InitializeInputSystem()
+    {
         _moveAction.performed += context =>
         {
             direction = context.ReadValue<Vector2>();
@@ -49,20 +63,14 @@ public class PlayerController : MonoBehaviour
             moveDirection.y = 0;
 
             isRotate = true;
+            isWalking = true;
         };
 
         _moveAction.canceled += context =>
         {
             moveDirection = Vector3.zero;
             isRotate = false;
+            isWalking = false;
         };
-    }
-
-
-
-    void Update()
-    {
-        _playerBehaviour.PlayerWalk(moveDirection);
-        _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
     }
 }

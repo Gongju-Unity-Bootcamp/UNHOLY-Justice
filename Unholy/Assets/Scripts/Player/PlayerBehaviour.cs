@@ -12,7 +12,6 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float walkSpeed = 10f;
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float rotationSpeed;
-    private float stopRotation = 0.1f;
 
 
     private void Awake()
@@ -24,7 +23,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     /// <summary>
-    /// Player 이동 메소드. 입력키를 입력 받으면 해당 방향으로 이동함.
+    /// Player 이동 메소드. 입력키를 입력 받으면 해당 방향으로 이동합니다.
     /// </summary>
     /// <param name="moveDirection"> Vector3 값으로 Player가 이동하고자 하는 방향이다. </param>
     public void PlayerWalk(Vector3 moveDirection)
@@ -37,7 +36,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     /// <summary>
-    /// Player 회전 메소드. 입력키 방향으로 부드럽게 회전한다.
+    /// Player 회전 메소드. 입력키 방향으로 회전합니다.
     /// </summary>
     /// <param name="isRotate">player의 회전 여부를 알려주는 bool형 변수</param>
     /// <param name="horizontalMovement">player가 이동하고자 하는 방향의 x값</param>
