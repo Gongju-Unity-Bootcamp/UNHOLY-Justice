@@ -26,11 +26,13 @@ public class PlayerBehaviour : MonoBehaviour
     /// Player 이동 메소드. 입력키를 입력 받으면 해당 방향으로 이동합니다.
     /// </summary>
     /// <param name="moveDirection"> Vector3 값으로 Player가 이동하고자 하는 방향이다. </param>
-    public void PlayerWalk(Vector3 moveDirection)
+    public void PlayerMove(Vector3 moveDirection, bool isState = false)
     {
         if (moveDirection != Vector3.zero)
         {
-            moveSpeed = walkSpeed;
+            if (isState) moveSpeed = sprintSpeed;
+            else moveSpeed = walkSpeed;
+
             _rigidbody.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
         }
     }
