@@ -27,5 +27,6 @@ public class PlayerAnimation : MonoBehaviour
     private void ControlAnimation()
     {
         _animator.SetBool(PlayerAnimParameter.IsWalk, _playerController.isWalking);
+        _animator.SetBool(PlayerAnimParameter.IsSprint, _playerController.isSprinting);
     }
 }

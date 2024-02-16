@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [Header("Etc")]
     private bool isRotate = false;
     internal bool isWalking = false;
+    internal bool isSprinting = false;
 
 
 
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
         _playerActionMap = _playerInput.actions.FindActionMap("Player");
         _moveAction = _playerInput.actions.FindAction("Move");
+        _sprintAction = _playerInput.actions.FindAction("Sprint");
 
         InitializeInputSystem();
     }
@@ -45,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _playerBehaviour.PlayerWalk(moveDirection);
+        _playerBehaviour.PlayerMove(moveDirection, isSprinting);
         _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
     }
 
@@ -71,6 +73,16 @@ public class PlayerController : MonoBehaviour
             moveDirection = Vector3.zero;
             isRotate = false;
             isWalking = false;
+        };
+
+        _sprintAction.performed += context => 
+        { 
+            isSprinting = true; 
+        };
+
+        _sprintAction.canceled += context => 
+        { 
+            isSprinting = false; 
         };
     }
 }
