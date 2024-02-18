@@ -14,4 +14,5 @@ public class PlayerAnimParameter
     public static readonly int IsAir= Animator.StringToHash("IsAir");
     public static readonly int IsDodge = Animator.StringToHash("IsDodge");
     public static readonly int IsPlayingDodgeAnimation = Animator.StringToHash("IsPlayingDodgeAnimation");
+    public static readonly int IsDamage = Animator.StringToHash("IsDamage");
 }

@@ -46,6 +46,9 @@ public class PlayerAnimation : MonoBehaviour
         if (_playerController.isDodging && !isPlayingDodgeAnimation)
             _animator.SetTrigger(PlayerAnimParameter.IsDodge);
         _animator.SetBool(PlayerAnimParameter.IsPlayingDodgeAnimation, isPlayingDodgeAnimation);
+
+        if (_playerController.isDamage)
+            _animator.SetTrigger(PlayerAnimParameter.IsDamage);
     }
 
 
