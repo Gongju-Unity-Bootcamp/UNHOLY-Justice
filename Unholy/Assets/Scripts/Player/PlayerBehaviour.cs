@@ -17,6 +17,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float jumpPower = 5f;
+    [SerializeField] private float dodgePower = 7f;
 
 
 
@@ -32,7 +33,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Update()
     {
-        _playerAnimation.isPlayingLandAnimation = _playerAnimation.CheckAnimationPlaying("P_Unarmed_Land");
+        
     }
 
     /// <summary>
@@ -41,6 +42,10 @@ public class PlayerBehaviour : MonoBehaviour
     /// <param name="moveDirection"> Vector3 값으로 Player가 이동하고자 하는 방향이다. </param>
     public void PlayerMove(Vector3 moveDirection, bool isState = false)
     {
+        //dodge animation이 동작하고 있을 때, 이동이 불가합니다.
+        if (_playerAnimation.isPlayingDodgeAnimation)
+            return;
+
         if (moveDirection != Vector3.zero)
         {
             if (isState) moveSpeed = sprintSpeed;
@@ -58,6 +63,10 @@ public class PlayerBehaviour : MonoBehaviour
     /// <param name="verticalMovement">player가 이동하고자 하는 방향의 y값</param>
     public void PlayerRotate(bool isRotate, float horizontalMovement, float verticalMovement)
     {
+        //dodge animation이 동작하고 있을 때, 회전이 불가합니다.
+        if (_playerAnimation.isPlayingDodgeAnimation)
+            return;
+
         if (isRotate)
         {
             Vector3 targetDirection = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
@@ -73,7 +82,23 @@ public class PlayerBehaviour : MonoBehaviour
     /// </summary>
     public void PlayerJump()
     {
+        //dodge animation이 동작하고 있을 때, 점프가 불가능합니다.
+        if (_playerAnimation.isPlayingDodgeAnimation)
+            return;
+
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpPower, _rigidbody.velocity.z);
         _playerAnimation.isPlayingJumpAnimation = false;
+    }
+
+    /// <summary>
+    /// Player 회피 메소드. 회피키(Left Control)를 누르면 플레이어가 바라보는 방향대로 dodgePower만큼 이동합니다.
+    /// </summary>
+    /// <param name="lastMoveDirection">player가 현재 바라보는 방향입니다.</param>
+    public void PlayerDodge(Vector3 lastMoveDirection)
+    {
+        if(_playerController.isDodging)
+        {
+            _rigidbody.velocity = lastMoveDirection + transform.forward * dodgePower;
+        }
     }
 }
