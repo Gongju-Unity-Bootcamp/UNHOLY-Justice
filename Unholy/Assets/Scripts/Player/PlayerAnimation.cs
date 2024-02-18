@@ -11,8 +11,8 @@ public class PlayerAnimation : MonoBehaviour
     private Animator _animator;
 
     [Header("Check Animation Clips")]
-    [SerializeField] internal bool isPlayingLandAnimation = false;
     [SerializeField] internal bool isPlayingJumpAnimation = false;
+    [SerializeField] internal bool isPlayingDodgeAnimation = false;
 
 
     void Awake()
@@ -25,6 +25,9 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
         ControlAnimation();
+
+        isPlayingJumpAnimation = CheckAnimationPlaying("P_Unarmed_Land");
+        isPlayingDodgeAnimation = CheckAnimationPlaying("Dodge");
     }
 
     /// <summary>
@@ -39,7 +42,12 @@ public class PlayerAnimation : MonoBehaviour
 
         if (_playerController.isJumping && !_playerController.isAir) _animator.SetTrigger(PlayerAnimParameter.IsJump);
         _animator.SetBool(PlayerAnimParameter.IsPlayingJumpAnimation, isPlayingJumpAnimation);
+
+        if (_playerController.isDodging && !isPlayingDodgeAnimation)
+            _animator.SetTrigger(PlayerAnimParameter.IsDodge);
+        _animator.SetBool(PlayerAnimParameter.IsPlayingDodgeAnimation, isPlayingDodgeAnimation);
     }
+
 
     /// <summary>
     /// 현재 재생되고 있는 animation을 감시할 수 있는 메소드입니다.

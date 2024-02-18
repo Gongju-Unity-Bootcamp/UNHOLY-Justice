@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public InputAction _moveAction;
     public InputAction _sprintAction;
     public InputAction _jumpAction;
+    public InputAction _dodgeAction;
 
     [Header("Component")]
     private PlayerBehaviour _playerBehaviour;
@@ -21,15 +22,18 @@ public class PlayerController : MonoBehaviour
     [Header("Position")]
     public Vector2 direction;
     public Vector3 moveDirection;
+    private Vector3 rollDirection;
     private float verticalMovement;
     private float horizontalMovement;
+    
 
     [Header("Behaviour bool")]
     private bool isRotate = false;
     internal bool isWalking = false;
     internal bool isSprinting = false;
     internal bool isJumping = false;
-    internal bool isAir = true; 
+    internal bool isAir = false;
+    internal bool isDodging = false;
 
 
 
@@ -43,6 +47,9 @@ public class PlayerController : MonoBehaviour
         _moveAction = _playerInput.actions.FindAction("Move");
         _sprintAction = _playerInput.actions.FindAction("Sprint");
         _jumpAction = _playerInput.actions.FindAction("Jump");
+        _dodgeAction = _playerInput.actions.FindAction("Dodge");
+
+        rollDirection = transform.forward;
 
         InitializeInputSystem();
     }
@@ -52,6 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerBehaviour.PlayerMove(moveDirection, isSprinting);
         _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
+        _playerBehaviour.PlayerDodge(rollDirection);
     }
 
 
@@ -66,6 +74,8 @@ public class PlayerController : MonoBehaviour
 
             moveDirection = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
             moveDirection.y = 0;
+
+            rollDirection = new Vector3(transform.localRotation.x, 0, transform.localRotation.z);
 
             isRotate = true;
             isWalking = true;
@@ -92,6 +102,10 @@ public class PlayerController : MonoBehaviour
         };
 
         _jumpAction.canceled += context => isJumping = false;
+
+        _dodgeAction.started += context => isDodging = true;
+        _dodgeAction.canceled += context => isDodging = false;
+
     }
 
     private void OnCollisionEnter(Collision collision)
