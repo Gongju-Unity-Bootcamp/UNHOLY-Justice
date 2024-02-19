@@ -19,6 +19,9 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float jumpPower = 5f;
     [SerializeField] private float dodgePower = 7f;
 
+    [Header("Possibility")]
+    internal bool ableToJump = false;
+    internal bool ableToDodge = false;
 
 
     private void Awake()
@@ -82,8 +85,9 @@ public class PlayerBehaviour : MonoBehaviour
     /// </summary>
     public void PlayerJump()
     {
-        //dodge animation이 동작하고 있을 때, 점프가 불가능합니다.
-        if (_playerAnimation.isPlayingDodgeAnimation)
+        // ableToJump : 평소, 이동 중 혹은 회피 동작 이후 일정한 시간이 지났을 때 true가 됩니다.
+        // ableToJump가 true일 경우에만 점프가 가능합니다.
+        if (!ableToJump)
             return;
 
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpPower, _rigidbody.velocity.z);
@@ -94,11 +98,23 @@ public class PlayerBehaviour : MonoBehaviour
     /// Player 회피 메소드. 회피키(Left Control)를 누르면 플레이어가 바라보는 방향대로 dodgePower만큼 이동합니다.
     /// </summary>
     /// <param name="lastMoveDirection">player가 현재 바라보는 방향입니다.</param>
-    public void PlayerDodge(Vector3 lastMoveDirection)
+    public IEnumerator PlayerDodge(Vector3 lastMoveDirection)
     {
-        if(_playerController.isDodging)
+        // ableToDodge : 평소, 이동 중 혹은 회피 동작 이후 일정한 시간이 지났을 때 true가 됩니다.
+        // ableToDodge true일 경우에만 회피가 가능합니다.
+        if (_playerController.isDodging && ableToDodge)
         {
             _rigidbody.velocity = lastMoveDirection + transform.forward * dodgePower;
+
+            ableToJump = false;
+            ableToDodge = false;
+        }
+        yield return new WaitForSeconds(1.15f);
+
+        if(!ableToJump && !ableToDodge)
+        {
+            ableToJump = true;
+            ableToDodge = true;
         }
     }
 }
