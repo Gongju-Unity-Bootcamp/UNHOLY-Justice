@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Types;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,10 +15,14 @@ public class PlayerController : MonoBehaviour
     public InputAction _sprintAction;
     public InputAction _jumpAction;
     public InputAction _dodgeAction;
+    public InputAction _attackAction;
+    public InputAction _unarmed;
+    public InputAction _onehand;
 
     [Header("Component")]
     private PlayerBehaviour _playerBehaviour;
     private PlayerAnimation _playerAnimation;
+    private WeaponSwitch _weaponSwitch;
 
     [Header("Position")]
     public Vector2 direction;
@@ -35,7 +40,7 @@ public class PlayerController : MonoBehaviour
     internal bool isAir = false;
     internal bool isDodging = false;
     internal bool isDamage = false;
-
+    internal bool isAttack = false;
 
 
     void Awake()
@@ -46,12 +51,16 @@ public class PlayerController : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _playerBehaviour = GetComponent<PlayerBehaviour>();
         _playerAnimation = GetComponent<PlayerAnimation>();
+        _weaponSwitch = GetComponent<WeaponSwitch>();  
 
         _playerActionMap = _playerInput.actions.FindActionMap("Player");
         _moveAction = _playerInput.actions.FindAction("Move");
         _sprintAction = _playerInput.actions.FindAction("Sprint");
         _jumpAction = _playerInput.actions.FindAction("Jump");
         _dodgeAction = _playerInput.actions.FindAction("Dodge");
+        _attackAction = _playerInput.actions.FindAction("Attack");
+        _unarmed = _playerInput.actions.FindAction("Unarmed");
+        _onehand = _playerInput.actions.FindAction("OneHand");
 
         rollDirection = transform.forward;
 
@@ -68,7 +77,9 @@ public class PlayerController : MonoBehaviour
         _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
     }
 
-
+    /// <summary>
+    /// Input event binding을 하는 메소드입니다.
+    /// </summary>
     private void InitializeInputSystem()
     {
         _moveAction.performed += context =>
@@ -119,6 +130,13 @@ public class PlayerController : MonoBehaviour
         };
         _dodgeAction.canceled += context => isDodging = false;
 
+        _attackAction.started += context => isAttack = true;
+        _attackAction.canceled += context => isAttack = false;
+
+        _unarmed.started += context => _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.Unarmed);
+        _onehand.started += context => _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.OneHand);
+
+        
     }
 
     void ResetCondition()

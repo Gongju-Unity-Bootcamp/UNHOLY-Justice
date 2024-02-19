@@ -71,6 +71,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Unarmed"",
+                    ""type"": ""Button"",
+                    ""id"": ""29ec85f3-86d1-4d70-a7e6-0cf2220c30c2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OneHand"",
+                    ""type"": ""Button"",
+                    ""id"": ""a66904ae-a51b-4840-a8eb-96d4de3cef0a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,7 +195,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Attack"",
@@ -247,6 +265,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a24503f4-1169-4a74-95f9-46a064b7cf93"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unarmed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c28c438-8d90-44b4-a5cf-dfee984f48a0"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OneHand"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -323,6 +363,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
+        m_Player_Unarmed = m_Player.FindAction("Unarmed", throwIfNotFound: true);
+        m_Player_OneHand = m_Player.FindAction("OneHand", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -389,6 +431,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Dodge;
+    private readonly InputAction m_Player_Unarmed;
+    private readonly InputAction m_Player_OneHand;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -398,6 +442,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
+        public InputAction @Unarmed => m_Wrapper.m_Player_Unarmed;
+        public InputAction @OneHand => m_Wrapper.m_Player_OneHand;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -422,6 +468,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
+            @Unarmed.started += instance.OnUnarmed;
+            @Unarmed.performed += instance.OnUnarmed;
+            @Unarmed.canceled += instance.OnUnarmed;
+            @OneHand.started += instance.OnOneHand;
+            @OneHand.performed += instance.OnOneHand;
+            @OneHand.canceled += instance.OnOneHand;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -441,6 +493,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
+            @Unarmed.started -= instance.OnUnarmed;
+            @Unarmed.performed -= instance.OnUnarmed;
+            @Unarmed.canceled -= instance.OnUnarmed;
+            @OneHand.started -= instance.OnOneHand;
+            @OneHand.performed -= instance.OnOneHand;
+            @OneHand.canceled -= instance.OnOneHand;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -510,5 +568,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnUnarmed(InputAction.CallbackContext context);
+        void OnOneHand(InputAction.CallbackContext context);
     }
 }
