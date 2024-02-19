@@ -10,8 +10,9 @@ public class PlayerBehaviour : MonoBehaviour
     private Rigidbody _rigidbody;
     private PlayerController _playerController;
     private PlayerAnimation _playerAnimation;
+    private Transform _playerCamera;
 
-    [Header("ETC")]
+    [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkSpeed = 10f;
     [SerializeField] private float sprintSpeed;
@@ -23,6 +24,9 @@ public class PlayerBehaviour : MonoBehaviour
     internal bool ableToJump = false;
     internal bool ableToDodge = false;
 
+    [Header("ETC")]
+    private const float DELAYTIME = 1.15f;
+
 
     private void Awake()
     {
@@ -32,6 +36,7 @@ public class PlayerBehaviour : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _playerController = GetComponent<PlayerController>();
         _playerAnimation = GetComponent<PlayerAnimation>();
+        _playerCamera = Camera.main.transform;
     }
 
     private void Update()
@@ -54,6 +59,8 @@ public class PlayerBehaviour : MonoBehaviour
             if (isState) moveSpeed = sprintSpeed;
             else moveSpeed = walkSpeed;
 
+            moveDirection = Quaternion.Euler(0, _playerCamera.eulerAngles.y, 0) * moveDirection;
+
             _rigidbody.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
         }
     }
@@ -74,7 +81,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Vector3 targetDirection = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            Quaternion interpolateRotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            Quaternion interpolateRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, _playerCamera.eulerAngles.y, 0) * targetRotation, rotationSpeed * Time.deltaTime);
 
             _rigidbody.MoveRotation(interpolateRotation);
         }
@@ -108,7 +115,7 @@ public class PlayerBehaviour : MonoBehaviour
             ableToJump = false;
             ableToDodge = false;
         }
-        yield return new WaitForSeconds(1.15f);
+        yield return new WaitForSeconds(DELAYTIME);
 
         if(!ableToJump && !ableToDodge)
         {

@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         _playerInput = GetComponent<PlayerInput>();
         _playerBehaviour = GetComponent<PlayerBehaviour>();
         _playerAnimation = GetComponent<PlayerAnimation>();
@@ -59,7 +62,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         _playerBehaviour.PlayerMove(moveDirection, isSprinting);
         _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
