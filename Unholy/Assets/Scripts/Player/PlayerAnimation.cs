@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Types;
+using UnityEditor.Overlays;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimation : MonoBehaviour
@@ -8,6 +10,7 @@ public class PlayerAnimation : MonoBehaviour
     [Header("Component")]
     private PlayerController _playerController;
     private PlayerBehaviour _playerBehaviour;
+    private WeaponSwitch _weaponSwitch;
     private Animator _animator;
 
     [Header("Check Animation Clips")]
@@ -18,6 +21,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         _playerController = GetComponent<PlayerController>();
         _playerBehaviour = GetComponent<PlayerBehaviour>();
+        _weaponSwitch = GetComponent<WeaponSwitch>();   
         _animator = GetComponent<Animator>();
     }
 
@@ -50,6 +54,10 @@ public class PlayerAnimation : MonoBehaviour
 
         if (_playerController.isDamage)
             _animator.SetTrigger(PlayerAnimParameter.IsDamage);
+
+
+        //현재 player가 들고 있는 weapon의 종류를 나타냅니다.
+        _animator.SetInteger(PlayerAnimParameter.WeaponType, _weaponSwitch.weaponIndex);
     }
 
 

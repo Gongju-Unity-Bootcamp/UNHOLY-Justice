@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Types;
 
 public class PlayerBehaviour : MonoBehaviour
 {
