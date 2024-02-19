@@ -91,7 +91,6 @@ public class PlayerBehaviour : MonoBehaviour
             return;
 
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpPower, _rigidbody.velocity.z);
-        _playerAnimation.isPlayingJumpAnimation = false;
     }
 
     /// <summary>
