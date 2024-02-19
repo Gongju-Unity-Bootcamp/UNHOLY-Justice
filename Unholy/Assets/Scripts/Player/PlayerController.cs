@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
     {
         _playerBehaviour.PlayerMove(moveDirection, isSprinting);
         _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
-        // _playerBehaviour.PlayerDodge(rollDirection);
     }
 
 
@@ -143,7 +142,6 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.CompareTag("Ground"))
         {
             isAir = true;
-            _playerAnimation.isPlayingJumpAnimation = true;
         }
     }
 }

@@ -1,4 +1,3 @@
-using PlayerState;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +11,6 @@ public class PlayerAnimation : MonoBehaviour
     private Animator _animator;
 
     [Header("Check Animation Clips")]
-    [SerializeField] internal bool isPlayingJumpAnimation = false;
     [SerializeField] internal bool isPlayingDodgeAnimation = false;
 
 
