@@ -1,3 +1,4 @@
+using PlayerState;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         ControlAnimation();
 
-        isPlayingJumpAnimation = CheckAnimationPlaying("P_Unarmed_Land");
         isPlayingDodgeAnimation = CheckAnimationPlaying("Dodge");
     }
 
@@ -35,17 +35,20 @@ public class PlayerAnimation : MonoBehaviour
     /// </summary>
     private void ControlAnimation()
     {
+        _animator.SetBool(PlayerAnimParameter.AbleToJump, _playerBehaviour.ableToJump);
+        _animator.SetBool(PlayerAnimParameter.AbleToDodge, _playerBehaviour.ableToDodge);
+
+        if (!_playerBehaviour.ableToJump) _animator.ResetTrigger(PlayerAnimParameter.IsJump);
+
         _animator.SetBool(PlayerAnimParameter.IsWalk, _playerController.isWalking);
         _animator.SetBool(PlayerAnimParameter.IsSprint, _playerController.isSprinting);
         _animator.SetBool(PlayerAnimParameter.IsAir, _playerController.isAir);
 
 
         if (_playerController.isJumping && !_playerController.isAir) _animator.SetTrigger(PlayerAnimParameter.IsJump);
-        _animator.SetBool(PlayerAnimParameter.IsPlayingJumpAnimation, isPlayingJumpAnimation);
 
         if (_playerController.isDodging && !isPlayingDodgeAnimation)
             _animator.SetTrigger(PlayerAnimParameter.IsDodge);
-        _animator.SetBool(PlayerAnimParameter.IsPlayingDodgeAnimation, isPlayingDodgeAnimation);
 
         if (_playerController.isDamage)
             _animator.SetTrigger(PlayerAnimParameter.IsDamage);

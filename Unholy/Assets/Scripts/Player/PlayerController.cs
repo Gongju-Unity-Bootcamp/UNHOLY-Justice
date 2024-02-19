@@ -52,6 +52,9 @@ public class PlayerController : MonoBehaviour
 
         rollDirection = transform.forward;
 
+        _playerBehaviour.ableToJump = true;
+        _playerBehaviour.ableToDodge = true;
+
         InitializeInputSystem();
     }
 
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerBehaviour.PlayerMove(moveDirection, isSprinting);
         _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
-        _playerBehaviour.PlayerDodge(rollDirection);
+        // _playerBehaviour.PlayerDodge(rollDirection);
     }
 
 
@@ -104,7 +107,14 @@ public class PlayerController : MonoBehaviour
 
         _jumpAction.canceled += context => isJumping = false;
 
-        _dodgeAction.started += context => isDodging = true;
+        _dodgeAction.started += context =>
+        {
+            if (isAir || !_playerBehaviour.ableToDodge) return;
+            
+            isDodging = true;
+            _playerBehaviour.StopCoroutine(_playerBehaviour.PlayerDodge(rollDirection));
+            _playerBehaviour.StartCoroutine(_playerBehaviour.PlayerDodge(rollDirection));
+        };
         _dodgeAction.canceled += context => isDodging = false;
 
     }

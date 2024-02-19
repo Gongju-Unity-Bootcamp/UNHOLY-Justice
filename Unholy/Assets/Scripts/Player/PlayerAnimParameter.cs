@@ -10,9 +10,9 @@ public class PlayerAnimParameter
     public static readonly int IsWalk = Animator.StringToHash("IsWalk");
     public static readonly int IsSprint = Animator.StringToHash("IsSprint");
     public static readonly int IsJump = Animator.StringToHash("IsJump");
-    public static readonly int IsPlayingJumpAnimation = Animator.StringToHash("IsPlayingJumpAnimation");
-    public static readonly int IsAir= Animator.StringToHash("IsAir");
+    public static readonly int IsAir = Animator.StringToHash("IsAir");
     public static readonly int IsDodge = Animator.StringToHash("IsDodge");
-    public static readonly int IsPlayingDodgeAnimation = Animator.StringToHash("IsPlayingDodgeAnimation");
     public static readonly int IsDamage = Animator.StringToHash("IsDamage");
+    public static readonly int AbleToJump = Animator.StringToHash("AbleToJump");
+    public static readonly int AbleToDodge = Animator.StringToHash("AbleToDodge");
 }
