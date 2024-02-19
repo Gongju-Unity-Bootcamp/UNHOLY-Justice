@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     internal bool isJumping = false;
     internal bool isAir = false;
     internal bool isDodging = false;
+    internal bool isDamage = false;
 
 
 
@@ -108,11 +109,22 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void ResetCondition()
+    {
+        isDamage = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Ground"))
         {
             isAir = false;
+        }
+
+        if (collision.transform.CompareTag("Monster"))
+        {
+            isDamage = true;
+            Invoke(nameof(ResetCondition), 0.5f); // 애니메이션 테스트용 임시 코드
         }
     }
 
