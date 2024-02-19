@@ -55,6 +55,8 @@ public class PlayerAnimation : MonoBehaviour
         if (_playerController.isDamage)
             _animator.SetTrigger(PlayerAnimParameter.IsDamage);
 
+        if (_playerController.isAttack)
+            _animator.SetTrigger(PlayerAnimParameter.IsAttack);
 
         //현재 player가 들고 있는 weapon의 종류를 나타냅니다.
         _animator.SetInteger(PlayerAnimParameter.WeaponType, _weaponSwitch.weaponIndex);

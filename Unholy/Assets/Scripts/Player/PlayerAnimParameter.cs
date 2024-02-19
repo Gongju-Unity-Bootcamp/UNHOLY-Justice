@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerAnimParameter
 {
+    public static readonly int IsAttack = Animator.StringToHash("IsAttack");
     public static readonly int IsWalk = Animator.StringToHash("IsWalk");
     public static readonly int IsSprint = Animator.StringToHash("IsSprint");
     public static readonly int IsJump = Animator.StringToHash("IsJump");
