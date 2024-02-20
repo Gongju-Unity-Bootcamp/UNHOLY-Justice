@@ -110,7 +110,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BossNormalAttack2
+  m_Name: BossATK2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -137,7 +137,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BossCombo1
+  m_Name: BossATK3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -376,7 +376,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BossNormalAttack1
+  m_Name: BossATK1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -403,7 +403,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BossCombo2
+  m_Name: BossATK4
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
