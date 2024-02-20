@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -195,7 +195,7 @@ Transform:
   m_GameObject: {fileID: 179692864}
   serializedVersion: 2
   m_LocalRotation: {x: -0.15415433, y: -7.38344e-10, z: -1.15195936e-10, w: 0.9880468}
-  m_LocalPosition: {x: 0, y: -4.0999994, z: 2}
+  m_LocalPosition: {x: 0, y: -4.0999985, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -356,14 +356,22 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
-  m_AnimatedTarget: {fileID: 0}
+  m_Follow: {fileID: 1266191334}
+  m_AnimatedTarget: {fileID: 1266191323}
   m_LayerIndex: 0
   m_ShowDebugText: 0
   m_ChildCameras:
   - {fileID: 1287099083}
   - {fileID: 1603052211}
-  m_Instructions: []
+  m_Instructions:
+  - m_FullHash: 1184301306
+    m_VirtualCamera: {fileID: 1287099083}
+    m_ActivateAfter: 0
+    m_MinDuration: 0
+  - m_FullHash: 1919263225
+    m_VirtualCamera: {fileID: 1603052211}
+    m_ActivateAfter: 0
+    m_MinDuration: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 0.5
@@ -374,7 +382,73 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   m_CustomBlends: {fileID: 0}
-  m_ParentHash: []
+  m_ParentHash:
+  - m_Hash: 1184301306
+    m_ParentHash: 756556552
+  - m_Hash: -725660850
+    m_ParentHash: 1184301306
+  - m_Hash: -94255774
+    m_ParentHash: 1184301306
+  - m_Hash: 872779152
+    m_ParentHash: 1184301306
+  - m_Hash: 1002780359
+    m_ParentHash: 872779152
+  - m_Hash: 2119409606
+    m_ParentHash: 872779152
+  - m_Hash: -1024647610
+    m_ParentHash: 1184301306
+  - m_Hash: 1881125499
+    m_ParentHash: -1024647610
+  - m_Hash: 1403992929
+    m_ParentHash: -1024647610
+  - m_Hash: 754740065
+    m_ParentHash: -1024647610
+  - m_Hash: 2142003637
+    m_ParentHash: -1024647610
+  - m_Hash: -1094949484
+    m_ParentHash: 1184301306
+  - m_Hash: 1228619118
+    m_ParentHash: -1094949484
+  - m_Hash: -845742966
+    m_ParentHash: -1094949484
+  - m_Hash: -1409175960
+    m_ParentHash: -1094949484
+  - m_Hash: 1919263225
+    m_ParentHash: 756556552
+  - m_Hash: -954767936
+    m_ParentHash: 1919263225
+  - m_Hash: 2067035261
+    m_ParentHash: 1919263225
+  - m_Hash: -2123332096
+    m_ParentHash: 2067035261
+  - m_Hash: -796089604
+    m_ParentHash: 2067035261
+  - m_Hash: -1888024935
+    m_ParentHash: -796089604
+  - m_Hash: -610704893
+    m_ParentHash: -796089604
+  - m_Hash: -1801392504
+    m_ParentHash: 2067035261
+  - m_Hash: 825673242
+    m_ParentHash: -1801392504
+  - m_Hash: 1486413128
+    m_ParentHash: -1801392504
+  - m_Hash: 75170898
+    m_ParentHash: -1801392504
+  - m_Hash: 1462439558
+    m_ParentHash: -1801392504
+  - m_Hash: 114545654
+    m_ParentHash: 2067035261
+  - m_Hash: 889616309
+    m_ParentHash: 114545654
+  - m_Hash: -1408293361
+    m_ParentHash: 114545654
+  - m_Hash: -620226919
+    m_ParentHash: 114545654
+  - m_Hash: -558713488
+    m_ParentHash: 114545654
+  - m_Hash: 154706811
+    m_ParentHash: 1919263225
 --- !u!4 &357654020
 Transform:
   m_ObjectHideFlags: 0
@@ -958,7 +1032,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 766847610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2010659, y: 0.00000004673272, z: -0.000000009592252, w: 0.9795777}
+  m_LocalRotation: {x: 0.20106587, y: -6.973135e-16, z: 1.4312897e-16, w: 0.9795777}
   m_LocalPosition: {x: 0, y: 4.5, z: -13.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1180,6 +1254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayingDodgeAnimation: 0
+  isPlayingAttackAnimation: 0
 --- !u!4 &1266191334 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6455139829038169830, guid: 7778632bf67024a46b1f78e3c03c216e,
@@ -1532,7 +1607,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 1879147154}
   m_Follow: {fileID: 1266191334}
   m_Lens:
     FieldOfView: 35
@@ -1561,8 +1636,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603052210}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15538882, y: -1e-45, z: -0, w: 0.9878534}
-  m_LocalPosition: {x: -0.57696515, y: -6.2933702, z: -3.064639}
+  m_LocalRotation: {x: 0.06542914, y: -1e-45, z: -0, w: 0.9978573}
+  m_LocalPosition: {x: -0.57696515, y: -7.0576186, z: -3.461935}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1624,7 +1699,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659920996}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2010659, y: 0.000000036492118, z: -0.000000007490288, w: 0.9795777}
+  m_LocalRotation: {x: 0.20106587, y: -6.965332e-16, z: 1.3932728e-16, w: 0.9795777}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1929,6 +2004,12 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!4 &1879147154 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4414871117303439923, guid: aef9a3e063e740f4d8100584de73ceb4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1879147150}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1888004540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2060,7 +2141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981522121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17819066, y: 0.000000006859515, z: -0.0000000012421815, w: 0.983996}
+  m_LocalRotation: {x: 0.17819066, y: 0.00000000920955, z: -0.0000000016677462, w: 0.983996}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

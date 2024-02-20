@@ -6,6 +6,7 @@ using Types;
 public class WeaponSwitch : MonoBehaviour
 {
     [Header("Weapon Field")]
+    // 무기 미 장착으로 시작하기에 인덱스 num이 -1부터 시작
     internal int weaponIndex = -1;
 
 

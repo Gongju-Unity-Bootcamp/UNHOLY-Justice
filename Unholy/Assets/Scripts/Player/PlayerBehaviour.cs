@@ -51,8 +51,12 @@ public class PlayerBehaviour : MonoBehaviour
     /// <param name="moveDirection"> Vector3 값으로 Player가 이동하고자 하는 방향이다. </param>
     public void PlayerMove(Vector3 moveDirection, bool isState = false)
     {
-        //dodge animation이 동작하고 있을 때, 이동이 불가합니다.
+        //dodge animation이 동작하고 있을 때 이동이 불가합니다.
         if (_playerAnimation.isPlayingDodgeAnimation)
+            return;
+
+        //attack animation이 동작하고 있을 때 이동이 불가합니다.
+        if (_playerAnimation.isPlayingAttackAnimation)
             return;
 
         if (moveDirection != Vector3.zero)
@@ -74,8 +78,12 @@ public class PlayerBehaviour : MonoBehaviour
     /// <param name="verticalMovement">player가 이동하고자 하는 방향의 y값</param>
     public void PlayerRotate(bool isRotate, float horizontalMovement, float verticalMovement)
     {
-        //dodge animation이 동작하고 있을 때, 회전이 불가합니다.
+        //dodge animation이 동작하고 있을 때 회전이 불가합니다.
         if (_playerAnimation.isPlayingDodgeAnimation)
+            return;
+
+        //attack animation이 동작하고 있을 때 회전이 불가합니다.
+        if (_playerAnimation.isPlayingAttackAnimation)
             return;
 
         if (isRotate)

@@ -15,6 +15,7 @@ public class PlayerAnimation : MonoBehaviour
 
     [Header("Check Animation Clips")]
     [SerializeField] internal bool isPlayingDodgeAnimation = false;
+    [SerializeField] internal bool isPlayingAttackAnimation = false;
 
 
     void Awake()
@@ -30,6 +31,7 @@ public class PlayerAnimation : MonoBehaviour
         ControlAnimation();
 
         isPlayingDodgeAnimation = CheckAnimationPlaying("Dodge");
+        isPlayingAttackAnimation = CheckAnimationPlaying("P_OneHand_Attack1") || CheckAnimationPlaying("P_OneHand_Attack2") || CheckAnimationPlaying("P_OneHand_Attack3");
     }
 
     /// <summary>
@@ -47,7 +49,8 @@ public class PlayerAnimation : MonoBehaviour
         _animator.SetBool(PlayerAnimParameter.IsAir, _playerController.isAir);
 
 
-        if (_playerController.isJumping && !_playerController.isAir) _animator.SetTrigger(PlayerAnimParameter.IsJump);
+        if (_playerController.isJumping && !_playerController.isAir)
+            _animator.SetTrigger(PlayerAnimParameter.IsJump);
 
         if (_playerController.isDodging && !isPlayingDodgeAnimation)
             _animator.SetTrigger(PlayerAnimParameter.IsDodge);
@@ -56,7 +59,10 @@ public class PlayerAnimation : MonoBehaviour
             _animator.SetTrigger(PlayerAnimParameter.IsDamage);
 
         if (_playerController.isAttack)
+        {
             _animator.SetTrigger(PlayerAnimParameter.IsAttack);
+            _playerController.isAttack = false;
+        }
 
         //현재 player가 들고 있는 weapon의 종류를 나타냅니다.
         _animator.SetInteger(PlayerAnimParameter.WeaponType, _weaponSwitch.weaponIndex);
