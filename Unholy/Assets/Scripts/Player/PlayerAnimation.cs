@@ -15,6 +15,9 @@ public class PlayerAnimation : MonoBehaviour
 
     [Header("Check Animation Clips")]
     [SerializeField] internal bool isPlayingDodgeAnimation = false;
+    [SerializeField] internal bool isPlayingAttackAnimation = false;
+    [SerializeField] internal bool isPlayingJumpAttackAnimation = false;
+    [SerializeField] internal bool isPlayingFallAnimation = false;
 
 
     void Awake()
@@ -30,6 +33,9 @@ public class PlayerAnimation : MonoBehaviour
         ControlAnimation();
 
         isPlayingDodgeAnimation = CheckAnimationPlaying("Dodge");
+        isPlayingFallAnimation = CheckAnimationPlaying("P_OneHand_Fall");
+        isPlayingJumpAttackAnimation = CheckAnimationPlaying("P_OneHand_Jump-Attack");
+        isPlayingAttackAnimation = CheckAnimationPlaying("P_OneHand_Attack1") || CheckAnimationPlaying("P_OneHand_Attack2") || CheckAnimationPlaying("P_OneHand_Attack3");
     }
 
     /// <summary>
@@ -37,17 +43,20 @@ public class PlayerAnimation : MonoBehaviour
     /// </summary>
     private void ControlAnimation()
     {
+        //현재 player가 들고 있는 weapon의 종류를 나타냅니다.
+        _animator.SetInteger(PlayerAnimParameter.WeaponType, _weaponSwitch.weaponIndex);
+
         _animator.SetBool(PlayerAnimParameter.AbleToJump, _playerBehaviour.ableToJump);
         _animator.SetBool(PlayerAnimParameter.AbleToDodge, _playerBehaviour.ableToDodge);
-
-        if (!_playerBehaviour.ableToJump) _animator.ResetTrigger(PlayerAnimParameter.IsJump);
-
         _animator.SetBool(PlayerAnimParameter.IsWalk, _playerController.isWalking);
         _animator.SetBool(PlayerAnimParameter.IsSprint, _playerController.isSprinting);
         _animator.SetBool(PlayerAnimParameter.IsAir, _playerController.isAir);
 
+        if (!_playerBehaviour.ableToJump)
+            _animator.ResetTrigger(PlayerAnimParameter.IsJump);
 
-        if (_playerController.isJumping && !_playerController.isAir) _animator.SetTrigger(PlayerAnimParameter.IsJump);
+        if (_playerController.isJumping && !_playerController.isAir)
+            _animator.SetTrigger(PlayerAnimParameter.IsJump);
 
         if (_playerController.isDodging && !isPlayingDodgeAnimation)
             _animator.SetTrigger(PlayerAnimParameter.IsDodge);
@@ -55,9 +64,17 @@ public class PlayerAnimation : MonoBehaviour
         if (_playerController.isDamage)
             _animator.SetTrigger(PlayerAnimParameter.IsDamage);
 
+        if (_playerController.isAttack)
+        {
+            _animator.SetTrigger(PlayerAnimParameter.IsAttack);
+            _playerController.isAttack = false;
+        }
 
-        //현재 player가 들고 있는 weapon의 종류를 나타냅니다.
-        _animator.SetInteger(PlayerAnimParameter.WeaponType, _weaponSwitch.weaponIndex);
+        if (_playerController.isAbleComboAttack)
+        {
+            _animator.SetTrigger(PlayerAnimParameter.IsAbleComboAttack);
+            _playerController.isAbleComboAttack = false;
+        }
     }
 
 

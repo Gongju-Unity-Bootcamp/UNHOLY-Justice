@@ -20,10 +20,12 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float jumpPower = 5f;
     [SerializeField] private float dodgePower = 7f;
+    [SerializeField] private float attackPower = 120f;
 
     [Header("Possibility")]
     internal bool ableToJump = false;
     internal bool ableToDodge = false;
+    internal bool ableToCombo = false;
 
     [Header("ETC")]
     private const float DELAYTIME = 1.15f;
@@ -51,8 +53,15 @@ public class PlayerBehaviour : MonoBehaviour
     /// <param name="moveDirection"> Vector3 값으로 Player가 이동하고자 하는 방향이다. </param>
     public void PlayerMove(Vector3 moveDirection, bool isState = false)
     {
-        //dodge animation이 동작하고 있을 때, 이동이 불가합니다.
+        //dodge animation이 동작하고 있을 때 이동이 불가합니다.
         if (_playerAnimation.isPlayingDodgeAnimation)
+            return;
+
+        //attack animation이 동작하고 있을 때 이동이 불가합니다.
+        if (_playerAnimation.isPlayingAttackAnimation)
+            return;
+
+        if (_playerAnimation.isPlayingJumpAttackAnimation)
             return;
 
         if (moveDirection != Vector3.zero)
@@ -74,8 +83,15 @@ public class PlayerBehaviour : MonoBehaviour
     /// <param name="verticalMovement">player가 이동하고자 하는 방향의 y값</param>
     public void PlayerRotate(bool isRotate, float horizontalMovement, float verticalMovement)
     {
-        //dodge animation이 동작하고 있을 때, 회전이 불가합니다.
+        //dodge animation이 동작하고 있을 때 회전이 불가합니다.
         if (_playerAnimation.isPlayingDodgeAnimation)
+            return;
+
+        //attack animation이 동작하고 있을 때 회전이 불가합니다.
+        if (_playerAnimation.isPlayingAttackAnimation)
+            return;
+
+        if (_playerAnimation.isPlayingJumpAttackAnimation)
             return;
 
         if (isRotate)
@@ -98,7 +114,38 @@ public class PlayerBehaviour : MonoBehaviour
         if (!ableToJump)
             return;
 
+        if (_playerAnimation.isPlayingJumpAttackAnimation)
+            return;
+
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpPower, _rigidbody.velocity.z);
+    }
+
+    public void PlayerJumpAttack()
+    {
+        if (_playerController.isJumpAttack && _playerAnimation.isPlayingFallAnimation)
+        {
+            _rigidbody.AddForce(Vector3.down * attackPower, ForceMode.Impulse);
+            
+            ableToJump = false;
+
+            CancelInvoke();
+            Invoke(nameof(ChangeJumpState), DELAYTIME);
+        }
+    }
+
+    private void ChangeJumpState()
+    {
+        ableToJump = true;
+    }
+
+    public void AbleToCombo()
+    {
+        ableToCombo = true;
+    }
+
+    public void NotAbleToCombo()
+    {
+        ableToCombo = false;
     }
 
     /// <summary>
