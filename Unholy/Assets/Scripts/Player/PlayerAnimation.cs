@@ -59,7 +59,10 @@ public class PlayerAnimation : MonoBehaviour
             _animator.SetTrigger(PlayerAnimParameter.IsJump);
 
         if (_playerController.isDodging && !isPlayingDodgeAnimation)
+        {
             _animator.SetTrigger(PlayerAnimParameter.IsDodge);
+            _playerController.isDodging = false;
+        }
 
         if (_playerController.isDamage)
             _animator.SetTrigger(PlayerAnimParameter.IsDamage);
