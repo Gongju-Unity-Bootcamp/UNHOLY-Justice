@@ -6,10 +6,7 @@ using UnityEngine;
 public class MinoController : MonoBehaviour
 {
     [SerializeField] private BehaviorTree _treeA;
-    private bool _isNormal = true;
-    public bool CanAttack { get; set; }
-
-    public static bool ck = false;
+    public bool _isIdle;   
     public bool _attackRange = false;
     public bool _backPOS = false;
     public bool _keepDEF = false;
@@ -18,10 +15,12 @@ public class MinoController : MonoBehaviour
     public float _bossHP = 10f;
 
     Animator _bossAnimator;
+    Rigidbody _rigidbody;
 
     private void Awake()
     {
         _bossAnimator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody>();
 
         _treeA = new BehaviorTreeBuilder(gameObject)
             .Selector()
@@ -38,7 +37,7 @@ public class MinoController : MonoBehaviour
                             .CustomAction("BossKickAttack")
                         .End()
                         .SelectorRandom()
-                            .CustomAction("BossATK1") 
+                            .CustomAction("BossATK1")
                             .CustomAction("BossATK2")
                             .CustomAction("BossATK3")
                             .CustomAction("BossATK4")
@@ -47,32 +46,37 @@ public class MinoController : MonoBehaviour
                 .End()
                 .Sequence()
                     .Condition("out7SEC", () => _out7SEC == true)
-                    .CustomAction("BossJumpAttack")   
+                    .CustomAction("BossJumpAttack")
                 .End()
             .End()
             .Build();
-            
     }
     private void Update()
     {
-        _treeA.Tick();
-        //if (!_isNormal)
+        if (_isIdle)
+        {
+            ActivateAi();
+        }
+
+        //if (Input.GetKeyDown(KeyCode.A))
         //{
-        //    ActivateAi();
+        //    _isNormal = false;
+        //    _treeA.RemoveActiveTask(_treeA.Root);
+        //    _bossAnimator.Play("BossHit");
         //}
     }
 
-    /*void Parrying()
+    void Parrying()
     {
         _treeA.Reset();
-        _bossAnimator.Play("Parrying");
-        _isNormal = false;
+        _bossAnimator.Play("BossHit");
+        _isIdle = false;
     }
 
     void ParryingEnd()
     {
-        _isNormal = true;
-    }*/
+        _isIdle = true;
+    }
 
     // Idle을 EntryState로 둔다.
     public void ActivateAi()
@@ -80,9 +84,8 @@ public class MinoController : MonoBehaviour
         StartCoroutine(ActivateAiCo());
     }
 
-    // Collider에 의해 CanAttack의 값을 변경
+    // Collider에 의해 _attackRange의 값을 변경
     bool _isHit;
-
     IEnumerator ActivateAiCo()
     {
         while (true)
@@ -96,10 +99,14 @@ public class MinoController : MonoBehaviour
             }
             else
             {
-                if (CanAttack)
+                if (_attackRange)
+                {
+                    _treeA.Tick(); // Attack Node Start.
+                }
+                else if (_out7SEC)
                 {
                     _treeA.Tick();
-                }
+                }                
                 else
                 {
                     _bossAnimator.Play("BossTrack");
@@ -108,15 +115,9 @@ public class MinoController : MonoBehaviour
             yield return null;
         }
     }
-
-    public void IsStateEnd()
+    public void ProcessBackstep()
     {
-        Debug.Log("End");
-        ck = true;
-    }
-    public void IsStateStart()
-    {
-        Debug.Log("Start");
-        ck = false;
+        _rigidbody.velocity = 1f * -_rigidbody.transform.forward;
+        _rigidbody.AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
     }
 }

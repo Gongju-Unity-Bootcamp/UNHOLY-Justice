@@ -5,7 +5,8 @@ using UnityEngine;
 public class CustomAction : ActionBase
 {
     int _animationHash;
-
+    private bool _isEnter;
+    Animator _animator;
 
     public CustomAction(string stateName)
     {
@@ -14,35 +15,27 @@ public class CustomAction : ActionBase
 
     protected override void OnInit()
     {
-        var animator = Owner.GetComponent<Animator>();
-        animator.Play(_animationHash);
+        _animator = Owner.GetComponent<Animator>();
     }
+
 
     protected override TaskStatus OnUpdate()
     {
-        if (CheckEnd())
+        if (_isEnter == false)
         {
-            Debug.Log("Success");
-            return TaskStatus.Success;
-        }
-        else
-        {
-            Debug.Log("Continue");
+            _isEnter = true;
+            _animator.Play(_animationHash, 0, 0);
+
             return TaskStatus.Continue;
         }
-    }
 
-    private bool CheckEnd()
-    {
-        // 여기에 MinoController의 CheckEnd() 함수 호출
-        var minoController = Owner.GetComponent<MinoController>();
-        if (minoController != null)
+        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            return MinoController.ck;
+            _isEnter = false;
+
+            return TaskStatus.Success;
         }
-        else
-        {
-            return true;
-        }
+
+        return TaskStatus.Continue;
     }
 }
