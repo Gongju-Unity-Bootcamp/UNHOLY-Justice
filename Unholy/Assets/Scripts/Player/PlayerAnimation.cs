@@ -43,15 +43,17 @@ public class PlayerAnimation : MonoBehaviour
     /// </summary>
     private void ControlAnimation()
     {
+        //현재 player가 들고 있는 weapon의 종류를 나타냅니다.
+        _animator.SetInteger(PlayerAnimParameter.WeaponType, _weaponSwitch.weaponIndex);
+
         _animator.SetBool(PlayerAnimParameter.AbleToJump, _playerBehaviour.ableToJump);
         _animator.SetBool(PlayerAnimParameter.AbleToDodge, _playerBehaviour.ableToDodge);
-
-        if (!_playerBehaviour.ableToJump) _animator.ResetTrigger(PlayerAnimParameter.IsJump);
-
         _animator.SetBool(PlayerAnimParameter.IsWalk, _playerController.isWalking);
         _animator.SetBool(PlayerAnimParameter.IsSprint, _playerController.isSprinting);
         _animator.SetBool(PlayerAnimParameter.IsAir, _playerController.isAir);
 
+        if (!_playerBehaviour.ableToJump)
+            _animator.ResetTrigger(PlayerAnimParameter.IsJump);
 
         if (_playerController.isJumping && !_playerController.isAir)
             _animator.SetTrigger(PlayerAnimParameter.IsJump);
@@ -68,8 +70,11 @@ public class PlayerAnimation : MonoBehaviour
             _playerController.isAttack = false;
         }
 
-        //현재 player가 들고 있는 weapon의 종류를 나타냅니다.
-        _animator.SetInteger(PlayerAnimParameter.WeaponType, _weaponSwitch.weaponIndex);
+        if (_playerController.isAbleComboAttack)
+        {
+            _animator.SetTrigger(PlayerAnimParameter.IsAbleComboAttack);
+            _playerController.isAbleComboAttack = false;
+        }
     }
 
 

@@ -25,6 +25,7 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Possibility")]
     internal bool ableToJump = false;
     internal bool ableToDodge = false;
+    internal bool ableToCombo = false;
 
     [Header("ETC")]
     private const float DELAYTIME = 1.15f;
@@ -135,6 +136,16 @@ public class PlayerBehaviour : MonoBehaviour
     private void ChangeJumpState()
     {
         ableToJump = true;
+    }
+
+    public void AbleToCombo()
+    {
+        ableToCombo = true;
+    }
+
+    public void NotAbleToCombo()
+    {
+        ableToCombo = false;
     }
 
     /// <summary>

@@ -494,6 +494,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsAttack
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsAbleComboAttack
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 68955919470812257}
   m_Solo: 0
@@ -803,6 +806,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsAttack
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsAbleComboAttack
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8382526441588151632}
   m_Solo: 0
@@ -923,7 +929,7 @@ AnimatorStateMachine:
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 40, y: -30, z: 0}
   m_EntryPosition: {x: 300, y: 0, z: 0}
-  m_ExitPosition: {x: 40, y: 120, z: 0}
+  m_ExitPosition: {x: 40, y: 130, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 8915418454621728850}
 --- !u!1102 &-3273790661658273756
@@ -1495,6 +1501,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: IsAbleComboAttack
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: AbleToJump
     m_Type: 4
     m_DefaultFloat: 0
@@ -1695,6 +1707,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: IsAttack
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsAbleComboAttack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2808311953586475477}

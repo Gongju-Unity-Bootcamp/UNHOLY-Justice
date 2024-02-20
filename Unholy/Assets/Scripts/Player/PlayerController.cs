@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     internal bool isDamage = false;
     internal bool isAttack = false;
     internal bool isJumpAttack = false;
+    internal bool isAbleComboAttack = false;
 
 
     void Awake()
@@ -136,6 +137,8 @@ public class PlayerController : MonoBehaviour
         {
             isAttack = true;
             if (_weaponSwitch.IsWeaponMelee() && isAir) isJumpAttack = true;
+
+            if (_playerBehaviour.ableToCombo) isAbleComboAttack = true;
         };
         _attackAction.canceled += context => isAttack = false;
 
