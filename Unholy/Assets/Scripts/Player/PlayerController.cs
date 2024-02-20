@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     internal bool isDodging = false;
     internal bool isDamage = false;
     internal bool isAttack = false;
+    internal bool isJumpAttack = false;
 
 
     void Awake()
@@ -75,6 +76,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerBehaviour.PlayerMove(moveDirection, isSprinting);
         _playerBehaviour.PlayerRotate(isRotate, horizontalMovement, verticalMovement);
+        _playerBehaviour.PlayerJumpAttack();
     }
 
     /// <summary>
@@ -130,7 +132,11 @@ public class PlayerController : MonoBehaviour
         };
         _dodgeAction.canceled += context => isDodging = false;
 
-        _attackAction.started += context => isAttack = true;
+        _attackAction.started += context =>
+        {
+            isAttack = true;
+            if (_weaponSwitch.IsWeaponMelee() && isAir) isJumpAttack = true;
+        };
         _attackAction.canceled += context => isAttack = false;
 
         _unarmed.started += context => _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.Unarmed);
@@ -149,6 +155,7 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.CompareTag("Ground"))
         {
             isAir = false;
+            isJumpAttack = false;
         }
 
         if (collision.transform.CompareTag("Monster"))

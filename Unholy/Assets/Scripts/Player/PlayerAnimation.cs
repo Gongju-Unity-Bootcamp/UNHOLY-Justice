@@ -16,6 +16,8 @@ public class PlayerAnimation : MonoBehaviour
     [Header("Check Animation Clips")]
     [SerializeField] internal bool isPlayingDodgeAnimation = false;
     [SerializeField] internal bool isPlayingAttackAnimation = false;
+    [SerializeField] internal bool isPlayingJumpAttackAnimation = false;
+    [SerializeField] internal bool isPlayingFallAnimation = false;
 
 
     void Awake()
@@ -31,6 +33,8 @@ public class PlayerAnimation : MonoBehaviour
         ControlAnimation();
 
         isPlayingDodgeAnimation = CheckAnimationPlaying("Dodge");
+        isPlayingFallAnimation = CheckAnimationPlaying("P_OneHand_Fall");
+        isPlayingJumpAttackAnimation = CheckAnimationPlaying("P_OneHand_Jump-Attack");
         isPlayingAttackAnimation = CheckAnimationPlaying("P_OneHand_Attack1") || CheckAnimationPlaying("P_OneHand_Attack2") || CheckAnimationPlaying("P_OneHand_Attack3");
     }
 

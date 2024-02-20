@@ -36,4 +36,15 @@ public class WeaponSwitch : MonoBehaviour
                 weaponIndex = 0; break;
         }
     }
+
+    /// <summary>
+    /// 현재 player가 지니고 있는 무기 type이 Melee(One Hand, Two Hand) 인지 아닌지를 반환하는 메소드입니다.
+    /// </summary>
+    /// <returns>true : Melee이다. false : Melee가 아니다.</returns>
+    public bool IsWeaponMelee()
+    {
+        if (weaponIndex == 2 || weaponIndex == 3)
+            return true;
+        else return false;
+    }
 }

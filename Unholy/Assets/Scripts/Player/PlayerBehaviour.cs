@@ -20,6 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float jumpPower = 5f;
     [SerializeField] private float dodgePower = 7f;
+    [SerializeField] private float attackPower = 120f;
 
     [Header("Possibility")]
     internal bool ableToJump = false;
@@ -59,6 +60,9 @@ public class PlayerBehaviour : MonoBehaviour
         if (_playerAnimation.isPlayingAttackAnimation)
             return;
 
+        if (_playerAnimation.isPlayingJumpAttackAnimation)
+            return;
+
         if (moveDirection != Vector3.zero)
         {
             if (isState) moveSpeed = sprintSpeed;
@@ -86,6 +90,9 @@ public class PlayerBehaviour : MonoBehaviour
         if (_playerAnimation.isPlayingAttackAnimation)
             return;
 
+        if (_playerAnimation.isPlayingJumpAttackAnimation)
+            return;
+
         if (isRotate)
         {
             Vector3 targetDirection = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
@@ -106,7 +113,28 @@ public class PlayerBehaviour : MonoBehaviour
         if (!ableToJump)
             return;
 
+        if (_playerAnimation.isPlayingJumpAttackAnimation)
+            return;
+
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpPower, _rigidbody.velocity.z);
+    }
+
+    public void PlayerJumpAttack()
+    {
+        if (_playerController.isJumpAttack && _playerAnimation.isPlayingFallAnimation)
+        {
+            _rigidbody.AddForce(Vector3.down * attackPower, ForceMode.Impulse);
+            
+            ableToJump = false;
+
+            CancelInvoke();
+            Invoke(nameof(ChangeJumpState), DELAYTIME);
+        }
+    }
+
+    private void ChangeJumpState()
+    {
+        ableToJump = true;
     }
 
     /// <summary>
