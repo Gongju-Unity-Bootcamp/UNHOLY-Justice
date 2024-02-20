@@ -502,13 +502,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f68703e26be834a9034a9dde71fa7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _notGround: 0
-  _bossDie: 0
-  _playerGard: 0
+  _notInRoom: 1
+  _bossHP: 10
+  _parrying: 0
   _attackRange: 0
-  _trackRange: 0
   _turnBack: 0
   _playerDefense: 0
+  _trackRange: 0
 --- !u!1001 &1926445708
 PrefabInstance:
   m_ObjectHideFlags: 0
