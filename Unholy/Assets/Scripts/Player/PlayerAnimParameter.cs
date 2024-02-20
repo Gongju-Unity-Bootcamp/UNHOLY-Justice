@@ -18,4 +18,7 @@ public class PlayerAnimParameter
     public static readonly int AbleToJump = Animator.StringToHash("AbleToJump");
     public static readonly int AbleToDodge = Animator.StringToHash("AbleToDodge");
     public static readonly int WeaponType = Animator.StringToHash("WeaponType");
+
+    public static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
+    public static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
 }

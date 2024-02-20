@@ -52,6 +52,9 @@ public class PlayerAnimation : MonoBehaviour
         _animator.SetBool(PlayerAnimParameter.IsSprint, _playerController.isSprinting);
         _animator.SetBool(PlayerAnimParameter.IsAir, _playerController.isAir);
 
+        _animator.SetFloat(PlayerAnimParameter.HorizontalMovement, _playerController.horizontalMovement, 0.25f, Time.deltaTime);
+        _animator.SetFloat(PlayerAnimParameter.VerticalMovement, _playerController.verticalMovement, 0.25f, Time.deltaTime);
+
         if (!_playerBehaviour.ableToJump)
             _animator.ResetTrigger(PlayerAnimParameter.IsJump);
 

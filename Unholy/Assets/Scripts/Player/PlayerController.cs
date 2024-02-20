@@ -28,8 +28,8 @@ public class PlayerController : MonoBehaviour
     public Vector2 direction;
     public Vector3 moveDirection;
     private Vector3 rollDirection;
-    private float verticalMovement;
-    private float horizontalMovement;
+    [SerializeField] internal float verticalMovement;
+    [SerializeField] internal float horizontalMovement;
     
 
     [Header("Behaviour bool")]
@@ -126,12 +126,16 @@ public class PlayerController : MonoBehaviour
         _dodgeAction.started += context =>
         {
             if (isAir || !_playerBehaviour.ableToDodge) return;
-            
+
             isDodging = true;
+            _playerBehaviour.PlayerDodgeRotate(isRotate, moveDirection);
             _playerBehaviour.StopCoroutine(_playerBehaviour.PlayerDodge(rollDirection));
             _playerBehaviour.StartCoroutine(_playerBehaviour.PlayerDodge(rollDirection));
         };
-        _dodgeAction.canceled += context => isDodging = false;
+        _dodgeAction.canceled += context =>
+        {
+            isDodging = false;
+        };
 
         _attackAction.started += context =>
         {
@@ -142,10 +146,16 @@ public class PlayerController : MonoBehaviour
         };
         _attackAction.canceled += context => isAttack = false;
 
-        _unarmed.started += context => _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.Unarmed);
-        _onehand.started += context => _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.OneHand);
-
-        
+        _unarmed.started += context =>
+        {
+            _playerBehaviour.isTargeting = false;
+            _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.Unarmed);
+        };
+        _onehand.started += context =>
+        {
+            _playerBehaviour.isTargeting = true;
+            _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.OneHand);
+        };
     }
 
     void ResetCondition()

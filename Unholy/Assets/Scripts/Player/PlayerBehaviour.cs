@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Types;
+using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class PlayerBehaviour : MonoBehaviour
     private PlayerController _playerController;
     private PlayerAnimation _playerAnimation;
     private Transform _playerCamera;
+    public GameObject monsterObject;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -19,17 +22,19 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float sprintSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float jumpPower = 5f;
-    [SerializeField] private float dodgePower = 7f;
+    [SerializeField] private float dodgePower = 8.5f;
     [SerializeField] private float attackPower = 120f;
 
     [Header("Possibility")]
     internal bool ableToJump = false;
     internal bool ableToDodge = false;
     internal bool ableToCombo = false;
+    internal bool isTargeting = false;
 
     [Header("ETC")]
     private const float DELAYTIME = 1.15f;
 
+    public Quaternion targetRotationdodge;
 
     private void Awake()
     {
@@ -94,13 +99,47 @@ public class PlayerBehaviour : MonoBehaviour
         if (_playerAnimation.isPlayingJumpAttackAnimation)
             return;
 
-        if (isRotate)
+        if (!ableToDodge)
+            return;
+
+        if ((isRotate && !isTargeting) || (_playerController.isSprinting && _playerController.isWalking))
         {
             Vector3 targetDirection = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
             Quaternion interpolateRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, _playerCamera.eulerAngles.y, 0) * targetRotation, rotationSpeed * Time.deltaTime);
 
             _rigidbody.MoveRotation(interpolateRotation);
+        }
+        else if(isTargeting)
+        {
+            Vector3 targetDirection = (monsterObject.transform.position - transform.position).normalized;
+
+            if (targetDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+        }
+    }
+
+    public void PlayerDodgeRotate(bool isRotate, Vector3 moveDirection)
+    {
+        //dodge animation이 동작하고 있을 때 회전이 불가합니다.
+        if (_playerAnimation.isPlayingDodgeAnimation)
+            return;
+
+        //attack animation이 동작하고 있을 때 회전이 불가합니다.
+        if (_playerAnimation.isPlayingAttackAnimation)
+            return;
+
+        if (_playerAnimation.isPlayingJumpAttackAnimation)
+            return;
+
+        if (isRotate && isTargeting)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Euler(0, _playerCamera.eulerAngles.y, 0) * targetRotation;
         }
     }
 
