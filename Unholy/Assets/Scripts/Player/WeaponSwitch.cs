@@ -5,6 +5,9 @@ using Types;
 
 public class WeaponSwitch : MonoBehaviour
 {
+    [Header("Component")]
+    private Animator _animator;
+
     [Header("Weapon Field")]
     // 무기 미 장착으로 시작하기에 인덱스 num이 -1부터 시작
     internal int weaponIndex = -1;
@@ -12,8 +15,15 @@ public class WeaponSwitch : MonoBehaviour
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
+
         if (weaponIndex < 0)
             GetIndexOfWeaponTypes(WeaponType.Unarmed);
+    }
+
+    private void Update()
+    {
+        _animator.SetInteger(PlayerAnimParameter.WeaponType, weaponIndex);
     }
 
     /// <summary>
