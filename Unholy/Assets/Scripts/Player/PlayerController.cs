@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         // isRotate를 사용한 이유 : 사용하지 않을 경우 키보드 입력 뿐만 아니라 카메라 회전에도 캐릭터가 회전하게 됩니다.
-        if ((isRotate && !isTargeting) || isSprinting)
+        if ((isRotate && !isTargeting) || (isWalking && isSprinting))
         {
             Vector3 targetDirection = new Vector3(horizontal, 0, vertical).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
