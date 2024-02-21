@@ -1,10 +1,14 @@
 using CleverCrow.Fluid.BTs.Trees;
+using CleverCrow.Fluid.BTs.Tasks;
 using System.Collections;
 using UnityEngine;
 
 
 public class MinoController : MonoBehaviour
 {
+    [SerializeField] Vector3 _backStepPower = new Vector3(0f, 2.5f, 0f);
+    [SerializeField] float _backstepSpeed = 5.5f;
+
     [SerializeField] private BehaviorTree _treeA;
     public bool _isIdle;   
     public bool _attackRange = false;
@@ -16,6 +20,8 @@ public class MinoController : MonoBehaviour
 
     Animator _bossAnimator;
     Rigidbody _rigidbody;
+
+    
 
     private void Awake()
     {
@@ -29,41 +35,37 @@ public class MinoController : MonoBehaviour
                     .Selector()
                         .Sequence()
                             .Condition("backPOS", () => _backPOS == true)
-                            .CustomAction("BossBackstep")
-                            .CustomAction("BossStompAttack")
+                            .StateAction("BossBackstep", ProcessBackstep)
+                            .StateAction("BossStompAttack")
                         .End()
                         .Sequence()
                             .Condition("keepDEF", () => _keepDEF == true)
-                            .CustomAction("BossKickAttack")
+                            .StateAction("BossKickAttack")
                         .End()
                         .SelectorRandom()
-                            .CustomAction("BossATK1")
-                            .CustomAction("BossATK2")
-                            .CustomAction("BossATK3")
-                            .CustomAction("BossATK4")
+                            .StateAction("BossATK1")
+                            .StateAction("BossATK2")
+                            .StateAction("BossATK3")
+                            .StateAction("BossATK4")
                         .End()
                     .End()
                 .End()
                 .Sequence()
                     .Condition("out7SEC", () => _out7SEC == true)
-                    .CustomAction("BossJumpAttack")
+                    .StateAction("BossJumpAttack")
                 .End()
+                .Do("BossTrack", () =>
+                {
+                    _bossAnimator.Play("BossTrack");
+                    return TaskStatus.Success;
+                })
             .End()
             .Build();
     }
-    private void Update()
-    {
-        if (_isIdle)
-        {
-            ActivateAi();
-        }
 
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    _isNormal = false;
-        //    _treeA.RemoveActiveTask(_treeA.Root);
-        //    _bossAnimator.Play("BossHit");
-        //}
+    private void OnEnable()
+    {
+        ActivateAi();
     }
 
     void Parrying()
@@ -90,6 +92,12 @@ public class MinoController : MonoBehaviour
     {
         while (true)
         {
+            if (_isIdle == false)
+            {
+                yield return null;
+                continue;
+            }
+
             if (_isHit)
             {
                 if (_bossHP <= 0)
@@ -99,25 +107,17 @@ public class MinoController : MonoBehaviour
             }
             else
             {
-                if (_attackRange)
-                {
-                    _treeA.Tick(); // Attack Node Start.
-                }
-                else if (_out7SEC)
-                {
-                    _treeA.Tick();
-                }                
-                else
-                {
-                    _bossAnimator.Play("BossTrack");
-                }
+                _treeA.Tick();
             }
             yield return null;
         }
     }
+
     public void ProcessBackstep()
     {
-        _rigidbody.velocity = 1f * -_rigidbody.transform.forward;
-        _rigidbody.AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
+
+        var localPower = transform.TransformVector(_backStepPower);
+        _rigidbody.AddForce(localPower, ForceMode.Impulse);
+        _rigidbody.velocity = _backstepSpeed * -_rigidbody.transform.forward;
     }
 }
