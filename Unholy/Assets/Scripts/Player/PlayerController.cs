@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public InputAction _jumpAction;
     public InputAction _dodgeAction;
     public InputAction _attackAction;
+    public InputAction _defenseAction;
     public InputAction _unarmed;
     public InputAction _onehand;
 
@@ -52,6 +53,8 @@ public class PlayerController : MonoBehaviour
     internal bool isTargeting = false;
     internal bool isTargetingDodge = false;
 
+    internal bool isRightClick = false;
+
 
     [Header("ETC")]
     float prevAttackInputTime = 0;
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour
         _jumpAction = _playerInput.actions.FindAction("Jump");
         _dodgeAction = _playerInput.actions.FindAction("Dodge");
         _attackAction = _playerInput.actions.FindAction("Attack");
+        _defenseAction = _playerInput.actions.FindAction("Defense");
         _unarmed = _playerInput.actions.FindAction("Unarmed");
         _onehand = _playerInput.actions.FindAction("OneHand");
 
@@ -120,6 +124,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(PlayerAnimParameter.IsSprint, isSprinting);
         _animator.SetBool(PlayerAnimParameter.IsAir, isAir);
         _animator.SetBool(PlayerAnimParameter.IsTargeting, isTargeting);
+        _animator.SetBool(PlayerAnimParameter.IsRightClick, isRightClick);
 
         if (isJumping && !isAir)
             _animator.SetTrigger(PlayerAnimParameter.IsJump);
@@ -188,6 +193,9 @@ public class PlayerController : MonoBehaviour
 
             if (_weaponSwitch.IsWeaponMelee() && isAir) isJumpAttack = true;
         };
+
+        _defenseAction.started += context => isRightClick = true;
+        _defenseAction.canceled += context => isRightClick = false;
 
         _unarmed.started += context =>
         {

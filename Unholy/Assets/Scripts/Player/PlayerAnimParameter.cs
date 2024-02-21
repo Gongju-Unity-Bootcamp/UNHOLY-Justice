@@ -17,6 +17,7 @@ public class PlayerAnimParameter
     public static readonly int IsAbleComboAttack = Animator.StringToHash("IsAbleComboAttack");
     public static readonly int IsTargeting = Animator.StringToHash("IsTargeting");
     public static readonly int WeaponType = Animator.StringToHash("WeaponType");
+    public static readonly int IsRightClick = Animator.StringToHash("IsRightClick");
 
     public static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
     public static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
