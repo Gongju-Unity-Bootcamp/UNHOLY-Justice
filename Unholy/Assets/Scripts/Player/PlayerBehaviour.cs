@@ -1,11 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using Types;
-using UnityEngine.UIElements;
-using UnityEngine.EventSystems;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -33,8 +28,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     [Header("ETC")]
     private const float DELAYTIME = 1.15f;
-
-    public Quaternion targetRotationdodge;
 
     private void Awake()
     {
@@ -66,6 +59,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (_playerAnimation.isPlayingAttackAnimation)
             return;
 
+        // jump attack animation이 동작하고 있을 때 이동이 불가합니다.
         if (_playerAnimation.isPlayingJumpAttackAnimation)
             return;
 
@@ -88,20 +82,23 @@ public class PlayerBehaviour : MonoBehaviour
     /// <param name="verticalMovement">player가 이동하고자 하는 방향의 y값</param>
     public void PlayerRotate(bool isRotate, float horizontalMovement, float verticalMovement)
     {
-        //dodge animation이 동작하고 있을 때 회전이 불가합니다.
+        // dodge animation이 동작하고 있을 때 회전이 불가합니다.
         if (_playerAnimation.isPlayingDodgeAnimation)
             return;
 
-        //attack animation이 동작하고 있을 때 회전이 불가합니다.
+        // attack animation이 동작하고 있을 때 회전이 불가합니다.
         if (_playerAnimation.isPlayingAttackAnimation)
             return;
 
+        // jump attack animation이 동작하고 있을 때 회전이 불가합니다.
         if (_playerAnimation.isPlayingJumpAttackAnimation)
             return;
 
+        // 회피 불가능 상태일 때 회전이 불가합니다.
         if (!ableToDodge)
             return;
 
+        // isRotate를 사용한 이유 : 사용하지 않을 경우 키보드 입력 뿐만 아니라 카메라 회전에도 캐릭터가 회전하게 됩니다.
         if ((isRotate && !isTargeting) || (_playerController.isSprinting && _playerController.isWalking))
         {
             Vector3 targetDirection = new Vector3(horizontalMovement, 0, verticalMovement).normalized;
@@ -110,6 +107,8 @@ public class PlayerBehaviour : MonoBehaviour
 
             _rigidbody.MoveRotation(interpolateRotation);
         }
+        // isTargeting의 경우 항상 타겟을 주시하고 있기 때문에 isRotate가 필요하지 않습니다.
+        // Slerp를 이용해 회전이 부드럽게 이루어지도록 하였습니다.
         else if(isTargeting)
         {
             Vector3 targetDirection = (monsterObject.transform.position - transform.position).normalized;
@@ -123,19 +122,27 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 타겟팅 중 회피 시 입력 중인 이동 값에 따라 회전 값을 변경하는 메소드입니다.
+    /// </summary>
+    /// <param name="isRotate"></param>
+    /// <param name="moveDirection"></param>
     public void PlayerDodgeRotate(bool isRotate, Vector3 moveDirection)
     {
-        //dodge animation이 동작하고 있을 때 회전이 불가합니다.
+        // dodge animation이 동작하고 있을 때 회전이 불가합니다.
         if (_playerAnimation.isPlayingDodgeAnimation)
             return;
 
-        //attack animation이 동작하고 있을 때 회전이 불가합니다.
+        // attack animation이 동작하고 있을 때 회전이 불가합니다.
         if (_playerAnimation.isPlayingAttackAnimation)
             return;
 
+        // jump attack animation이 동작하고 있을 때 회전이 불가합니다.
         if (_playerAnimation.isPlayingJumpAttackAnimation)
             return;
 
+        // 키보드 입력 중(isRotate)이고 타겟팅이 활성화(isTargeting) 되었을 때만 실행됩니다.
+        // 입력 중인 방향 값에 따라 회전 값을 변경합니다.
         if (isRotate && isTargeting)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
@@ -153,12 +160,16 @@ public class PlayerBehaviour : MonoBehaviour
         if (!ableToJump)
             return;
 
+        // jump attack animation이 동작하고 있을 때 점프가 불가합니다.
         if (_playerAnimation.isPlayingJumpAttackAnimation)
             return;
 
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpPower, _rigidbody.velocity.z);
     }
 
+    /// <summary>
+    /// 점프 공격 기능을 구현한 메소드 입니다.
+    /// </summary>
     public void PlayerJumpAttack()
     {
         if (_playerController.isJumpAttack && _playerAnimation.isPlayingFallAnimation)
@@ -172,16 +183,19 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    // 점프 가능 상태를 초기화하는 메소드로 Invoke와 함께 사용합니다.
     private void ChangeJumpState()
     {
         ableToJump = true;
     }
 
+    // 연속 공격 타이밍 구현을 위한 애니메이션용 이벤트입니다.
     public void AbleToCombo()
     {
         ableToCombo = true;
     }
 
+    // 연속 공격 타이밍 구현을 위한 애니메이션용 이벤트입니다.
     public void NotAbleToCombo()
     {
         ableToCombo = false;
@@ -202,6 +216,7 @@ public class PlayerBehaviour : MonoBehaviour
             ableToJump = false;
             ableToDodge = false;
         }
+
         yield return new WaitForSeconds(DELAYTIME);
 
         if(!ableToJump && !ableToDodge)

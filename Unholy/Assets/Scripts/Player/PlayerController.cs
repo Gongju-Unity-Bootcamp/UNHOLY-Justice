@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Types;
 
@@ -25,8 +23,8 @@ public class PlayerController : MonoBehaviour
     private WeaponSwitch _weaponSwitch;
 
     [Header("Position")]
-    public Vector2 direction;
-    public Vector3 moveDirection;
+    private Vector2 direction;
+    private Vector3 moveDirection;
     private Vector3 rollDirection;
     [SerializeField] internal float verticalMovement;
     [SerializeField] internal float horizontalMovement;
@@ -128,6 +126,7 @@ public class PlayerController : MonoBehaviour
             if (isAir || !_playerBehaviour.ableToDodge) return;
 
             isDodging = true;
+
             _playerBehaviour.PlayerDodgeRotate(isRotate, moveDirection);
             _playerBehaviour.StopCoroutine(_playerBehaviour.PlayerDodge(rollDirection));
             _playerBehaviour.StartCoroutine(_playerBehaviour.PlayerDodge(rollDirection));

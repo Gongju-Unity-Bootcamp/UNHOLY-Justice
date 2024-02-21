@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Types;
-using UnityEditor.Overlays;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimation : MonoBehaviour
@@ -46,14 +44,14 @@ public class PlayerAnimation : MonoBehaviour
         //현재 player가 들고 있는 weapon의 종류를 나타냅니다.
         _animator.SetInteger(PlayerAnimParameter.WeaponType, _weaponSwitch.weaponIndex);
 
+        _animator.SetFloat(PlayerAnimParameter.HorizontalMovement, _playerController.horizontalMovement, 0.25f, Time.deltaTime);
+        _animator.SetFloat(PlayerAnimParameter.VerticalMovement, _playerController.verticalMovement, 0.25f, Time.deltaTime);
+
         _animator.SetBool(PlayerAnimParameter.AbleToJump, _playerBehaviour.ableToJump);
         _animator.SetBool(PlayerAnimParameter.AbleToDodge, _playerBehaviour.ableToDodge);
         _animator.SetBool(PlayerAnimParameter.IsWalk, _playerController.isWalking);
         _animator.SetBool(PlayerAnimParameter.IsSprint, _playerController.isSprinting);
         _animator.SetBool(PlayerAnimParameter.IsAir, _playerController.isAir);
-
-        _animator.SetFloat(PlayerAnimParameter.HorizontalMovement, _playerController.horizontalMovement, 0.25f, Time.deltaTime);
-        _animator.SetFloat(PlayerAnimParameter.VerticalMovement, _playerController.verticalMovement, 0.25f, Time.deltaTime);
 
         if (!_playerBehaviour.ableToJump)
             _animator.ResetTrigger(PlayerAnimParameter.IsJump);
@@ -61,14 +59,14 @@ public class PlayerAnimation : MonoBehaviour
         if (_playerController.isJumping && !_playerController.isAir)
             _animator.SetTrigger(PlayerAnimParameter.IsJump);
 
+        if (_playerController.isDamage)
+            _animator.SetTrigger(PlayerAnimParameter.IsDamage);
+
         if (_playerController.isDodging && !isPlayingDodgeAnimation)
         {
             _animator.SetTrigger(PlayerAnimParameter.IsDodge);
             _playerController.isDodging = false;
         }
-
-        if (_playerController.isDamage)
-            _animator.SetTrigger(PlayerAnimParameter.IsDamage);
 
         if (_playerController.isAttack)
         {
