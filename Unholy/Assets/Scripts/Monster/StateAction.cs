@@ -43,5 +43,5 @@ public class StateAction : ActionBase
         }
 
         return TaskStatus.Continue;
-    }
+    }    
 }

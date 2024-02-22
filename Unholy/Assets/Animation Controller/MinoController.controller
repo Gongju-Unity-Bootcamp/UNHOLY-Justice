@@ -27,14 +27,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-7931405998919421571
+--- !u!1102 &-6536812873643162309
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BossKickAttack
+  m_Name: BossJumpAttack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -47,13 +47,13 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 2266cfaabe6e767489b2331a158fe7d5,
+  m_Motion: {fileID: -203655887218126122, guid: ee0d9c1370ede9e428511f5a2f721f6c,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: MotionTime
+  m_TimeParameter: 
 --- !u!1102 &-5468431592571193131
 AnimatorState:
   serializedVersion: 6
@@ -122,7 +122,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -244,14 +244,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &6777416906095327382
+--- !u!1102 &6970021493759991066
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BossJumpAttack
+  m_Name: BossKickAttack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -264,13 +264,13 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: ee0d9c1370ede9e428511f5a2f721f6c,
+  m_Motion: {fileID: 1827226128182048838, guid: 2266cfaabe6e767489b2331a158fe7d5,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: MotionTime
+  m_TimeParameter: 
 --- !u!1107 &7840849047881356785
 AnimatorStateMachine:
   serializedVersion: 6
@@ -280,9 +280,6 @@ AnimatorStateMachine:
   m_PrefabAsset: {fileID: 0}
   m_Name: Base Layer
   m_ChildStates:
-  - serializedVersion: 1
-    m_State: {fileID: -7931405998919421571}
-    m_Position: {x: 210, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5225882070241963276}
     m_Position: {x: 0, y: 90, z: 0}
@@ -305,9 +302,6 @@ AnimatorStateMachine:
     m_State: {fileID: 6650627896418138678}
     m_Position: {x: 0, y: 40, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 6777416906095327382}
-    m_Position: {x: 210, y: 290, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 8903738645216922007}
     m_Position: {x: 210, y: 40, z: 0}
   - serializedVersion: 1
@@ -316,6 +310,12 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -5468431592571193131}
     m_Position: {x: 210, y: 340, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6970021493759991066}
+    m_Position: {x: 200, y: 240, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -6536812873643162309}
+    m_Position: {x: 210, y: 290, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
