@@ -210,27 +210,28 @@ public class PlayerController : MonoBehaviour
 
         _unarmed.started += context =>
         {
-            isTargeting = false;
-            if (weaponSwitch || isSwitchDone || _weaponSwitch.weaponIndex == 1) return;
+            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 1) return;
 
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.Unarmed);
+            isTargeting = false;
             weaponSwitch = true;
             isSwitchDone = true;
         };
         _onehand.started += context =>
         {
-            isTargeting = true;
-            if (weaponSwitch || isSwitchDone || _weaponSwitch.weaponIndex == 2) return;
+            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 2) return;
 
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.OneHand);
+            isTargeting = true;
             weaponSwitch = true;
             isSwitchDone = true;
         };
         _twohand.started += context =>
         {
-            isTargeting = true;
-            if (weaponSwitch || isSwitchDone || _weaponSwitch.weaponIndex == 3) return;
+            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 3) return;
+
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.TwoHand);
+            isTargeting = true;
             weaponSwitch = true;
             isSwitchDone = true;
         };

@@ -10,6 +10,10 @@ public class WeaponSwitch : MonoBehaviour
     public Transform _twoHand;
     public Transform _leftHandAttachPoint;
 
+    [Header("Object")]
+    public GameObject[] _prefabs;
+    public GameObject[] _weapons;
+
     [Header("IK")]
     [Range(0, 1)] public float leftHandPositionWeight;
     [Range(0, 1)] public float leftHandRotationWeight;
@@ -29,6 +33,11 @@ public class WeaponSwitch : MonoBehaviour
 
         if (weaponIndex < 0)
             GetIndexOfWeaponTypes(WeaponType.Unarmed);
+
+        foreach(GameObject element in _weapons)
+        {
+            if (element != null) element.SetActive(false);
+        }
     }
 
     private void Update()

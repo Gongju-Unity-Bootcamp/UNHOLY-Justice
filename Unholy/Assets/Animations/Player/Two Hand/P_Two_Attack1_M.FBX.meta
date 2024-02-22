@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 536453aeca9f2a042bd73d3e99ab3385
+guid: dbbdcfdc751ca1146932bd6bc3dda730
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
@@ -65,126 +65,147 @@ ModelImporter:
     second: B_L_Forearm
   - first:
       1: 100040
-    second: B_L_Hand
+    second: B_L_ForeArmTwist
   - first:
       1: 100042
-    second: B_L_Thigh
+    second: B_L_Hand
   - first:
       1: 100044
-    second: B_L_Toe0
+    second: B_L_Thigh
   - first:
       1: 100046
-    second: B_L_UpperArm
+    second: B_L_Toe0
   - first:
       1: 100048
-    second: B_Neck
+    second: B_L_UpperArm
   - first:
       1: 100050
-    second: B_Pelvis
+    second: B_Neck
   - first:
       1: 100052
-    second: B_R_Calf
+    second: B_Pelvis
   - first:
       1: 100054
-    second: B_R_Clavicle
+    second: B_R_Calf
   - first:
       1: 100056
-    second: B_R_Finger0
+    second: B_R_Clavicle
   - first:
       1: 100058
-    second: B_R_Finger01
+    second: B_R_Finger0
   - first:
       1: 100060
-    second: B_R_Finger02
+    second: B_R_Finger01
   - first:
       1: 100062
-    second: B_R_Finger1
+    second: B_R_Finger02
   - first:
       1: 100064
-    second: B_R_Finger11
+    second: B_R_Finger1
   - first:
       1: 100066
-    second: B_R_Finger12
+    second: B_R_Finger11
   - first:
       1: 100068
-    second: B_R_Finger2
+    second: B_R_Finger12
   - first:
       1: 100070
-    second: B_R_Finger21
+    second: B_R_Finger2
   - first:
       1: 100072
-    second: B_R_Finger22
+    second: B_R_Finger21
   - first:
       1: 100074
-    second: B_R_Finger3
+    second: B_R_Finger22
   - first:
       1: 100076
-    second: B_R_Finger31
+    second: B_R_Finger3
   - first:
       1: 100078
-    second: B_R_Finger32
+    second: B_R_Finger31
   - first:
       1: 100080
-    second: B_R_Finger4
+    second: B_R_Finger32
   - first:
       1: 100082
-    second: B_R_Finger41
+    second: B_R_Finger4
   - first:
       1: 100084
-    second: B_R_Finger42
+    second: B_R_Finger41
   - first:
       1: 100086
-    second: B_R_Foot
+    second: B_R_Finger42
   - first:
       1: 100088
-    second: B_R_Forearm
+    second: B_R_Foot
   - first:
       1: 100090
-    second: B_R_Hand
+    second: B_R_Forearm
   - first:
       1: 100092
-    second: B_R_Thigh
+    second: B_R_ForeArmTwist
   - first:
       1: 100094
-    second: B_R_Toe0
+    second: B_R_Hand
   - first:
       1: 100096
-    second: B_R_UpperArm
+    second: B_R_Thigh
   - first:
       1: 100098
-    second: B_Spine
+    second: B_R_Toe0
   - first:
       1: 100100
-    second: B_Spine1
+    second: B_R_UpperArm
   - first:
       1: 100102
-    second: //RootNode
+    second: B_Spine
   - first:
       1: 100104
-    second: Mesh_Karate
+    second: B_Spine1
   - first:
       1: 100106
-    second: Motion
-  - first:
-      1: 100108
-    second: Mesh_Ninja
-  - first:
-      1: 100110
     second: B_Spine2
   - first:
+      1: 100108
+    second: //RootNode
+  - first:
+      1: 100110
+    second: Mesh_Male
+  - first:
       1: 100112
-    second: Mesh_Brute
+    second: Motion
   - first:
       1: 100114
-    second: Mesh_Knight
+    second: Mesh_Berserker
   - first:
       1: 100116
-    second: Shield
+    second: Mesh_Karate
   - first:
       1: 100118
-    second: Sword
+    second: Mesh_Ninja
   - first:
       1: 100120
+    second: Mesh_Brute
+  - first:
+      1: 100122
+    second: Mesh_Knight
+  - first:
+      1: 100124
+    second: Shield
+  - first:
+      1: 100126
+    second: Sword
+  - first:
+      1: 100128
+    second: 2Handed-Sword
+  - first:
+      1: 100130
+    second: 2Handed-Sword001
+  - first:
+      1: 100132
+    second: Mesh-2Handed
+  - first:
+      1: 100134
     second: Exporter
   - first:
       4: 400000
@@ -248,169 +269,223 @@ ModelImporter:
     second: B_L_Forearm
   - first:
       4: 400040
-    second: B_L_Hand
+    second: B_L_ForeArmTwist
   - first:
       4: 400042
-    second: B_L_Thigh
+    second: B_L_Hand
   - first:
       4: 400044
-    second: B_L_Toe0
+    second: B_L_Thigh
   - first:
       4: 400046
-    second: B_L_UpperArm
+    second: B_L_Toe0
   - first:
       4: 400048
-    second: B_Neck
+    second: B_L_UpperArm
   - first:
       4: 400050
-    second: B_Pelvis
+    second: B_Neck
   - first:
       4: 400052
-    second: B_R_Calf
+    second: B_Pelvis
   - first:
       4: 400054
-    second: B_R_Clavicle
+    second: B_R_Calf
   - first:
       4: 400056
-    second: B_R_Finger0
+    second: B_R_Clavicle
   - first:
       4: 400058
-    second: B_R_Finger01
+    second: B_R_Finger0
   - first:
       4: 400060
-    second: B_R_Finger02
+    second: B_R_Finger01
   - first:
       4: 400062
-    second: B_R_Finger1
+    second: B_R_Finger02
   - first:
       4: 400064
-    second: B_R_Finger11
+    second: B_R_Finger1
   - first:
       4: 400066
-    second: B_R_Finger12
+    second: B_R_Finger11
   - first:
       4: 400068
-    second: B_R_Finger2
+    second: B_R_Finger12
   - first:
       4: 400070
-    second: B_R_Finger21
+    second: B_R_Finger2
   - first:
       4: 400072
-    second: B_R_Finger22
+    second: B_R_Finger21
   - first:
       4: 400074
-    second: B_R_Finger3
+    second: B_R_Finger22
   - first:
       4: 400076
-    second: B_R_Finger31
+    second: B_R_Finger3
   - first:
       4: 400078
-    second: B_R_Finger32
+    second: B_R_Finger31
   - first:
       4: 400080
-    second: B_R_Finger4
+    second: B_R_Finger32
   - first:
       4: 400082
-    second: B_R_Finger41
+    second: B_R_Finger4
   - first:
       4: 400084
-    second: B_R_Finger42
+    second: B_R_Finger41
   - first:
       4: 400086
-    second: B_R_Foot
+    second: B_R_Finger42
   - first:
       4: 400088
-    second: B_R_Forearm
+    second: B_R_Foot
   - first:
       4: 400090
-    second: B_R_Hand
+    second: B_R_Forearm
   - first:
       4: 400092
-    second: B_R_Thigh
+    second: B_R_ForeArmTwist
   - first:
       4: 400094
-    second: B_R_Toe0
+    second: B_R_Hand
   - first:
       4: 400096
-    second: B_R_UpperArm
+    second: B_R_Thigh
   - first:
       4: 400098
-    second: B_Spine
+    second: B_R_Toe0
   - first:
       4: 400100
-    second: B_Spine1
+    second: B_R_UpperArm
   - first:
       4: 400102
-    second: //RootNode
+    second: B_Spine
   - first:
       4: 400104
-    second: Mesh_Karate
+    second: B_Spine1
   - first:
       4: 400106
-    second: Motion
-  - first:
-      4: 400108
-    second: Mesh_Ninja
-  - first:
-      4: 400110
     second: B_Spine2
   - first:
+      4: 400108
+    second: //RootNode
+  - first:
+      4: 400110
+    second: Mesh_Male
+  - first:
       4: 400112
-    second: Mesh_Brute
+    second: Motion
   - first:
       4: 400114
-    second: Mesh_Knight
+    second: Mesh_Berserker
   - first:
       4: 400116
-    second: Shield
-  - first:
-      4: 400118
-    second: Sword
-  - first:
-      4: 400120
-    second: Exporter
-  - first:
-      43: 4300000
     second: Mesh_Karate
   - first:
-      43: 4300002
+      4: 400118
     second: Mesh_Ninja
   - first:
-      43: 4300004
+      4: 400120
     second: Mesh_Brute
   - first:
-      43: 4300006
+      4: 400122
     second: Mesh_Knight
   - first:
-      43: 4300008
+      4: 400124
     second: Shield
   - first:
-      43: 4300010
+      4: 400126
     second: Sword
   - first:
+      4: 400128
+    second: 2Handed-Sword
+  - first:
+      4: 400130
+    second: 2Handed-Sword001
+  - first:
+      4: 400132
+    second: Mesh-2Handed
+  - first:
+      4: 400134
+    second: Exporter
+  - first:
+      23: 2300000
+    second: 2Handed-Sword
+  - first:
+      23: 2300002
+    second: 2Handed-Sword001
+  - first:
+      33: 3300000
+    second: 2Handed-Sword
+  - first:
+      33: 3300002
+    second: 2Handed-Sword001
+  - first:
+      43: 4300000
+    second: Mesh_Berserker
+  - first:
+      43: 4300002
+    second: Mesh_Karate
+  - first:
+      43: 4300004
+    second: Mesh_Ninja
+  - first:
+      43: 4300006
+    second: Mesh_Brute
+  - first:
+      43: 4300008
+    second: Mesh_Knight
+  - first:
+      43: 4300010
+    second: Shield
+  - first:
+      43: 4300012
+    second: Sword
+  - first:
+      43: 4300014
+    second: Mesh-2Handed
+  - first:
+      43: 4300016
+    second: 2Handed-Sword001
+  - first:
+      43: 4300018
+    second: 2Handed-Sword
+  - first:
       74: 7400000
-    second: WalkLeft
+    second: Attack1
   - first:
       95: 9500000
     second: //RootNode
   - first:
       137: 13700000
-    second: Mesh_Karate
+    second: Mesh_Berserker
   - first:
       137: 13700002
-    second: Mesh_Ninja
+    second: Mesh_Karate
   - first:
       137: 13700004
-    second: Mesh_Brute
+    second: Mesh_Ninja
   - first:
       137: 13700006
-    second: Mesh_Knight
+    second: Mesh_Brute
   - first:
       137: 13700008
-    second: Shield
+    second: Mesh_Knight
   - first:
       137: 13700010
+    second: Shield
+  - first:
+      137: 13700012
     second: Sword
+  - first:
+      137: 13700014
+    second: Mesh-2Handed
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -427,7 +502,10 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'B_Spine' has translation animation that
+      will be discarded.\n\t'B_Spine1' has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -441,19 +519,19 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: WalkLeft
+      name: Attack1
       takeName: Take 001
       internalID: 7400000
       firstFrame: 0
-      lastFrame: 24
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
-      cycleOffset: 0.2
+      cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
@@ -619,7 +697,7 @@ ModelImporter:
     normalImportMode: 2
     tangentImportMode: 2
     normalCalculationMode: 0
-    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 2
     normalSmoothingSource: 0
   referencedClips: []
@@ -1330,7 +1408,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 0
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 417a287abb2cab94889f1f1ddd91f928,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 781a15e490c144941adf6440cf6b6cdd,
     type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
