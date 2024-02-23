@@ -56,10 +56,13 @@ public class PlayerController : MonoBehaviour
     internal bool isDefense = false;
     internal bool weaponSwitch = false;
     internal bool isSwitchDone = false;
-
+    internal bool isParry = false;
 
     [Header("ETC")]
     float prevAttackInputTime = 0;
+
+    [Header("Const")]
+    private const float DAMPTIME = 0.25f;
 
     void Awake()
     {
@@ -100,22 +103,23 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // 1. 입력이 됐다면 시간 갱신
-        // 2. 입력이 되지 않았다면 시간
         if (isAttack && Time.time - prevAttackInputTime > 0.2f)
         {
             isAttack = false;
         }
 
         ControlAnimation();
+
+        // 패링 기능
+        // ActivateParrying();
     }
 
     private void ControlAnimation()
     {
         if (isTargeting)
         {
-            _animator.SetFloat(PlayerAnimParameter.HorizontalMovement, horizontalMovement, 0.25f, Time.deltaTime);
-            _animator.SetFloat(PlayerAnimParameter.VerticalMovement, verticalMovement, 0.25f, Time.deltaTime);
+            _animator.SetFloat(PlayerAnimParameter.HorizontalMovement, horizontalMovement, DAMPTIME, Time.deltaTime);
+            _animator.SetFloat(PlayerAnimParameter.VerticalMovement, verticalMovement, DAMPTIME, Time.deltaTime);
         }
         else
         {
@@ -131,11 +135,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(PlayerAnimParameter.IsDefense, isDefense);
         _animator.SetBool(PlayerAnimParameter.IsSwitchDone, isSwitchDone);
 
-        if(weaponSwitch)
-        {
-            _animator.SetTrigger(PlayerAnimParameter.WeaponSwitch);
-            weaponSwitch = false;
-        }
+        _animator.SetBool(PlayerAnimParameter.WeaponSwitch, weaponSwitch);
 
         if (isJumping && !isAir)
             _animator.SetTrigger(PlayerAnimParameter.IsJump);
@@ -210,31 +210,36 @@ public class PlayerController : MonoBehaviour
 
         _unarmed.started += context =>
         {
-            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 1) return;
+            if (isDefense || weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == (int)WeaponType.Unarmed) return;
 
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.Unarmed);
             isTargeting = false;
             weaponSwitch = true;
             isSwitchDone = true;
         };
+        _unarmed.canceled += context => weaponSwitch = false;
+
         _onehand.started += context =>
         {
-            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 2) return;
+            if (isDefense || weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == (int)WeaponType.OneHand) return;
 
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.OneHand);
             isTargeting = true;
             weaponSwitch = true;
             isSwitchDone = true;
         };
+        _onehand.canceled += context => weaponSwitch = false;
+
         _twohand.started += context =>
         {
-            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 3) return;
+            if (isDefense || weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == (int)WeaponType.TwoHand) return;
 
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.TwoHand);
             isTargeting = true;
             weaponSwitch = true;
             isSwitchDone = true;
         };
+        _twohand.canceled += context => weaponSwitch = false;
     }
 
     private void PlayerMove(Vector3 moveDirection)
@@ -295,6 +300,13 @@ public class PlayerController : MonoBehaviour
     void ResetCondition()
     {
         isDamage = false;
+    }
+
+    // 변경 예정인 함수입니다.
+    // 전투 매니저에 포함될 예정으로, 패링 기능을 수행하는 메소드입니다.
+    void ActivateParry()
+    {
+        // _minoController.Parrying();
     }
 
     private void OnCollisionEnter(Collision collision)
