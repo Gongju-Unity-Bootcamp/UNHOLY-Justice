@@ -27,6 +27,33 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &-7931405998919421571
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BossKickAttack
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 1827226128182048838, guid: 2266cfaabe6e767489b2331a158fe7d5,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: MotionTime
 --- !u!1102 &-6536812873643162309
 AnimatorState:
   serializedVersion: 6
@@ -54,33 +81,22 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-5468431592571193131
-AnimatorState:
-  serializedVersion: 6
+--- !u!114 &-6533922371041742584
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BossBackstep
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 1c2d0a236fc34f640b8fcc8ffd63b23d,
-    type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef8dd369f953d64ea219d8cdf365d3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartTime: 0.32
+  EndTime: 0.345
+  StartTime2: 0
+  EndTime2: 0
 --- !u!1102 &-899370766363323343
 AnimatorState:
   serializedVersion: 6
@@ -122,7 +138,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -133,7 +149,7 @@ AnimatorController:
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 0
-    m_IKPass: 0
+    m_IKPass: 1
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
 --- !u!1102 &584135698988054591
@@ -147,7 +163,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -6533922371041742584}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -163,6 +180,54 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: MotionTime
+--- !u!114 &727975906267869554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef8dd369f953d64ea219d8cdf365d3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartTime: 0.36
+  EndTime: 0.38
+  StartTime2: 0
+  EndTime2: 0
+--- !u!114 &1008856389584556125
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef8dd369f953d64ea219d8cdf365d3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartTime: 0.34
+  EndTime: 0.365
+  StartTime2: 0.59
+  EndTime2: 0.62
+--- !u!114 &1655952152294367437
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef8dd369f953d64ea219d8cdf365d3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartTime: 0.22
+  EndTime: 0.25
+  StartTime2: 0.38
+  EndTime2: 0.45
 --- !u!1102 &3453412502683672513
 AnimatorState:
   serializedVersion: 6
@@ -171,6 +236,34 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BossATK3
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours:
+  - {fileID: 1008856389584556125}
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -203655887218126122, guid: d9d84882eef623b449113027e07d7a41,
+    type: 3}
+  m_Tag: ComboAttack
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: MotionTime
+--- !u!1102 &3459869588978164108
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BossBackstep
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -183,13 +276,13 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: d9d84882eef623b449113027e07d7a41,
+  m_Motion: {fileID: -203655887218126122, guid: ab96ba4c1435f2d46bd7f024808375c1,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: MotionTime
+  m_TimeParameter: 
 --- !u!1102 &5225882070241963276
 AnimatorState:
   serializedVersion: 6
@@ -244,6 +337,33 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &6777416906095327382
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BossJumpAttack
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: -203655887218126122, guid: ee0d9c1370ede9e428511f5a2f721f6c,
+    type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: MotionTime
 --- !u!1102 &6970021493759991066
 AnimatorState:
   serializedVersion: 6
@@ -281,6 +401,9 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
+    m_State: {fileID: -7931405998919421571}
+    m_Position: {x: 210, y: 240, z: 0}
+  - serializedVersion: 1
     m_State: {fileID: 5225882070241963276}
     m_Position: {x: 0, y: 90, z: 0}
   - serializedVersion: 1
@@ -302,20 +425,17 @@ AnimatorStateMachine:
     m_State: {fileID: 6650627896418138678}
     m_Position: {x: 0, y: 40, z: 0}
   - serializedVersion: 1
+    m_State: {fileID: 6777416906095327382}
+    m_Position: {x: 210, y: 290, z: 0}
+  - serializedVersion: 1
     m_State: {fileID: 8903738645216922007}
     m_Position: {x: 210, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 584135698988054591}
     m_Position: {x: 210, y: 90, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -5468431592571193131}
+    m_State: {fileID: 3459869588978164108}
     m_Position: {x: 210, y: 340, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 6970021493759991066}
-    m_Position: {x: 200, y: 240, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -6536812873643162309}
-    m_Position: {x: 210, y: 290, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -386,7 +506,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 727975906267869554}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -413,7 +534,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 1655952152294367437}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -424,7 +546,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: ae2b0a7e332af524d8aa8d4732175a2b,
     type: 3}
-  m_Tag: 
+  m_Tag: ComboAttack
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
