@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Types;
 using UnityEngine;
 
 public class WeaponSwitchBehaviour : StateMachineBehaviour
@@ -12,13 +13,16 @@ public class WeaponSwitchBehaviour : StateMachineBehaviour
     [Range(0, 1)] public float StartTime = 0.7f;
     [Range(0, 1)] public float EndTime = 0.9f;
 
+    [Header("Const")]
+    private const float TIMETOBLEND = 0.25f;
+
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _playerController = animator.GetComponent<PlayerController>();
         _weaponSwitch = animator.GetComponent<WeaponSwitch>();
 
-        _weaponSwitch.BlendIK(0.25f, animator.GetInteger(PlayerAnimParameter.WeaponType));
+        _weaponSwitch.BlendIK(TIMETOBLEND, animator.GetInteger(PlayerAnimParameter.WeaponType));
     }
 
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
@@ -38,7 +42,7 @@ public class WeaponSwitchBehaviour : StateMachineBehaviour
 
     private void SelectWeapon(Animator animator)
     {
-        if (animator.GetInteger(PlayerAnimParameter.WeaponType) == 1)
+        if (animator.GetInteger(PlayerAnimParameter.WeaponType) == (int)WeaponType.Unarmed)
         {
             _weaponSwitch._prefabs[0].SetActive(true);
             _weaponSwitch._prefabs[1].SetActive(true);
@@ -48,7 +52,7 @@ public class WeaponSwitchBehaviour : StateMachineBehaviour
             _weaponSwitch._weapons[1].SetActive(false);
             _weaponSwitch._weapons[2].SetActive(false);
         }
-        else if (animator.GetInteger(PlayerAnimParameter.WeaponType) == 2)
+        else if (animator.GetInteger(PlayerAnimParameter.WeaponType) == (int)WeaponType.OneHand)
         {
             _weaponSwitch._prefabs[0].SetActive(false);
             _weaponSwitch._prefabs[1].SetActive(false);
@@ -58,7 +62,7 @@ public class WeaponSwitchBehaviour : StateMachineBehaviour
             _weaponSwitch._weapons[1].SetActive(true);
             _weaponSwitch._weapons[2].SetActive(false);
         }
-        else if (animator.GetInteger(PlayerAnimParameter.WeaponType) == 3)
+        else if (animator.GetInteger(PlayerAnimParameter.WeaponType) == (int)WeaponType.TwoHand)
         {
             _weaponSwitch._prefabs[0].SetActive(true);
             _weaponSwitch._prefabs[1].SetActive(true);
@@ -69,28 +73,4 @@ public class WeaponSwitchBehaviour : StateMachineBehaviour
             _weaponSwitch._weapons[2].SetActive(true);
         }
     }
-
-    // OnStateMove is called before OnStateMove is called on any state inside this state machine
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateIK is called before OnStateIK is called on any state inside this state machine
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateMachineEnter is called when entering a state machine via its Entry Node
-    //override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
-    //{
-    //    
-    //}
-
-    // OnStateMachineExit is called when exiting a state machine via its Exit Node
-    //override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
-    //{
-    //    
-    //}
 }

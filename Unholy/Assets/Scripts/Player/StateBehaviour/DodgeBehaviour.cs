@@ -12,7 +12,6 @@ public class DodgeBehaviour : StateMachineBehaviour
     [Header("Power")]
     private float dodgePower = 8.5f;
 
-
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _playerCamera = Camera.main;
@@ -33,12 +32,6 @@ public class DodgeBehaviour : StateMachineBehaviour
         PlayerDodgeRotate(animator, _playerController.isRotate, moveDirection);
         PlayerDodge(animator, rollDirection);
     }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //
-    //}
 
     private void PlayerDodgeRotate(Animator animator, bool isRotate, Vector3 moveDirection)
     {
@@ -61,16 +54,4 @@ public class DodgeBehaviour : StateMachineBehaviour
         _playerController.isTargetingDodge = false;
         _playerController.isDodging = false;
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}a
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }

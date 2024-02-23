@@ -20,7 +20,6 @@ public class WeaponSwitch : MonoBehaviour
     private Transform blendToTransform;
     private const float DELAYTIME = 0.75f;
 
-
     [Header("Weapon Field")]
     // 무기 미 장착으로 시작하기에 인덱스 num이 -1부터 시작
     internal int weaponIndex = -1;
@@ -42,12 +41,13 @@ public class WeaponSwitch : MonoBehaviour
 
     private void Update()
     {
-        _animator.SetInteger(PlayerAnimParameter.WeaponType, weaponIndex);
+        if (!_animator.GetBool(PlayerAnimParameter.IsDefense))
+            _animator.SetInteger(PlayerAnimParameter.WeaponType, weaponIndex);
     }
 
     private void OnAnimatorIK(int layerIndex)
     {
-        if(weaponIndex == 3)
+        if(weaponIndex == (int)WeaponType.TwoHand)
         {
             _animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, leftHandPositionWeight);
             _animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, leftHandRotationWeight);
@@ -69,7 +69,7 @@ public class WeaponSwitch : MonoBehaviour
         var blendTo = 0;
         var blendFrom = 0;
         
-        if(weaponIndex == 3)
+        if(weaponIndex == (int)WeaponType.TwoHand)
         {
             leftHandPositionWeight = 0;
             leftHandRotationWeight = 0;
@@ -82,7 +82,7 @@ public class WeaponSwitch : MonoBehaviour
 
         yield return new WaitForSeconds(DELAYTIME);
 
-        if (weaponIndex == 3) blendTo = 1;
+        if (weaponIndex == (int)WeaponType.TwoHand) blendTo = 1;
         else blendFrom = 1;
         
         while(t < 1)
@@ -116,7 +116,8 @@ public class WeaponSwitch : MonoBehaviour
                 weaponIndex = 4;
                 break;
             default:
-                weaponIndex = 0; break;
+                weaponIndex = 0;
+                break;
         }
     }
 
@@ -126,7 +127,7 @@ public class WeaponSwitch : MonoBehaviour
     /// <returns>true : Melee이다. false : Melee가 아니다.</returns>
     public bool IsWeaponMelee()
     {
-        if (weaponIndex == 2 || weaponIndex == 3)
+        if (weaponIndex == (int)WeaponType.OneHand || weaponIndex == (int)WeaponType.TwoHand)
             return true;
         else return false;
     }
