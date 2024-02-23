@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public InputAction _defenseAction;
     public InputAction _unarmed;
     public InputAction _onehand;
+    public InputAction _twohand;
 
     [Header("Component")]
     private WeaponSwitch _weaponSwitch;
@@ -52,8 +53,9 @@ public class PlayerController : MonoBehaviour
     internal bool isAbleComboAttack = false;
     internal bool isTargeting = false;
     internal bool isTargetingDodge = false;
-
-    internal bool isRightClick = false;
+    internal bool isDefense = false;
+    internal bool weaponSwitch = false;
+    internal bool isSwitchDone = false;
 
 
     [Header("ETC")]
@@ -77,8 +79,10 @@ public class PlayerController : MonoBehaviour
         _dodgeAction = _playerInput.actions.FindAction("Dodge");
         _attackAction = _playerInput.actions.FindAction("Attack");
         _defenseAction = _playerInput.actions.FindAction("Defense");
+        
         _unarmed = _playerInput.actions.FindAction("Unarmed");
         _onehand = _playerInput.actions.FindAction("OneHand");
+        _twohand = _playerInput.actions.FindAction("TwoHand");
 
         _monsterObject = GameObject.FindGameObjectWithTag("Monster").transform;
 
@@ -124,7 +128,14 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(PlayerAnimParameter.IsSprint, isSprinting);
         _animator.SetBool(PlayerAnimParameter.IsAir, isAir);
         _animator.SetBool(PlayerAnimParameter.IsTargeting, isTargeting);
-        _animator.SetBool(PlayerAnimParameter.IsRightClick, isRightClick);
+        _animator.SetBool(PlayerAnimParameter.IsDefense, isDefense);
+        _animator.SetBool(PlayerAnimParameter.IsSwitchDone, isSwitchDone);
+
+        if(weaponSwitch)
+        {
+            _animator.SetTrigger(PlayerAnimParameter.WeaponSwitch);
+            weaponSwitch = false;
+        }
 
         if (isJumping && !isAir)
             _animator.SetTrigger(PlayerAnimParameter.IsJump);
@@ -194,18 +205,35 @@ public class PlayerController : MonoBehaviour
             if (_weaponSwitch.IsWeaponMelee() && isAir) isJumpAttack = true;
         };
 
-        _defenseAction.started += context => isRightClick = true;
-        _defenseAction.canceled += context => isRightClick = false;
+        _defenseAction.started += context => isDefense = true;
+        _defenseAction.canceled += context => isDefense = false;
 
         _unarmed.started += context =>
         {
-            isTargeting = false;
+            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 1) return;
+
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.Unarmed);
+            isTargeting = false;
+            weaponSwitch = true;
+            isSwitchDone = true;
         };
         _onehand.started += context =>
         {
-            isTargeting = true;
+            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 2) return;
+
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.OneHand);
+            isTargeting = true;
+            weaponSwitch = true;
+            isSwitchDone = true;
+        };
+        _twohand.started += context =>
+        {
+            if (weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == 3) return;
+
+            _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.TwoHand);
+            isTargeting = true;
+            weaponSwitch = true;
+            isSwitchDone = true;
         };
     }
 
@@ -241,7 +269,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         // isRotate를 사용한 이유 : 사용하지 않을 경우 키보드 입력 뿐만 아니라 카메라 회전에도 캐릭터가 회전하게 됩니다.
-        if ((isRotate && !isTargeting) || (isWalking && isSprinting))
+        if ((isRotate && !isTargeting) || isSprinting)
         {
             Vector3 targetDirection = new Vector3(horizontal, 0, vertical).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
