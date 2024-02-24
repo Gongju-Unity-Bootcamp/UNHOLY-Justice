@@ -16,7 +16,7 @@ public class ParryingBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _minoController = animator.GetComponent<MinoController>();
-        _playerController = animator.GetComponent<PlayerController>();
+        _playerController = FindObjectOfType<PlayerController>();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -25,14 +25,14 @@ public class ParryingBehaviour : StateMachineBehaviour
 
 
         //  && _minoController.isParry 추가 해야함
-        if ((stateInfo.normalizedTime > StartTime && stateInfo.normalizedTime < EndTime))
+        if ((stateInfo.normalizedTime > StartTime && stateInfo.normalizedTime < EndTime) && _playerController.isParry)
         {
             _minoController._canParrying = true;
         }
 
         if (stateInfo.IsTag("ComboAttack"))
         {
-            if ((stateInfo.normalizedTime > StartTime2 && stateInfo.normalizedTime < EndTime2))
+            if ((stateInfo.normalizedTime > StartTime2 && stateInfo.normalizedTime < EndTime2) && _playerController.isParry)
             {
                 _minoController._canParrying = true;
             }

@@ -56,13 +56,15 @@ public class PlayerController : MonoBehaviour
     internal bool isDefense = false;
     internal bool weaponSwitch = false;
     internal bool isSwitchDone = false;
-    internal bool isParry = false;
+    public bool isParry = false;
 
     [Header("ETC")]
     float prevAttackInputTime = 0;
 
     [Header("Const")]
     private const float DAMPTIME = 0.25f;
+
+    MinoController _minoController;
 
     void Awake()
     {
@@ -74,6 +76,8 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _playerCamera = Camera.main;
+
+        _minoController = FindObjectOfType<MinoController>();
 
         _playerActionMap = _playerInput.actions.FindActionMap("Player");
         _moveAction = _playerInput.actions.FindAction("Move");
@@ -111,7 +115,7 @@ public class PlayerController : MonoBehaviour
         ControlAnimation();
 
         // 패링 기능
-        // ActivateParrying();
+        ActivateParry();
     }
 
     private void ControlAnimation()
@@ -306,7 +310,7 @@ public class PlayerController : MonoBehaviour
     // 전투 매니저에 포함될 예정으로, 패링 기능을 수행하는 메소드입니다.
     void ActivateParry()
     {
-        // _minoController.Parrying();
+        _minoController.Parrying();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -319,7 +323,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.transform.CompareTag("Monster"))
         {
-            isDamage = true;
+            //isDamage = true;
             Invoke(nameof(ResetCondition), 0.5f); // 애니메이션 테스트용 임시 코드
         }
     }
