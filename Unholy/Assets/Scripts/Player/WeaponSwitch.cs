@@ -23,6 +23,7 @@ public class WeaponSwitch : MonoBehaviour
     [Header("Weapon Field")]
     // 무기 미 장착으로 시작하기에 인덱스 num이 -1부터 시작
     internal int weaponIndex = -1;
+    internal int weaponDamage = default;
 
 
     private void Awake()
@@ -105,12 +106,15 @@ public class WeaponSwitch : MonoBehaviour
         {
             case WeaponType.Unarmed:
                 weaponIndex = 1;
+                weaponDamage = 0;
                 break;
             case WeaponType.OneHand:
                 weaponIndex = 2;
+                weaponDamage = 25;
                 break;
             case WeaponType.TwoHand:
                 weaponIndex = 3;
+                weaponDamage = 100;
                 break;
             case WeaponType.Bow:
                 weaponIndex = 4;

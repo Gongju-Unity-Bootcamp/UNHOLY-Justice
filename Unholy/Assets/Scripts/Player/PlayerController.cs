@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Camera _playerCamera;
     private Animator _animator;
     private Transform _monsterObject;
+    private MinoController _minoController;
 
     [Header("Position")]
     private Vector2 direction;
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
     internal bool isDodging = false;
     internal bool isDamage = false;
     internal bool isAttack = false;
+    internal bool isAttacking = false;
     internal bool isJumpAttack = false;
     internal bool isJumpAttacking = false;
     internal bool isAbleComboAttack = false;
@@ -58,13 +60,13 @@ public class PlayerController : MonoBehaviour
     internal bool isSwitchDone = false;
     public bool isParry = false;
 
-    [Header("ETC")]
-    float prevAttackInputTime = 0;
-
     [Header("Const")]
     private const float DAMPTIME = 0.25f;
 
-    MinoController _minoController;
+    [Header("ETC")]
+    [SerializeField] private GameObject _oneHandCol;
+    [SerializeField] private GameObject _twoHandCol;
+    float prevAttackInputTime = 0;
 
     void Awake()
     {
@@ -96,13 +98,25 @@ public class PlayerController : MonoBehaviour
         moveSpeed = walkSpeed;
         sprintSpeed = walkSpeed * 2f;
 
+        _oneHandCol.SetActive(false);
+        _twoHandCol.SetActive(false);
+
         InitializeInputSystem();
     }
 
     void FixedUpdate()
     {
-        PlayerMove(moveDirection);
-        PlayerRotate(isRotate, horizontalMovement, verticalMovement);
+        if (!isDamage)
+        {
+            PlayerMove(moveDirection);
+            PlayerRotate(isRotate, horizontalMovement, verticalMovement);
+        }
+
+        if (CombatManager._currentPlayerST <= 0)
+            isSprinting = false;
+
+        if (isSprinting) CombatManager.DecreaseStamina();
+        else CombatManager.IncreaseStamina();
     }
 
     void Update()
@@ -131,24 +145,27 @@ public class PlayerController : MonoBehaviour
             _animator.SetFloat(PlayerAnimParameter.VerticalMovement, verticalMovement);
         }
 
-        _animator.SetBool(PlayerAnimParameter.IsAttack, isAttack);
-        _animator.SetBool(PlayerAnimParameter.IsWalk, isWalking);
-        _animator.SetBool(PlayerAnimParameter.IsSprint, isSprinting);
-        _animator.SetBool(PlayerAnimParameter.IsAir, isAir);
-        _animator.SetBool(PlayerAnimParameter.IsTargeting, isTargeting);
-        _animator.SetBool(PlayerAnimParameter.IsDefense, isDefense);
-        _animator.SetBool(PlayerAnimParameter.IsSwitchDone, isSwitchDone);
-
-        _animator.SetBool(PlayerAnimParameter.WeaponSwitch, weaponSwitch);
-
-        if (isJumping && !isAir)
-            _animator.SetTrigger(PlayerAnimParameter.IsJump);
-
-        if (isDodge)
-            _animator.SetTrigger(PlayerAnimParameter.IsDodge);
-
         if (isDamage)
             _animator.SetTrigger(PlayerAnimParameter.IsDamage);
+
+        if (!isDamage)
+        {
+            if (isJumping && !isAir)
+                _animator.SetTrigger(PlayerAnimParameter.IsJump);
+
+            if (isDodge)
+                _animator.SetTrigger(PlayerAnimParameter.IsDodge);
+
+            _animator.SetBool(PlayerAnimParameter.IsAttack, isAttack);
+            _animator.SetBool(PlayerAnimParameter.IsAttacking, isAttacking);
+            _animator.SetBool(PlayerAnimParameter.IsWalk, isWalking);
+            _animator.SetBool(PlayerAnimParameter.IsSprint, isSprinting);
+            _animator.SetBool(PlayerAnimParameter.IsAir, isAir);
+            _animator.SetBool(PlayerAnimParameter.IsTargeting, isTargeting);
+            _animator.SetBool(PlayerAnimParameter.IsDefense, isDefense);
+            _animator.SetBool(PlayerAnimParameter.IsSwitchDone, isSwitchDone);
+            _animator.SetBool(PlayerAnimParameter.WeaponSwitch, weaponSwitch);
+        }
     }
 
     /// <summary>
@@ -313,6 +330,25 @@ public class PlayerController : MonoBehaviour
         _minoController.Parrying();
     }
 
+    /// <summary>
+    /// 공격 범위 콜라이더를 활성화 시키는 메소드입니다.
+    /// 애니메이션 이벤트에서 호출되며, float 값을 받아 콜라이더 종료 시간을 설정합니다.
+    /// </summary>
+    /// <param name="time"></param>
+    public void ActivateCollider(float time)
+    {
+        if (_weaponSwitch.weaponIndex == (int)WeaponType.OneHand)
+        {
+            PlayerAttackCollision._disableTime = time;
+            _oneHandCol.SetActive(true);
+        }
+        else if (_weaponSwitch.weaponIndex == (int)WeaponType.TwoHand)
+        {
+            PlayerAttackCollision._disableTime = time;
+            _twoHandCol.SetActive(true);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Ground"))
@@ -324,7 +360,7 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.CompareTag("Monster"))
         {
             //isDamage = true;
-            Invoke(nameof(ResetCondition), 0.5f); // 애니메이션 테스트용 임시 코드
+            //Invoke(nameof(ResetCondition), 0.5f); // 애니메이션 테스트용 임시 코드
         }
     }
 
@@ -333,6 +369,21 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.CompareTag("Ground"))
         {
             isAir = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Monster"))
+        {
+            float damage = _weaponSwitch.weaponDamage;
+            if (isJumpAttacking) damage *= 1.2f;
+
+            Debug.Log(damage);
+
+            Debug.Log(gameObject.tag);
+
+            CombatManager.TakeDamage(gameObject.tag, damage);
         }
     }
 }
