@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef8dd369f953d64ea219d8cdf365d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTime: 0.32
+  StartTime: 0.34
   EndTime: 0.345
   StartTime2: 0
   EndTime2: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef8dd369f953d64ea219d8cdf365d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTime: 0.36
+  StartTime: 0.375
   EndTime: 0.38
   StartTime2: 0
   EndTime2: 0
@@ -208,9 +208,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef8dd369f953d64ea219d8cdf365d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTime: 0.34
+  StartTime: 0.36
   EndTime: 0.365
-  StartTime2: 0.59
+  StartTime2: 0.615
   EndTime2: 0.62
 --- !u!114 &1655952152294367437
 MonoBehaviour:
@@ -224,9 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef8dd369f953d64ea219d8cdf365d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTime: 0.22
+  StartTime: 0.245
   EndTime: 0.25
-  StartTime2: 0.38
+  StartTime2: 0.445
   EndTime2: 0.45
 --- !u!1102 &3453412502683672513
 AnimatorState:

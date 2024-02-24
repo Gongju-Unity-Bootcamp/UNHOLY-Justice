@@ -13,6 +13,7 @@ public class MinoController : MonoBehaviour
     public bool _isIdle; // true 일시 Idle 상태 해제
     public bool _keepDEF = false;
     public bool _isForward = false; // 앞 뒤 구분]
+    public bool _parryingRange = false;
 
     public float _bossHP = 10f;
     float _dist;
@@ -121,15 +122,18 @@ public class MinoController : MonoBehaviour
     internal bool _canParrying;
     public void Parrying()
     {
-        if (_canParrying == false)
+        if (_parryingRange)
         {
-            return;
-        }
-        else
-        {
-            _bossAnimator.Play("BossHit");
-            _treeA.RemoveActiveTask(_treeA.Root);
-            _canParrying = false;
+            if (_canParrying == false)
+            {
+                return;
+            }
+            else
+            {
+                _bossAnimator.Play("BossHit");
+                _treeA.RemoveActiveTask(_treeA.Root);
+                _canParrying = false;
+            }
         }
     }
 
@@ -151,7 +155,7 @@ public class MinoController : MonoBehaviour
     }
 
     // 플레이어와의 위치 계산
-    private void CheckDistance()
+    public void CheckDistance()
     {
         _dist = Vector3.Distance(_player.position, transform.position);
         Vector3 directionToPlayer = (_player.position - transform.position).normalized;
@@ -159,7 +163,16 @@ public class MinoController : MonoBehaviour
 
         float dotProduct = Vector3.Dot(directionToPlayer, bossForward);
 
-        if (dotProduct > 0.5f) { _isForward = false; }
+        if (dotProduct > 0.5f)
+        {
+            _isForward = false;
+        }
         else { _isForward = true; }
+
+        if (dotProduct > 0.5f && _dist <= _attackRange)
+        {
+            _parryingRange = true;
+        }
+        else { _parryingRange = false; }
     }
 }
