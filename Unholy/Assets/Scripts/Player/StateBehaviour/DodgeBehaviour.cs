@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class DodgeBehaviour : StateMachineBehaviour
         _playerCamera = Camera.main;
         _rigidbody = animator.GetComponent<Rigidbody>();
         _playerController = animator.GetComponent<PlayerController>();
+
+        CombatManager.ConsumeStamina((float)StaminaValues.dodge);
 
         Vector3 rollDirection = new Vector3(animator.transform.localRotation.x, 0, animator.transform.localRotation.z);
 

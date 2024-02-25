@@ -11,14 +11,14 @@ public class DamagedBehaviour : StateMachineBehaviour
     {
         _playerController = animator.GetComponent<PlayerController>();
 
+        _playerController.isDamage = false;
+
         animator.applyRootMotion = true;
     }
 
     // OnStateMachineExit is called when exiting a state machine via its Exit Node
     override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
     {
-        _playerController.isDamage = false;
-
         animator.applyRootMotion = false;
     }
 }

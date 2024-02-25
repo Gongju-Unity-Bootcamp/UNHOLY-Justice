@@ -8,6 +8,7 @@ TagManager:
   - Monster
   - OneHand
   - TwoHand
+  - MinoAxe
   layers:
   - Default
   - TransparentFX

@@ -3,26 +3,22 @@ using CleverCrow.Fluid.BTs.Tasks;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
+using TMPro.EditorUtilities;
 
 public class MinoController : MonoBehaviour
 {
-    [SerializeField] private BehaviorTree _treeA;
+    [SerializeField] internal BehaviorTree _treeA;
     [SerializeField] Transform _player;
 
+    internal bool _isHit;
     public bool _isIdle; // true 일시 Idle 상태 해제
     public bool _keepDEF = false;
-    public bool _isForward = false; // 앞 뒤 구분]
-    public bool _parryingRange = false;
 
     public float _bossHP = 10f;
-    float _dist;
-    float _distance;
-    public float _attackRange = 6f;
-    public float _minJump = 15f;
-    public float _maxJump = 20f;
+    public float _minJump = 10f;
+    public float _maxJump = 12f;
 
-    Animator _bossAnimator;
+    internal Animator _bossAnimator;
     NavMeshAgent _agent;
 
 
@@ -35,15 +31,16 @@ public class MinoController : MonoBehaviour
         _treeA = new BehaviorTreeBuilder(gameObject)
             .Selector()
                 .Sequence()
-                    .Condition("attackRange", () => _dist <= _attackRange)
+                    .Condition("attackRange", () => CombatManager._dist <= CombatManager._attackRange)
                     .Selector()
                         .Sequence()
-                            .Condition("backPOS", () => _isForward == true)
+                            .Condition("backPOS", () => CombatManager._isForward == false)
                             .Do(() =>
                             {
                                 _agent.isStopped = true;
                                 return TaskStatus.Success;
                             })
+                            .RandomChance(1, 3)
                             .StateAction("BossBackstep", ProcessBackstep)
                             .StateAction("BossStompAttack")
                         .End()
@@ -52,21 +49,33 @@ public class MinoController : MonoBehaviour
                             .StateAction("BossKickAttack")
                         .End()
                         .SelectorRandom()
-                            .StateAction("BossATK1")
-                            .StateAction("BossATK2")
-                            .StateAction("BossATK3")
-                            .StateAction("BossATK4")
+                            .Sequence()
+                                .StateAction("BossLook", () => { _look = true; })
+                                .StateAction("BossATK1", () => { _look = false; })
+                            .End()
+                            .Sequence()
+                                .StateAction("BossLook", () => { _look = true; })
+                                .StateAction("BossATK2", () => { _look = false; })
+                            .End()
+                            .Sequence()
+                                .StateAction("BossLook", () => { _look = true; })
+                                .StateAction("BossATK3", () => { _look = false; })
+                            .End()
+                            .Sequence()
+                                .StateAction("BossLook", () => { _look = true; })
+                                .StateAction("BossATK4", () => { _look = false; })
+                            .End()
                         .End()
                     .End()
                 .End()
                 .Sequence()
-                    .Condition("out7SEC", () => _dist >= _minJump && _dist < _maxJump)
+                    .Condition("out7SEC", () => CombatManager._dist >= _minJump && CombatManager._dist < _maxJump && CombatManager._isForward)
                     .Do(() =>
                     {
                         _agent.isStopped = true;
                         return TaskStatus.Success;
                     })
-                    .StateAction("BossJumpAttack", ProcessJumpAttack)
+                    .StateAction("BossJumpAttack", ProcessLookAt)
                 .End()
                 .RepeatUntilSuccess()
                     .Do("BossTrack", () =>
@@ -74,7 +83,7 @@ public class MinoController : MonoBehaviour
                         _bossAnimator.Play("BossTrack");
                         _agent.isStopped = false;
                         _agent.SetDestination(_player.position);
-                        if (_dist > 5f)
+                        if (CombatManager._dist > CombatManager._attackRange)
                         {
                             return TaskStatus.Success;
                         }
@@ -88,11 +97,24 @@ public class MinoController : MonoBehaviour
             .End()
             .Build();
     }
-    private void Update()  { CheckDistance(); }
+    bool _look = false;
+    private void Update()  
+    {
+        CombatManager.CheckDistance(_player, gameObject.transform);
+        if (_look)
+        {
+            ProcessLookAt();
+        }
+
+
+        if (CombatManager._checkParrying)
+        {
+            BossParrying();
+        }
+
+    }
     private void OnEnable() { ActivateAi(); }
 
-    // Collider에 의해 _attackRange의 값을 변경
-    internal bool _isHit;
     IEnumerator ActivateAiCo()
     {
         while (true)
@@ -103,13 +125,9 @@ public class MinoController : MonoBehaviour
                 continue;
             }
 
-            if (_isHit)
+            if (_bossHP <= 0)
             {
-                //  보스 피깎이는거 여기
-                if (_bossHP <= 0)
-                {
-                    _bossAnimator.Play("BossDie");
-                }
+                _bossAnimator.Play("BossDie");
             }
             else
             {
@@ -118,31 +136,29 @@ public class MinoController : MonoBehaviour
             yield return null;
         }
     }
-    
-    internal bool _canParrying;
-    public void Parrying()
+
+    void BossParrying()
     {
-        if (_parryingRange)
-        {
-            if (_canParrying == false)
-            {
-                return;
-            }
-            else
-            {
-                _bossAnimator.Play("BossHit");
-                _treeA.RemoveActiveTask(_treeA.Root);
-                _canParrying = false;
-            }
-        }
+        _bossAnimator.Play("BossHit");
+        _treeA.RemoveActiveTask(_treeA.Root);
     }
 
-    // Idle을 EntryState로 둔다.
     public void ActivateAi()
     {
         StartCoroutine(ActivateAiCo());
     }
 
+
+    public void ProcessLookAt()
+    {
+        Vector3 targetDirection = (_player.position - transform.position).normalized;
+
+        if (targetDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 7.5f * Time.deltaTime);
+        }
+    }
 
     public void ProcessBackstep()
     {
@@ -152,27 +168,5 @@ public class MinoController : MonoBehaviour
     public void ProcessJumpAttack()
     {
         transform.LookAt(_player.position);
-    }
-
-    // 플레이어와의 위치 계산
-    public void CheckDistance()
-    {
-        _dist = Vector3.Distance(_player.position, transform.position);
-        Vector3 directionToPlayer = (_player.position - transform.position).normalized;
-        Vector3 bossForward = transform.forward;
-
-        float dotProduct = Vector3.Dot(directionToPlayer, bossForward);
-
-        if (dotProduct > 0.5f)
-        {
-            _isForward = false;
-        }
-        else { _isForward = true; }
-
-        if (dotProduct > 0.5f && _dist <= _attackRange)
-        {
-            _parryingRange = true;
-        }
-        else { _parryingRange = false; }
     }
 }

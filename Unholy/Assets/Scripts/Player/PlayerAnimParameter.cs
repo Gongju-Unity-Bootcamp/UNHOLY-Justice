@@ -24,4 +24,6 @@ public class PlayerAnimParameter
     public static readonly int IsSwitchDone = Animator.StringToHash("IsSwitchDone");
     public static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
     public static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
+    public static readonly int PlayerHP = Animator.StringToHash("PlayerHP");
+    public static readonly int PlayerST = Animator.StringToHash("PlayerST");
 }

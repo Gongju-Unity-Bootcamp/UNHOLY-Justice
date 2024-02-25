@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Types;
+using Data;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     private Camera _playerCamera;
     private Animator _animator;
     private Transform _monsterObject;
-    private MinoController _minoController;
 
     [Header("Position")]
     private Vector2 direction;
@@ -79,8 +78,6 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _playerCamera = Camera.main;
 
-        _minoController = FindObjectOfType<MinoController>();
-
         _playerActionMap = _playerInput.actions.FindActionMap("Player");
         _moveAction = _playerInput.actions.FindAction("Move");
         _sprintAction = _playerInput.actions.FindAction("Sprint");
@@ -114,26 +111,28 @@ public class PlayerController : MonoBehaviour
 
         if (CombatManager._currentPlayerST <= 0)
             isSprinting = false;
-
-        if (isSprinting) CombatManager.DecreaseStamina();
-        else CombatManager.IncreaseStamina();
     }
 
     void Update()
     {
+        if (CombatManager._checkParrying)
+        {
+            PlayerParrying();
+        }
+
         if (isAttack && Time.time - prevAttackInputTime > 0.2f)
         {
             isAttack = false;
         }
 
         ControlAnimation();
-
-        // 패링 기능
-        ActivateParry();
     }
 
     private void ControlAnimation()
     {
+        _animator.SetFloat(PlayerAnimParameter.PlayerHP, CombatManager._currentPlayerHP);
+        _animator.SetFloat(PlayerAnimParameter.PlayerST, CombatManager._currentPlayerST);
+
         if (isTargeting)
         {
             _animator.SetFloat(PlayerAnimParameter.HorizontalMovement, horizontalMovement, DAMPTIME, Time.deltaTime);
@@ -318,16 +317,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void PlayerParrying()
+    {
+        CombatManager.RecoveryStamina((float)StaminaValues.parry);
+    }
+
     void ResetCondition()
     {
         isDamage = false;
-    }
-
-    // 변경 예정인 함수입니다.
-    // 전투 매니저에 포함될 예정으로, 패링 기능을 수행하는 메소드입니다.
-    void ActivateParry()
-    {
-        _minoController.Parrying();
     }
 
     /// <summary>
@@ -378,10 +375,6 @@ public class PlayerController : MonoBehaviour
         {
             float damage = _weaponSwitch.weaponDamage;
             if (isJumpAttacking) damage *= 1.2f;
-
-            Debug.Log(damage);
-
-            Debug.Log(gameObject.tag);
 
             CombatManager.TakeDamage(gameObject.tag, damage);
         }

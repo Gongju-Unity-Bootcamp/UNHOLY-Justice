@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Types;
+using Data;
 using UnityEngine;
 
 public class WeaponSwitchBehaviour : StateMachineBehaviour
