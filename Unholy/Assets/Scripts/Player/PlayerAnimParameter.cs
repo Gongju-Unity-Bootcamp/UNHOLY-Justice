@@ -26,4 +26,5 @@ public class PlayerAnimParameter
     public static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
     public static readonly int PlayerHP = Animator.StringToHash("PlayerHP");
     public static readonly int PlayerST = Animator.StringToHash("PlayerST");
+    public static readonly int IsStun = Animator.StringToHash("IsStun");
 }

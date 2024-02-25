@@ -20,11 +20,11 @@ public class PlayerController : MonoBehaviour
     public InputAction _twohand;
 
     [Header("Component")]
+    public Transform _monsterObject;
     private WeaponSwitch _weaponSwitch;
     private Rigidbody _rigidbody;
     private Camera _playerCamera;
     private Animator _animator;
-    private Transform _monsterObject;
 
     [Header("Position")]
     private Vector2 direction;
@@ -57,7 +57,8 @@ public class PlayerController : MonoBehaviour
     internal bool isDefense = false;
     internal bool weaponSwitch = false;
     internal bool isSwitchDone = false;
-    public bool isParry = false;
+    internal bool isParry = false;
+    internal bool isStun = false;
 
     [Header("Const")]
     private const float DAMPTIME = 0.25f;
@@ -89,8 +90,6 @@ public class PlayerController : MonoBehaviour
         _unarmed = _playerInput.actions.FindAction("Unarmed");
         _onehand = _playerInput.actions.FindAction("OneHand");
         _twohand = _playerInput.actions.FindAction("TwoHand");
-
-        _monsterObject = GameObject.FindGameObjectWithTag("Monster").transform;
 
         moveSpeed = walkSpeed;
         sprintSpeed = walkSpeed * 2f;
@@ -144,8 +143,8 @@ public class PlayerController : MonoBehaviour
             _animator.SetFloat(PlayerAnimParameter.VerticalMovement, verticalMovement);
         }
 
-        if (isDamage)
-            _animator.SetTrigger(PlayerAnimParameter.IsDamage);
+        _animator.SetBool(PlayerAnimParameter.IsDamage, isDamage);
+        _animator.SetBool(PlayerAnimParameter.IsStun, isStun);
 
         if (!isDamage)
         {
@@ -155,13 +154,15 @@ public class PlayerController : MonoBehaviour
             if (isDodge)
                 _animator.SetTrigger(PlayerAnimParameter.IsDodge);
 
+            if(!isStun)
+                _animator.SetBool(PlayerAnimParameter.IsDefense, isDefense);
+
             _animator.SetBool(PlayerAnimParameter.IsAttack, isAttack);
             _animator.SetBool(PlayerAnimParameter.IsAttacking, isAttacking);
             _animator.SetBool(PlayerAnimParameter.IsWalk, isWalking);
             _animator.SetBool(PlayerAnimParameter.IsSprint, isSprinting);
             _animator.SetBool(PlayerAnimParameter.IsAir, isAir);
             _animator.SetBool(PlayerAnimParameter.IsTargeting, isTargeting);
-            _animator.SetBool(PlayerAnimParameter.IsDefense, isDefense);
             _animator.SetBool(PlayerAnimParameter.IsSwitchDone, isSwitchDone);
             _animator.SetBool(PlayerAnimParameter.WeaponSwitch, weaponSwitch);
         }

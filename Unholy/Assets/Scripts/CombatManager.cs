@@ -111,7 +111,7 @@ public class CombatManager : MonoBehaviour
     {
         if (type == "Player")
             _currentBossHP -= damage;
-        else if (type == "Monster")
+        else if (type == "MinoAxe")
             _currentPlayerHP -= damage;
 
         // boss 및 player의 체력을 확인하기 위해 임시적으로 삽입했습니다.
