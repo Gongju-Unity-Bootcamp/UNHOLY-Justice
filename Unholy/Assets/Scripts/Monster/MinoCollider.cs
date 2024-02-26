@@ -41,6 +41,21 @@ public class MinoCollider : MonoBehaviour
         }
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (_playerController.isDodging) return;
+
+            if (!_playerController.isDefense)
+                CombatManager.TakeDamage(gameObject.tag, 50);
+            else
+                CombatManager.ConsumeStamina(CombatManager._currentPlayerST);
+
+            _playerController.isDamage = true;
+        }
+    }
+
     private void AttackSuccess()
     {
         if (_playerController.isDodging) return;
