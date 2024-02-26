@@ -9,7 +9,7 @@ namespace Data
         sprint = 15,
         recovery = 15,
         dodge = 20,
-        defenseHit = 20,
+        defenseHit = 30,
         parry = 50,
         onehand = 10,
         twohand = 20

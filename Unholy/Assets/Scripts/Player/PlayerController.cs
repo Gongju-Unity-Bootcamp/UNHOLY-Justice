@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     internal bool isSwitchDone = false;
     internal bool isParry = false;
     internal bool isStun = false;
+    internal bool isDead = false;
 
     [Header("Const")]
     private const float DAMPTIME = 0.25f;
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isDamage)
+        if (!isDamage && !isStun)
         {
             PlayerMove(moveDirection);
             PlayerRotate(isRotate, horizontalMovement, verticalMovement);
@@ -110,6 +111,9 @@ public class PlayerController : MonoBehaviour
 
         if (CombatManager._currentPlayerST <= 0)
             isSprinting = false;
+
+        if (CombatManager._currentPlayerHP <= 0)
+            isDead = true;
     }
 
     void Update()
@@ -143,10 +147,13 @@ public class PlayerController : MonoBehaviour
             _animator.SetFloat(PlayerAnimParameter.VerticalMovement, verticalMovement);
         }
 
-        _animator.SetBool(PlayerAnimParameter.IsDamage, isDamage);
         _animator.SetBool(PlayerAnimParameter.IsStun, isStun);
+        _animator.SetBool(PlayerAnimParameter.IsDead, isDead);
 
-        if (!isDamage)
+        if(!isDead) 
+            _animator.SetBool(PlayerAnimParameter.IsDamage, isDamage);
+
+        if (!isDamage || !isDead)
         {
             if (isJumping && !isAir)
                 _animator.SetTrigger(PlayerAnimParameter.IsJump);

@@ -14,7 +14,6 @@ public class MinoController : MonoBehaviour
     public bool _isIdle; // true 일시 Idle 상태 해제
     public bool _keepDEF = false;
 
-    public float _bossHP = 10f;
     public float _minJump = 10f;
     public float _maxJump = 12f;
 
@@ -125,7 +124,7 @@ public class MinoController : MonoBehaviour
                 continue;
             }
 
-            if (_bossHP <= 0)
+            if (CombatManager._currentBossHP <= 0)
             {
                 _bossAnimator.Play("BossDie");
             }

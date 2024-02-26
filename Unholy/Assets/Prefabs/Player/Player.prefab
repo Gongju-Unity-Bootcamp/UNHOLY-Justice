@@ -592,7 +592,7 @@ Transform:
   m_GameObject: {fileID: 2301064664071819257}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.13052624, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: -0.368, y: -0, z: 0.751}
+  m_LocalPosition: {x: -0.384, y: 0, z: 0.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -617,7 +617,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25, y: 0.11, z: 1.3}
+  m_Size: {x: 0.5, y: 0.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9194660682941795996
 MonoBehaviour:
@@ -1645,9 +1645,9 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  _monsterObject: {fileID: 0}
   verticalMovement: 0
   horizontalMovement: 0
-  isParry: 0
   _oneHandCol: {fileID: 2301064664071819257}
   _twoHandCol: {fileID: 2018250710807053704}
 --- !u!114 &7375726191836826796

@@ -12,6 +12,12 @@ public class DamagedBehaviour : StateMachineBehaviour
         _playerController = animator.GetComponent<PlayerController>();
         animator.applyRootMotion = true;
 
+        if (_playerController.isDead)
+        {
+            _playerController.isDamage = false;
+            return;
+        }
+
         if (animator.GetBool(PlayerAnimParameter.IsDefense))
         {
             CombatManager.ConsumeStamina((float)StaminaValues.defenseHit);

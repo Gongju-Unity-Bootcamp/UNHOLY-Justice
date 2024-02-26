@@ -43,6 +43,8 @@ public class MinoCollider : MonoBehaviour
 
     private void AttackSuccess()
     {
+        if (_playerController.isDodging) return;
+
         if(!_playerController.isDefense)
             CombatManager.TakeDamage(gameObject.tag, 25);
         _playerController.isDamage = true;

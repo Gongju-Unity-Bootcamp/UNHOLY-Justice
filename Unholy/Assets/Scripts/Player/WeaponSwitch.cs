@@ -42,7 +42,7 @@ public class WeaponSwitch : MonoBehaviour
 
     private void Update()
     {
-        if (!_animator.GetBool(PlayerAnimParameter.IsDefense))
+        if (!_animator.GetBool(PlayerAnimParameter.IsDefense) && !_animator.GetBool(PlayerAnimParameter.IsDead))
             _animator.SetInteger(PlayerAnimParameter.WeaponType, weaponIndex);
     }
 
