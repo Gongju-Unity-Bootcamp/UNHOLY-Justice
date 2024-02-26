@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Types;
+using Data;
 
 public class WeaponSwitch : MonoBehaviour
 {
@@ -23,6 +23,7 @@ public class WeaponSwitch : MonoBehaviour
     [Header("Weapon Field")]
     // 무기 미 장착으로 시작하기에 인덱스 num이 -1부터 시작
     internal int weaponIndex = -1;
+    internal int weaponDamage = default;
 
 
     private void Awake()
@@ -41,7 +42,7 @@ public class WeaponSwitch : MonoBehaviour
 
     private void Update()
     {
-        if (!_animator.GetBool(PlayerAnimParameter.IsDefense))
+        if (!_animator.GetBool(PlayerAnimParameter.IsDefense) && !_animator.GetBool(PlayerAnimParameter.IsDead))
             _animator.SetInteger(PlayerAnimParameter.WeaponType, weaponIndex);
     }
 
@@ -105,12 +106,15 @@ public class WeaponSwitch : MonoBehaviour
         {
             case WeaponType.Unarmed:
                 weaponIndex = 1;
+                weaponDamage = 0;
                 break;
             case WeaponType.OneHand:
                 weaponIndex = 2;
+                weaponDamage = 25;
                 break;
             case WeaponType.TwoHand:
                 weaponIndex = 3;
+                weaponDamage = 100;
                 break;
             case WeaponType.Bow:
                 weaponIndex = 4;

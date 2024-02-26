@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Types;
+using Data;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,11 +20,11 @@ public class PlayerController : MonoBehaviour
     public InputAction _twohand;
 
     [Header("Component")]
+    public Transform _monsterObject;
     private WeaponSwitch _weaponSwitch;
     private Rigidbody _rigidbody;
     private Camera _playerCamera;
     private Animator _animator;
-    private Transform _monsterObject;
 
     [Header("Position")]
     private Vector2 direction;
@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     internal bool isDodging = false;
     internal bool isDamage = false;
     internal bool isAttack = false;
+    internal bool isAttacking = false;
     internal bool isJumpAttack = false;
     internal bool isJumpAttacking = false;
     internal bool isAbleComboAttack = false;
@@ -56,15 +57,17 @@ public class PlayerController : MonoBehaviour
     internal bool isDefense = false;
     internal bool weaponSwitch = false;
     internal bool isSwitchDone = false;
-    public bool isParry = false;
-
-    [Header("ETC")]
-    float prevAttackInputTime = 0;
+    internal bool isParry = false;
+    internal bool isStun = false;
+    internal bool isDead = false;
 
     [Header("Const")]
     private const float DAMPTIME = 0.25f;
 
-    MinoController _minoController;
+    [Header("ETC")]
+    [SerializeField] private GameObject _oneHandCol;
+    [SerializeField] private GameObject _twoHandCol;
+    float prevAttackInputTime = 0;
 
     void Awake()
     {
@@ -76,8 +79,6 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _playerCamera = Camera.main;
-
-        _minoController = FindObjectOfType<MinoController>();
 
         _playerActionMap = _playerInput.actions.FindActionMap("Player");
         _moveAction = _playerInput.actions.FindAction("Move");
@@ -91,35 +92,50 @@ public class PlayerController : MonoBehaviour
         _onehand = _playerInput.actions.FindAction("OneHand");
         _twohand = _playerInput.actions.FindAction("TwoHand");
 
-        _monsterObject = GameObject.FindGameObjectWithTag("Monster").transform;
-
         moveSpeed = walkSpeed;
         sprintSpeed = walkSpeed * 2f;
+
+        _oneHandCol.SetActive(false);
+        _twoHandCol.SetActive(false);
 
         InitializeInputSystem();
     }
 
     void FixedUpdate()
     {
-        PlayerMove(moveDirection);
-        PlayerRotate(isRotate, horizontalMovement, verticalMovement);
+        if (!isDamage && !isStun)
+        {
+            PlayerMove(moveDirection);
+            PlayerRotate(isRotate, horizontalMovement, verticalMovement);
+        }
+
+        if (CombatManager._currentPlayerST <= 0)
+            isSprinting = false;
+
+        if (CombatManager._currentPlayerHP <= 0)
+            isDead = true;
     }
 
     void Update()
     {
+        if (CombatManager._checkParrying)
+        {
+            PlayerParrying();
+        }
+
         if (isAttack && Time.time - prevAttackInputTime > 0.2f)
         {
             isAttack = false;
         }
 
         ControlAnimation();
-
-        // 패링 기능
-        ActivateParry();
     }
 
     private void ControlAnimation()
     {
+        _animator.SetFloat(PlayerAnimParameter.PlayerHP, CombatManager._currentPlayerHP);
+        _animator.SetFloat(PlayerAnimParameter.PlayerST, CombatManager._currentPlayerST);
+
         if (isTargeting)
         {
             _animator.SetFloat(PlayerAnimParameter.HorizontalMovement, horizontalMovement, DAMPTIME, Time.deltaTime);
@@ -131,24 +147,32 @@ public class PlayerController : MonoBehaviour
             _animator.SetFloat(PlayerAnimParameter.VerticalMovement, verticalMovement);
         }
 
-        _animator.SetBool(PlayerAnimParameter.IsAttack, isAttack);
-        _animator.SetBool(PlayerAnimParameter.IsWalk, isWalking);
-        _animator.SetBool(PlayerAnimParameter.IsSprint, isSprinting);
-        _animator.SetBool(PlayerAnimParameter.IsAir, isAir);
-        _animator.SetBool(PlayerAnimParameter.IsTargeting, isTargeting);
-        _animator.SetBool(PlayerAnimParameter.IsDefense, isDefense);
-        _animator.SetBool(PlayerAnimParameter.IsSwitchDone, isSwitchDone);
+        _animator.SetBool(PlayerAnimParameter.IsStun, isStun);
+        _animator.SetBool(PlayerAnimParameter.IsDead, isDead);
 
-        _animator.SetBool(PlayerAnimParameter.WeaponSwitch, weaponSwitch);
+        if(!isDead) 
+            _animator.SetBool(PlayerAnimParameter.IsDamage, isDamage);
 
-        if (isJumping && !isAir)
-            _animator.SetTrigger(PlayerAnimParameter.IsJump);
+        if (!isDamage || !isDead)
+        {
+            if (isJumping && !isAir)
+                _animator.SetTrigger(PlayerAnimParameter.IsJump);
 
-        if (isDodge)
-            _animator.SetTrigger(PlayerAnimParameter.IsDodge);
+            if (isDodge)
+                _animator.SetTrigger(PlayerAnimParameter.IsDodge);
 
-        if (isDamage)
-            _animator.SetTrigger(PlayerAnimParameter.IsDamage);
+            if(!isStun)
+                _animator.SetBool(PlayerAnimParameter.IsDefense, isDefense);
+
+            _animator.SetBool(PlayerAnimParameter.IsAttack, isAttack);
+            _animator.SetBool(PlayerAnimParameter.IsAttacking, isAttacking);
+            _animator.SetBool(PlayerAnimParameter.IsWalk, isWalking);
+            _animator.SetBool(PlayerAnimParameter.IsSprint, isSprinting);
+            _animator.SetBool(PlayerAnimParameter.IsAir, isAir);
+            _animator.SetBool(PlayerAnimParameter.IsTargeting, isTargeting);
+            _animator.SetBool(PlayerAnimParameter.IsSwitchDone, isSwitchDone);
+            _animator.SetBool(PlayerAnimParameter.WeaponSwitch, weaponSwitch);
+        }
     }
 
     /// <summary>
@@ -301,16 +325,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void PlayerParrying()
+    {
+        CombatManager.RecoveryStamina((float)StaminaValues.parry);
+    }
+
     void ResetCondition()
     {
         isDamage = false;
     }
 
-    // 변경 예정인 함수입니다.
-    // 전투 매니저에 포함될 예정으로, 패링 기능을 수행하는 메소드입니다.
-    void ActivateParry()
+    /// <summary>
+    /// 공격 범위 콜라이더를 활성화 시키는 메소드입니다.
+    /// 애니메이션 이벤트에서 호출되며, float 값을 받아 콜라이더 종료 시간을 설정합니다.
+    /// </summary>
+    /// <param name="time"></param>
+    public void ActivateCollider(float time)
     {
-        _minoController.Parrying();
+        if (_weaponSwitch.weaponIndex == (int)WeaponType.OneHand)
+        {
+            PlayerAttackCollision._disableTime = time;
+            _oneHandCol.SetActive(true);
+        }
+        else if (_weaponSwitch.weaponIndex == (int)WeaponType.TwoHand)
+        {
+            PlayerAttackCollision._disableTime = time;
+            _twoHandCol.SetActive(true);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -324,7 +365,7 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.CompareTag("Monster"))
         {
             //isDamage = true;
-            Invoke(nameof(ResetCondition), 0.5f); // 애니메이션 테스트용 임시 코드
+            //Invoke(nameof(ResetCondition), 0.5f); // 애니메이션 테스트용 임시 코드
         }
     }
 
@@ -333,6 +374,17 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.CompareTag("Ground"))
         {
             isAir = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Monster"))
+        {
+            float damage = _weaponSwitch.weaponDamage;
+            if (isJumpAttacking) damage *= 1.2f;
+
+            CombatManager.TakeDamage(gameObject.tag, damage);
         }
     }
 }

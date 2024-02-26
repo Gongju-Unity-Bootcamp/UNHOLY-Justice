@@ -1,4 +1,4 @@
-namespace Types
+namespace Data
 {
     public enum WeaponType
     {

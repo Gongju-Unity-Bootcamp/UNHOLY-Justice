@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 6432508957181941757}
   m_Layer: 0
   m_Name: minotaur1
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -640,7 +640,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2.2, y: 2.2, z: 2.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2796384994311789709}
@@ -684,7 +684,6 @@ MonoBehaviour:
   _player: {fileID: 0}
   _isIdle: 0
   _keepDEF: 0
-  _isForward: 0
   _bossHP: 10
   _attackRange: 6
   _minJump: 15
@@ -3659,6 +3658,72 @@ Transform:
   - {fileID: 5204011175747088969}
   m_Father: {fileID: 738009901371712883}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5954793242750748469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4955737095811669160}
+  - component: {fileID: 261161883691736496}
+  - component: {fileID: 892918905054258683}
+  m_Layer: 0
+  m_Name: BossCol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4955737095811669160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5954793242750748469}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.028675426, y: 0.056855757, z: -0.22277169, w: 0.97278875}
+  m_LocalPosition: {x: 0.211, y: -0.028, z: 0.593}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6538151006410368480}
+  m_LocalEulerAnglesHint: {x: -1.745, y: 7.091, z: -25.905}
+--- !u!65 &261161883691736496
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5954793242750748469}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2720196, y: 1.8895016, z: 0.6239982}
+  m_Center: {x: 0.037716582, y: 0.023693157, z: -0.054572284}
+--- !u!114 &892918905054258683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5954793242750748469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01e274925bd2e74e8ded35b1ab9f614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6076255750142534943
 GameObject:
   m_ObjectHideFlags: 0
@@ -4609,6 +4674,7 @@ Transform:
   - {fileID: 3811535381381945089}
   - {fileID: 1231248384744791751}
   - {fileID: 738009901371712883}
+  - {fileID: 4955737095811669160}
   m_Father: {fileID: 3184693246446167794}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8925169485437345955

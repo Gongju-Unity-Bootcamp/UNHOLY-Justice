@@ -1,23 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using UnityEngine;
 
 public class AttackBehaviour : StateMachineBehaviour
 {
-    private bool isAttacking = false;
+    private PlayerController _playerController;
+    public string _weaponTag = default;
 
-    // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetBool(PlayerAnimParameter.IsAttacking, isAttacking);
+        if (animator.GetInteger(PlayerAnimParameter.WeaponType) == (int)WeaponType.OneHand)
+            CombatManager.ConsumeStamina((float)StaminaValues.onehand);
+        else if (animator.GetInteger(PlayerAnimParameter.WeaponType) == (int)WeaponType.TwoHand)
+            CombatManager.ConsumeStamina((float)StaminaValues.twohand);
     }
 
     // OnStateMachineEnter is called when entering a state machine via its Entry Node
     override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
     {
+        _playerController = animator.GetComponent<PlayerController>();
+
         animator.applyRootMotion = true;
 
-        isAttacking = true;
+        _playerController.isAttacking = true;
     }
 
     // OnStateMachineExit is called when exiting a state machine via its Exit Node
@@ -25,6 +31,6 @@ public class AttackBehaviour : StateMachineBehaviour
     {
         animator.applyRootMotion = false;
 
-        isAttacking = false;
+        _playerController.isAttacking = false;
     }
 }

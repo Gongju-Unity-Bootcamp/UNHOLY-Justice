@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a49e7db84d3600b43b7e625eb11ca394
+guid: dcc6de2c3705c1a4fb8380b714764cdd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
@@ -502,7 +502,10 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'B_Spine' has translation animation that
+      will be discarded.\n\t'B_Spine1' has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Monster
+  - OneHand
+  - TwoHand
+  - MinoAxe
   layers:
   - Default
   - TransparentFX
