@@ -20,12 +20,14 @@ public class CombatManager : MonoBehaviour
     public static float _currentPlayerHP;
     public static float _currentPlayerST;
 
+    private static float _defenseTime = default;
     public static float _dist;
-    public static float _attackRange = 6f;
+    public static float _attackRange = 3.5f;
     public static bool _isForward = false; // 앞 뒤 구분
     public static bool _parryingRange = false;
     public static bool _canParrying = false;
     public static bool _checkParrying = false;
+    public static bool _longDefense = false;
 
     void Awake()
     {
@@ -83,23 +85,20 @@ public class CombatManager : MonoBehaviour
 
         float dotProduct = Vector3.Dot(directionToPlayer, bossForward);
 
-        if (dotProduct > 0.5f)
-        {
-            _isForward = true;
-        }
-        else
-        {
-            _isForward = false;
-        }
+        if (dotProduct > 0.5f) _isForward = true;
+        else _isForward = false;
 
-        if (_isForward && _dist <= _attackRange)
-        {
-            _parryingRange = true;
-        }
-        else
-        {
-            _parryingRange = false;
-        }
+        if (_isForward && _dist <= _attackRange) _parryingRange = true;
+        else _parryingRange = false;
+    }
+
+    public static void CheckTime(bool state)
+    {
+        if (state) _defenseTime += Time.deltaTime;
+        else _defenseTime = default;
+
+        if (_defenseTime >= 5f) _longDefense = true;
+        else _longDefense = false;
     }
 
     /// <summary>
@@ -111,7 +110,9 @@ public class CombatManager : MonoBehaviour
     {
         if (type == "Player")
             _currentBossHP -= damage;
-        else if (type == "MinoAxe")
+        if (type == "MinoAxe")
+            _currentPlayerHP -= damage;
+        else if (type == "MinoSlam")
             _currentPlayerHP -= damage;
 
         // boss 및 player의 체력을 확인하기 위해 임시적으로 삽입했습니다.

@@ -103,6 +103,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isDead) return;
+
         if (!isDamage && !isStun)
         {
             PlayerMove(moveDirection);
@@ -127,6 +129,8 @@ public class PlayerController : MonoBehaviour
         {
             isAttack = false;
         }
+
+        CombatManager.CheckTime(isDefense);
 
         ControlAnimation();
     }
@@ -330,11 +334,6 @@ public class PlayerController : MonoBehaviour
         CombatManager.RecoveryStamina((float)StaminaValues.parry);
     }
 
-    void ResetCondition()
-    {
-        isDamage = false;
-    }
-
     /// <summary>
     /// 공격 범위 콜라이더를 활성화 시키는 메소드입니다.
     /// 애니메이션 이벤트에서 호출되며, float 값을 받아 콜라이더 종료 시간을 설정합니다.
@@ -360,12 +359,6 @@ public class PlayerController : MonoBehaviour
         {
             isAir = false;
             isJumpAttack = false;
-        }
-
-        if (collision.transform.CompareTag("Monster"))
-        {
-            //isDamage = true;
-            //Invoke(nameof(ResetCondition), 0.5f); // 애니메이션 테스트용 임시 코드
         }
     }
 
