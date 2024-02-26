@@ -27,6 +27,7 @@ public class MinoController : MonoBehaviour
     public GameObject KickPosition;
     public GameObject SlamPosition;
 
+    public ParticleSystem _trail;
     NavMeshAgent _agent;
 
 
@@ -193,5 +194,12 @@ public class MinoController : MonoBehaviour
 
         Instantiate(_kickPrefab, _kickPosition, transform.rotation);
         _specialAttack = true;
+    }
+
+    public void ActiveTrail(float _time)
+    {
+        var _tempTrail = _trail.main;
+        _tempTrail.duration = _time;
+        _trail.Play();
     }
 }

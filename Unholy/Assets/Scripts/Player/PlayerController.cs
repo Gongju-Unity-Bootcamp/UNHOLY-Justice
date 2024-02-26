@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     [Header("ETC")]
     [SerializeField] private GameObject _oneHandCol;
     [SerializeField] private GameObject _twoHandCol;
+    public GameObject _parrySpark;
     float prevAttackInputTime = 0;
 
     void Awake()
@@ -331,6 +332,9 @@ public class PlayerController : MonoBehaviour
 
     void PlayerParrying()
     {
+        Vector3 _tempPos = transform.position + transform.forward + (transform.up * 2f);
+        Instantiate(_parrySpark, _tempPos, Quaternion.identity);
+
         CombatManager.RecoveryStamina((float)StaminaValues.parry);
     }
 
