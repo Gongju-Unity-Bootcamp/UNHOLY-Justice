@@ -26,7 +26,6 @@ public class TitleSceneManager : MonoBehaviour
 
             _exitGame.performed += context =>
             {
-                Debug.Log("esc");
                 ExitGame();
             };
         }

@@ -20,11 +20,6 @@ public class UIPopUp : MonoBehaviour
     public bool isFadeFinish;
     public static bool coroutineFlag = false;
 
-    //UI 동작을 확인하기 위해 추가한 임시 변수입니다.
-    //추후 삭제 예정입니다.
-    public static bool isDead = false;
-
-
     /// <summary>
     /// 해당 컴포넌트에 할당된 canvasgroup의 alpha값들을 초기화 해줍니다.
     /// </summary>
@@ -44,8 +39,7 @@ public class UIPopUp : MonoBehaviour
     {
         CanvasGroup _canvas = null;
 
-        //추후 isDead는 CombatManager._currentPlayerHP <= 0로 바뀌어야 합니다.
-        if (isDead)
+        if (CombatManager._currentPlayerHP <= 0)
         {
             _canvas = _canvasGroup[(int)popUpType.GameOver];
         }
@@ -70,9 +64,7 @@ public class UIPopUp : MonoBehaviour
 
         if (coroutineFlag)
         {
-            StopAllCoroutines();
             LoadingManager.Instance.LoadScene((int)SceneIndex.Title);
-            isDead = false;
             coroutineFlag = false;
         }
     }

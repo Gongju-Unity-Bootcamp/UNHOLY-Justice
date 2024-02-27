@@ -130,13 +130,6 @@ public class PlayerController : MonoBehaviour
         }
 
         ControlAnimation();
-
-        //ui를 확인하기 위해 임시적으로 넣은 코드입니다.
-        //추후 삭제 예정입니다.
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            UIPopUp.isDead = true;
-        }
     }
 
     private void ControlAnimation()

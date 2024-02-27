@@ -54,6 +54,7 @@ public class LoadingManager : MonoBehaviour
     {
         gameObject.SetActive(true);
         loadSceneIndex = sceneIndex;
+        StopAllCoroutines();
         StartCoroutine(LoadSceneProcess());
     }
 

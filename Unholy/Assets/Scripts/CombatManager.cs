@@ -53,8 +53,6 @@ public class CombatManager : MonoBehaviour
         _currentPlayerST = _playerMaxStamina;
     }
 
-    // 변경 예정인 함수입니다.
-    // 전투 매니저에 포함될 예정으로, 패링 기능을 수행하는 메소드입니다.
     void ActivateParry()
     {
         if (_parryingRange)
@@ -111,10 +109,6 @@ public class CombatManager : MonoBehaviour
             _currentBossHP -= damage;
         else if (type == "MinoAxe")
             _currentPlayerHP -= damage;
-
-        // boss 및 player의 체력을 확인하기 위해 임시적으로 삽입했습니다.
-        //Debug.Log($"_currentBossHP = {_currentBossHP}");
-        //Debug.Log($"_currentPlayerHP = {_currentPlayerHP}");
     }
 
     /// <summary>
