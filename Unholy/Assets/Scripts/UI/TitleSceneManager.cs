@@ -29,6 +29,8 @@ public class TitleSceneManager : MonoBehaviour
                 ExitGame();
             };
         }
+
+        SoundManager.Instance.Play(SoundType.Bgm, "test-bgm");
     }
 
     public void ExitGame()

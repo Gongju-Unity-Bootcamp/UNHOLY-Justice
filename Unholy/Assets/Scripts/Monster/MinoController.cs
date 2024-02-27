@@ -3,15 +3,19 @@ using CleverCrow.Fluid.BTs.Tasks;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro.EditorUtilities;
+using Unity.VisualScripting;
+using TMPro;
 
 public class MinoController : MonoBehaviour
 {
     [SerializeField] internal BehaviorTree _treeA;
     [SerializeField] Transform _player;
 
+    public static bool _specialAttack = false;
     internal bool _isHit;
-    public bool _isIdle; // true √Ä√è¬Ω√É Idle ¬ª√≥√Ö√Ç √á√ò√Å¬¶
-    public bool _keepDEF = false;
+    public bool _isIdle; // true ¿œΩ√ Idle ªÛ≈¬ «ÿ¡¶
+    bool _look = false;
 
     public float _minJump = 10f;
     public float _maxJump = 12f;
@@ -119,7 +123,6 @@ public class MinoController : MonoBehaviour
             .End()
             .Build();
     }
-    bool _look = false;
     private void Update()  
     {
         CombatManager.CheckDistance(_player, gameObject.transform);
@@ -137,7 +140,7 @@ public class MinoController : MonoBehaviour
         }
 
     }
-    private void OnEnable() { ActivateAi(); }
+    private void Start() { ActivateAi(); }
 
     IEnumerator ActivateAiCo()
     {
@@ -152,12 +155,23 @@ public class MinoController : MonoBehaviour
             if (CombatManager._currentBossHP <= 0)
             {
                 _bossAnimator.Play("BossDie");
+                CombatManager._isBossDead = true;
             }
             else
             {
                 _treeA.Tick();
             }
             yield return null;
+        }
+    }
+
+    public void BreakDefense()
+    {
+        if (CombatManager._isForward && CombatManager._dist <= CombatManager._attackRange)
+        {
+            transform.LookAt(_player.position);
+            _player.GetComponent<PlayerController>().isDamage = true;
+            CombatManager.ConsumeStamina(CombatManager._currentPlayerST);
         }
     }
 
@@ -184,14 +198,22 @@ public class MinoController : MonoBehaviour
         }
     }
 
-    public void ProcessBackstep()
+    public void GroundSlam()
     {
-        transform.LookAt(_player.position);
+        Vector3 _slamPosition = SlamPosition.transform.position;
+        _slamPosition.y = 0.05f;
+
+        Instantiate(_slamPrefab, _slamPosition, Quaternion.identity);
+        _specialAttack = true;
     }
 
-    public void ProcessJumpAttack()
+    public void GroundKick()
     {
-        transform.LookAt(_player.position);
+        Vector3 _kickPosition = KickPosition.transform.position;
+        _kickPosition.y = 0.05f;
+
+        Instantiate(_kickPrefab, _kickPosition, transform.rotation);
+        _specialAttack = true;
     }
 
     public void ActiveTrail(float _time)
