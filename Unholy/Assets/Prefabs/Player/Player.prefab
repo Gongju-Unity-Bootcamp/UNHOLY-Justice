@@ -531,6 +531,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponSwitch: {fileID: 7375726191836826796}
   _playerController: {fileID: 1353488866188461503}
+  _sparkPrefab: {fileID: 893418734675235107, guid: c95cf19787b90d5449326370bfa1de7a,
+    type: 3}
 --- !u!1 &2219815345735519827
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,6 +635,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponSwitch: {fileID: 7375726191836826796}
   _playerController: {fileID: 1353488866188461503}
+  _sparkPrefab: {fileID: 893418734675235107, guid: c95cf19787b90d5449326370bfa1de7a,
+    type: 3}
 --- !u!1 &2429040142259878455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1462,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5683056634769682616}
   serializedVersion: 4
-  m_Mass: 50
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1650,6 +1654,8 @@ MonoBehaviour:
   horizontalMovement: 0
   _oneHandCol: {fileID: 2301064664071819257}
   _twoHandCol: {fileID: 2018250710807053704}
+  _parrySpark: {fileID: 893418734675235107, guid: c713814f52666604baaa72eb152f6d8c,
+    type: 3}
 --- !u!114 &7375726191836826796
 MonoBehaviour:
   m_ObjectHideFlags: 0
