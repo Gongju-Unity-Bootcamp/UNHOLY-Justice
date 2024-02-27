@@ -9,6 +9,12 @@ public class MinoCollider : MonoBehaviour
 
     PlayerController _playerController;
 
+    [Header("Prefab")]
+    public GameObject _bloodPrefab;
+
+    Vector3 spawnPosition;
+    Quaternion spawnRotation;
+
 
     private void Awake()
     {
@@ -27,9 +33,14 @@ public class MinoCollider : MonoBehaviour
     bool _enterCol = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             _enterCol = true;
+
+            var collisionPoint = other.ClosestPoint(transform.position);
+            var surfaceNormal = other.ClosestPointOnBounds(transform.position) - transform.position;
+            spawnPosition = collisionPoint + surfaceNormal;
+            spawnRotation = Quaternion.FromToRotation(Vector3.up, surfaceNormal);
         }
     }
 
@@ -46,7 +57,10 @@ public class MinoCollider : MonoBehaviour
         if (_playerController.isDodging) return;
 
         if(!_playerController.isDefense)
+        {
             CombatManager.TakeDamage(gameObject.tag, 25);
+            Instantiate(_bloodPrefab, spawnPosition, spawnRotation);
+        }
         _playerController.isDamage = true;
     }
 }

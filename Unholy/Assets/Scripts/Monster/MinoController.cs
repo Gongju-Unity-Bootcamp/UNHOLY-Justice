@@ -10,13 +10,20 @@ public class MinoController : MonoBehaviour
     [SerializeField] Transform _player;
 
     internal bool _isHit;
-    public bool _isIdle; // true ÀÏ½Ã Idle »óÅÂ ÇØÁ¦
+    public bool _isIdle; // true Ã€ÃÂ½Ãƒ Idle Â»Ã³Ã…Ã‚ Ã‡Ã˜ÃÂ¦
     public bool _keepDEF = false;
 
     public float _minJump = 10f;
     public float _maxJump = 12f;
 
     internal Animator _bossAnimator;
+    public GameObject _slamPrefab;
+    public GameObject _kickPrefab;
+
+    public GameObject KickPosition;
+    public GameObject SlamPosition;
+
+    public ParticleSystem _trail;
     NavMeshAgent _agent;
 
 
@@ -39,12 +46,20 @@ public class MinoController : MonoBehaviour
                                 return TaskStatus.Success;
                             })
                             .RandomChance(1, 3)
-                            .StateAction("BossBackstep", ProcessBackstep)
-                            .StateAction("BossStompAttack")
+                            .StateAction("BossBackstep", () => 
+                            { 
+                                transform.LookAt(_player.position);
+                                _bossAnimator.applyRootMotion = true;
+                            })
+                            .StateAction("BossStompAttack", () =>          
+                            { 
+                                _bossAnimator.applyRootMotion = false;
+                                transform.LookAt(_player.position);
+                            })
                         .End()
                         .Sequence()
-                            .Condition("keepDEF", () => _keepDEF == true)
-                            .StateAction("BossKickAttack")
+                            .Condition("keepDEF", () => CombatManager._longDefense && CombatManager._dist <= CombatManager._attackRange)
+                            .StateAction("BossKickAttack", () => { transform.LookAt(_player.position); })
                         .End()
                         .SelectorRandom()
                             .Sequence()
@@ -73,7 +88,16 @@ public class MinoController : MonoBehaviour
                         _agent.isStopped = true;
                         return TaskStatus.Success;
                     })
-                    .StateAction("BossJumpAttack", ProcessLookAt)
+                    .StateAction("BossJumpAttack", () =>
+                    {
+                        transform.LookAt(_player.position);
+                        _bossAnimator.applyRootMotion = true;
+                    })
+                    .Do(() => 
+                    {
+                        _bossAnimator.applyRootMotion = false;
+                        return TaskStatus.Success;
+                    }) 
                 .End()
                 .RepeatUntilSuccess()
                     .Do("BossTrack", () =>
@@ -108,6 +132,8 @@ public class MinoController : MonoBehaviour
         if (CombatManager._checkParrying)
         {
             BossParrying();
+
+            CombatManager._checkParrying = false;
         }
 
     }
@@ -166,5 +192,16 @@ public class MinoController : MonoBehaviour
     public void ProcessJumpAttack()
     {
         transform.LookAt(_player.position);
+    }
+
+    public void ActiveTrail(float _time)
+    {
+        var _tempTrail = _trail.main;
+        
+        _tempTrail.duration = default;
+
+        _tempTrail.duration = _time;
+        
+        _trail.Play();
     }
 }
