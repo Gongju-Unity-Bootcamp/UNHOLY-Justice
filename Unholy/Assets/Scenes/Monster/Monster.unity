@@ -1171,8 +1171,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800993429}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10473619, y: -0.00000036494052, z: 0.000000038433864, w: 0.99450004}
-  m_LocalPosition: {x: -0.576958, y: -6.2801948, z: 11.731839}
+  m_LocalRotation: {x: 0.5457981, y: -0.0000032552155, z: 0.0000021203664, w: 0.83791673}
+  m_LocalPosition: {x: -0.57693374, y: 0.78327084, z: 2.4103575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1198,9 +1198,9 @@ MonoBehaviour:
   m_TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_MinimumDistanceFromTarget: 0.1
+  m_MinimumDistanceFromTarget: 0.01
   m_AvoidObstacles: 1
-  m_DistanceLimit: 0
+  m_DistanceLimit: 1
   m_MinimumOcclusionTime: 0
   m_CameraRadius: 0.1
   m_Strategy: 0
@@ -1434,7 +1434,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004625347}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17819066, y: -0.000000009797294, z: 0.0000000017741802, w: 0.983996}
+  m_LocalRotation: {x: 0.17819066, y: -0.000000008135461, z: 0.0000000014732409, w: 0.983996}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2119,7 +2119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014224358}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.20106587, y: 1e-45, z: -0, w: 0.9795777}
+  m_LocalRotation: {x: 0.20106587, y: -1e-45, z: -0, w: 0.9795777}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2229,6 +2229,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2193640268616111114, guid: aef9a3e063e740f4d8100584de73ceb4,
         type: 3}
+      propertyPath: _isIdle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2193640268616111114, guid: aef9a3e063e740f4d8100584de73ceb4,
+        type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 489013908}
@@ -2236,11 +2241,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: minotaur1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2594334180195604521, guid: aef9a3e063e740f4d8100584de73ceb4,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8857584697337689243, guid: aef9a3e063e740f4d8100584de73ceb4,
         type: 3}

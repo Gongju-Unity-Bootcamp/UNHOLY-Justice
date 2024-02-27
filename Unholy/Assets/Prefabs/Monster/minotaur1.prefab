@@ -763,7 +763,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2228955510092502124}
   serializedVersion: 4
-  m_Mass: 100
+  m_Mass: 500
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -823,8 +823,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.1218255, z: 1}
-  m_Center: {x: 0, y: 1.0379096, z: 0}
+  m_Size: {x: 1, y: 2.1218255, z: 0.5451715}
+  m_Center: {x: 0, y: 1.0379096, z: -0.10257336}
 --- !u!1 &2372257939111876935
 GameObject:
   m_ObjectHideFlags: 0
@@ -3824,6 +3824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b01e274925bd2e74e8ded35b1ab9f614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bloodPrefab: {fileID: 183573059371509244, guid: 0a6b7160fffbcf647af2dbe65380d700,
+    type: 3}
 --- !u!1 &6076255750142534943
 GameObject:
   m_ObjectHideFlags: 0
