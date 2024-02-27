@@ -1684,6 +1684,7 @@ MonoBehaviour:
   - {fileID: 6464278798263907876}
   leftHandPositionWeight: 0
   leftHandRotationWeight: 0
+  blendToTransform: {fileID: 0}
 --- !u!1 &5954234438478325055
 GameObject:
   m_ObjectHideFlags: 0
@@ -2048,9 +2049,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8547034117389806790}
   - {fileID: 5398021520765764467}
   - {fileID: 848301313851079772}
+  - {fileID: 8547034117389806790}
   m_Father: {fileID: 4621921127523862539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1972360469472724220
@@ -2166,8 +2167,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7270998608098364747}
   - {fileID: 3977910553157819224}
+  - {fileID: 7270998608098364747}
   m_Father: {fileID: 4621921127523862539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5924364537594213847
