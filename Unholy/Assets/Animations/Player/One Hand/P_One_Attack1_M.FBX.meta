@@ -508,6 +508,14 @@ ModelImporter:
         floatParameter: 0.05
         intParameter: 0
         messageOptions: 0
+      - time: 0.3471698
+        functionName: PlayerSound
+        data: PlayerOneHand
+        objectReferenceParameter: {fileID: 11500000, guid: f6e89defe3f51124cb079fdbdf119723,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

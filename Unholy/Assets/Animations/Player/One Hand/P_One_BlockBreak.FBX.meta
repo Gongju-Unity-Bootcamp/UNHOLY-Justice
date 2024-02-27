@@ -494,7 +494,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: PlayerSound
+        data: DefenseBreak
+        objectReferenceParameter: {fileID: 11500000, guid: f6e89defe3f51124cb079fdbdf119723,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

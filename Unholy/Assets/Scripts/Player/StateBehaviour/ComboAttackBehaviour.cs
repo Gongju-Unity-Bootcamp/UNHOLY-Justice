@@ -22,7 +22,6 @@ public class ComboAttackBehaviour : StateMachineBehaviour
             if (_isOneTime == false)
             {
                 _isOneTime = true;
-                SoundManager.Instance.Play(SoundType.Effect, "test-sword");
             }
 
             // 키 입력이 있으면 전환.

@@ -98,13 +98,19 @@ public class PlayerController : MonoBehaviour
 
         _oneHandCol.SetActive(false);
         _twoHandCol.SetActive(false);
+        
+        isDodging = false;
 
         InitializeInputSystem();
     }
 
     void FixedUpdate()
     {
-        if (isDead) return;
+        if (isDead)
+        {
+            isDodging = true;
+            return;
+        }
 
         if (!isDamage && !isStun)
         {
@@ -132,6 +138,8 @@ public class PlayerController : MonoBehaviour
         }
 
         CombatManager.CheckTime(isDefense);
+
+        if (!isTargeting) isTargeting = CombatManager._isIdle;
 
         ControlAnimation();
     }
@@ -243,10 +251,9 @@ public class PlayerController : MonoBehaviour
 
         _unarmed.started += context =>
         {
-            if (isDefense || weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == (int)WeaponType.Unarmed) return;
+            if (CombatManager._isIdle || isDefense || weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == (int)WeaponType.Unarmed) return;
 
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.Unarmed);
-            isTargeting = false;
             weaponSwitch = true;
             isSwitchDone = true;
         };
@@ -257,7 +264,6 @@ public class PlayerController : MonoBehaviour
             if (isDefense || weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == (int)WeaponType.OneHand) return;
 
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.OneHand);
-            isTargeting = true;
             weaponSwitch = true;
             isSwitchDone = true;
         };
@@ -268,7 +274,6 @@ public class PlayerController : MonoBehaviour
             if (isDefense || weaponSwitch || isSwitchDone || isDodging || _weaponSwitch.weaponIndex == (int)WeaponType.TwoHand) return;
 
             _weaponSwitch.GetIndexOfWeaponTypes(WeaponType.TwoHand);
-            isTargeting = true;
             weaponSwitch = true;
             isSwitchDone = true;
         };
@@ -383,5 +388,10 @@ public class PlayerController : MonoBehaviour
 
             CombatManager.TakeDamage(gameObject.tag, damage);
         }
+    }
+
+    public void PlayerSound(string name)
+    {
+        SoundManager.Instance.Play(SoundType.Effect, name);
     }
 }
