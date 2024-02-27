@@ -4,29 +4,20 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro.EditorUtilities;
-using Unity.VisualScripting;
-using TMPro;
 
 public class MinoController : MonoBehaviour
 {
     [SerializeField] internal BehaviorTree _treeA;
     [SerializeField] Transform _player;
 
-    public static bool _specialAttack = false;
     internal bool _isHit;
     public bool _isIdle; // true 일시 Idle 상태 해제
-    bool _look = false;
+    public bool _keepDEF = false;
 
     public float _minJump = 10f;
     public float _maxJump = 12f;
 
     internal Animator _bossAnimator;
-    public GameObject _slamPrefab;
-    public GameObject _kickPrefab;
-
-    public GameObject KickPosition;
-    public GameObject SlamPosition;
-
     NavMeshAgent _agent;
 
 
@@ -49,11 +40,11 @@ public class MinoController : MonoBehaviour
                                 return TaskStatus.Success;
                             })
                             .RandomChance(1, 3)
-                            .StateAction("BossBackstep", () => { transform.LookAt(_player.position); })
+                            .StateAction("BossBackstep", ProcessBackstep)
                             .StateAction("BossStompAttack")
                         .End()
                         .Sequence()
-                            .Condition("keepDEF", () => CombatManager._longDefense && CombatManager._dist <= CombatManager._attackRange)
+                            .Condition("keepDEF", () => _keepDEF == true)
                             .StateAction("BossKickAttack")
                         .End()
                         .SelectorRandom()
@@ -83,7 +74,7 @@ public class MinoController : MonoBehaviour
                         _agent.isStopped = true;
                         return TaskStatus.Success;
                     })
-                    .StateAction("BossJumpAttack", () => { transform.LookAt(_player.position); })
+                    .StateAction("BossJumpAttack", ProcessLookAt)
                 .End()
                 .RepeatUntilSuccess()
                     .Do("BossTrack", () =>
@@ -105,6 +96,7 @@ public class MinoController : MonoBehaviour
             .End()
             .Build();
     }
+    bool _look = false;
     private void Update()  
     {
         CombatManager.CheckDistance(_player, gameObject.transform);
@@ -144,16 +136,6 @@ public class MinoController : MonoBehaviour
         }
     }
 
-    public void BreakDefense()
-    {
-        if (CombatManager._isForward && CombatManager._dist <= CombatManager._attackRange)
-        {
-            transform.LookAt(_player.position);
-            _player.GetComponent<PlayerController>().isDamage = true;
-            CombatManager.ConsumeStamina(CombatManager._currentPlayerST);
-        }
-    }
-
     void BossParrying()
     {
         _bossAnimator.Play("BossHit");
@@ -177,21 +159,13 @@ public class MinoController : MonoBehaviour
         }
     }
 
-    public void GroundSlam()
+    public void ProcessBackstep()
     {
-        Vector3 _slamPosition = SlamPosition.transform.position;
-        _slamPosition.y = 0.05f;
-
-        Instantiate(_slamPrefab, _slamPosition, Quaternion.identity);
-        _specialAttack = true;
+        transform.LookAt(_player.position);
     }
 
-    public void GroundKick()
+    public void ProcessJumpAttack()
     {
-        Vector3 _kickPosition = KickPosition.transform.position;
-        _kickPosition.y = 0.05f;
-
-        Instantiate(_kickPrefab, _kickPosition, transform.rotation);
-        _specialAttack = true;
+        transform.LookAt(_player.position);
     }
 }
