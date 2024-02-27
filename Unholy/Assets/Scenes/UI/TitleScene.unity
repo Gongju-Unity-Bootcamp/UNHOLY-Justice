@@ -507,7 +507,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 47f530dac1b563d419a88ff521839f0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 72d91918783440c4e9eae181c9305a8d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1166,7 +1166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tutorialImage: {fileID: 861406859}
-  playSceneIndex: 1
 --- !u!114 &1631519136
 MonoBehaviour:
   m_ObjectHideFlags: 0

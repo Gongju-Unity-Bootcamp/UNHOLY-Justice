@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +40,6 @@ public class UIHudManager : MonoBehaviour
 
         _quickSlots.TurnOnSlots(_playerAnimator.GetInteger(PlayerAnimParameter.WeaponType));
 
-        if (CombatManager._currentBossHP <= 0 || CombatManager._currentPlayerHP <= 0)
-            _uiPopUp.EndProcess();
+        _uiPopUp.EndProcess();
     }
 }

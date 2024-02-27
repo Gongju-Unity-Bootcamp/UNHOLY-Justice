@@ -3,7 +3,6 @@ using CleverCrow.Fluid.BTs.Tasks;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using TMPro.EditorUtilities;
 
 public class MinoController : MonoBehaviour
 {

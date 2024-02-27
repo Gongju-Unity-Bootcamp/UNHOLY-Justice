@@ -16,7 +16,7 @@ public class TitleSceneManager : MonoBehaviour
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
+        if (!Cursor.visible) Cursor.visible = true;
 
         if (_playerUIInput == null)
         {
@@ -53,7 +53,7 @@ public class TitleSceneManager : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(LoadPlayScene());
+        LoadingManager.Instance.LoadScene((int)SceneIndex.Play);
     }
 
     public IEnumerator LoadPlayScene()
