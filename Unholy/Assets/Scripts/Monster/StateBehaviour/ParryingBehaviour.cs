@@ -21,7 +21,7 @@ public class ParryingBehaviour : StateMachineBehaviour
     [Range(0, 1)]public float EndCol3 = 0f;
     MinoCollider _minoCollider;
     PlayerController _playerController;
-    
+   
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

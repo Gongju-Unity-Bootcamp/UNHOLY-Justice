@@ -14,7 +14,6 @@ public class MinoController : MonoBehaviour
 
     public static bool _specialAttack = false;
     internal bool _isHit;
-    public bool _isIdle; // true 일시 Idle 상태 해제
     bool _look = false;
 
     public float _minJump = 10f;
@@ -135,8 +134,6 @@ public class MinoController : MonoBehaviour
         if (CombatManager._checkParrying)
         {
             BossParrying();
-
-            CombatManager._checkParrying = false;
         }
 
     }
@@ -146,7 +143,7 @@ public class MinoController : MonoBehaviour
     {
         while (true)
         {
-            if (!_isIdle)
+            if (CombatManager._isIdle == false)
             {
                 yield return null;
                 continue;
@@ -225,5 +222,10 @@ public class MinoController : MonoBehaviour
         _tempTrail.duration = _time;
         
         _trail.Play();
+    }
+
+    public void BossSound(string name)
+    {
+        SoundManager.Instance.Play(SoundType.Effect, name);
     }
 }

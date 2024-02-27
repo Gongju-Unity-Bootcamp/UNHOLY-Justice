@@ -30,7 +30,7 @@ public class TitleSceneManager : MonoBehaviour
             };
         }
 
-        SoundManager.Instance.Play(SoundType.Bgm, "test-bgm");
+        //SoundManager.Instance.Play(SoundType.Bgm, "test-bgm");
     }
 
     public void ExitGame()
@@ -44,16 +44,19 @@ public class TitleSceneManager : MonoBehaviour
 
     public void TutorialButton()
     {
+        SoundManager.Instance.Play(SoundType.Effect, "TitleButton");
         _tutorialImage.SetActive(true);
     }
 
     public void CloseButton()
     {
+        SoundManager.Instance.Play(SoundType.Effect, "TitleButton");
         _tutorialImage.SetActive(false);
     }
 
     public void StartGame()
     {
+        SoundManager.Instance.Play(SoundType.Effect, "TitleButton");
         LoadingManager.Instance.LoadScene((int)SceneIndex.Play);
     }
 

@@ -75,6 +75,7 @@ public class MinoCollider : MonoBehaviour
         {
             CombatManager.TakeDamage(gameObject.tag, 25);
             Instantiate(_bloodPrefab, spawnPosition, spawnRotation);
+            SoundManager.Instance.Play(SoundType.Effect, "PlayerHit");
         }
         _playerController.isDamage = true;
     }

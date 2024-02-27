@@ -29,6 +29,7 @@ public class CombatManager : MonoBehaviour
     public static bool _checkParrying = false;
     public static bool _longDefense = false;
     public static bool _isPlayerDead = false;
+    public static bool _isIdle;
     public static bool _isBossDead { get; set; } = false;
 
     void Awake()
@@ -42,6 +43,8 @@ public class CombatManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         InitializeStats();
+
+        _isIdle = false;
     }
 
     void Update()
