@@ -50,12 +50,20 @@ public class MinoController : MonoBehaviour
                                 return TaskStatus.Success;
                             })
                             .RandomChance(1, 3)
-                            .StateAction("BossBackstep", () => { transform.LookAt(_player.position); })
-                            .StateAction("BossStompAttack")
+                            .StateAction("BossBackstep", () => 
+                            { 
+                                transform.LookAt(_player.position);
+                                _bossAnimator.applyRootMotion = true;
+                            })
+                            .StateAction("BossStompAttack", () =>          
+                            { 
+                                _bossAnimator.applyRootMotion = false;
+                                transform.LookAt(_player.position);
+                            })
                         .End()
                         .Sequence()
                             .Condition("keepDEF", () => CombatManager._longDefense && CombatManager._dist <= CombatManager._attackRange)
-                            .StateAction("BossKickAttack")
+                            .StateAction("BossKickAttack", () => { transform.LookAt(_player.position); })
                         .End()
                         .SelectorRandom()
                             .Sequence()
@@ -84,7 +92,16 @@ public class MinoController : MonoBehaviour
                         _agent.isStopped = true;
                         return TaskStatus.Success;
                     })
-                    .StateAction("BossJumpAttack", () => { transform.LookAt(_player.position); })
+                    .StateAction("BossJumpAttack", () =>
+                    {
+                        transform.LookAt(_player.position);
+                        _bossAnimator.applyRootMotion = true;
+                    })
+                    .Do(() => 
+                    {
+                        _bossAnimator.applyRootMotion = false;
+                        return TaskStatus.Success;
+                    }) 
                 .End()
                 .RepeatUntilSuccess()
                     .Do("BossTrack", () =>
@@ -118,6 +135,8 @@ public class MinoController : MonoBehaviour
         if (CombatManager._checkParrying)
         {
             BossParrying();
+
+            CombatManager._checkParrying = false;
         }
 
     }
@@ -199,7 +218,11 @@ public class MinoController : MonoBehaviour
     public void ActiveTrail(float _time)
     {
         var _tempTrail = _trail.main;
+        
+        _tempTrail.duration = default;
+
         _tempTrail.duration = _time;
+        
         _trail.Play();
     }
 }
