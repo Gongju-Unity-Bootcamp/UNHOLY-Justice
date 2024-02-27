@@ -39,11 +39,11 @@ public class UIPopUp : MonoBehaviour
     {
         CanvasGroup _canvas = null;
 
-        if (CombatManager._currentPlayerHP <= 0)
+        if (CombatManager._isPlayerDead)
         {
             _canvas = _canvasGroup[(int)popUpType.GameOver];
         }
-        else if(CombatManager._currentBossHP <= 0)
+        else if(CombatManager._isBossDead)
         {
             _canvas = _canvasGroup[(int)popUpType.GameClear];
         }
@@ -66,6 +66,8 @@ public class UIPopUp : MonoBehaviour
         {
             LoadingManager.Instance.LoadScene((int)SceneIndex.Title);
             coroutineFlag = false;
+            CombatManager._isPlayerDead = false;
+            CombatManager._isBossDead = false;
         }
     }
 

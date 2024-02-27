@@ -9,7 +9,7 @@ public class UIStatBar : MonoBehaviour
     [SerializeField] private RectTransform _rectTransform;
 
     private int widthScaleMultiplier = 2;
-
+    //
     private void Awake()
     {
         _slider = GetComponent<Slider>();
