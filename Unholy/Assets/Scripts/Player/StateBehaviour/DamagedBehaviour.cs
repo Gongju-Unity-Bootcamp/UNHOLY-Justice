@@ -21,6 +21,7 @@ public class DamagedBehaviour : StateMachineBehaviour
         if (animator.GetBool(PlayerAnimParameter.IsDefense))
         {
             CombatManager.ConsumeStamina((float)StaminaValues.defenseHit);
+            Debug.Log("COUNT");
         }
 
         if (CombatManager._currentPlayerST <= (float)StaminaValues.defenseHit && animator.GetBool(PlayerAnimParameter.IsDefense))

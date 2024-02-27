@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Data;
-using TMPro;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CombatManager : MonoBehaviour
 {
@@ -12,22 +9,20 @@ public class CombatManager : MonoBehaviour
     public static CombatManager _instance;
 
     [Header("Status")]
-    [SerializeField] private int _bossMaxHP = 2000;
-    [SerializeField] private int _playerMaxHP = 200;
+    [SerializeField] public static int _bossMaxHP = 500;
+    [SerializeField] public static int _playerMaxHP = 200;
     [SerializeField] public static float _playerMaxStamina = 100;
 
     public static float _currentBossHP;
     public static float _currentPlayerHP;
     public static float _currentPlayerST;
 
-    private static float _defenseTime = default;
     public static float _dist;
-    public static float _attackRange = 3.5f;
+    public static float _attackRange = 6f;
     public static bool _isForward = false; // 앞 뒤 구분
     public static bool _parryingRange = false;
     public static bool _canParrying = false;
     public static bool _checkParrying = false;
-    public static bool _longDefense = false;
 
     void Awake()
     {
@@ -45,6 +40,7 @@ public class CombatManager : MonoBehaviour
     void Update()
     {
         ActivateParry();
+        //Debug.Log($"CurrentStamina = {_currentPlayerST}");
     }
 
     /// <summary>
@@ -57,8 +53,6 @@ public class CombatManager : MonoBehaviour
         _currentPlayerST = _playerMaxStamina;
     }
 
-    // 변경 예정인 함수입니다.
-    // 전투 매니저에 포함될 예정으로, 패링 기능을 수행하는 메소드입니다.
     void ActivateParry()
     {
         if (_parryingRange)
@@ -85,20 +79,23 @@ public class CombatManager : MonoBehaviour
 
         float dotProduct = Vector3.Dot(directionToPlayer, bossForward);
 
-        if (dotProduct > 0.5f) _isForward = true;
-        else _isForward = false;
+        if (dotProduct > 0.5f)
+        {
+            _isForward = true;
+        }
+        else
+        {
+            _isForward = false;
+        }
 
-        if (_isForward && _dist <= _attackRange) _parryingRange = true;
-        else _parryingRange = false;
-    }
-
-    public static void CheckTime(bool state)
-    {
-        if (state) _defenseTime += Time.deltaTime;
-        else _defenseTime = default;
-
-        if (_defenseTime >= 5f) _longDefense = true;
-        else _longDefense = false;
+        if (_isForward && _dist <= _attackRange)
+        {
+            _parryingRange = true;
+        }
+        else
+        {
+            _parryingRange = false;
+        }
     }
 
     /// <summary>
@@ -110,14 +107,8 @@ public class CombatManager : MonoBehaviour
     {
         if (type == "Player")
             _currentBossHP -= damage;
-        if (type == "MinoAxe")
+        else if (type == "MinoAxe")
             _currentPlayerHP -= damage;
-        else if (type == "MinoSlam")
-            _currentPlayerHP -= damage;
-
-        // boss 및 player의 체력을 확인하기 위해 임시적으로 삽입했습니다.
-        Debug.Log($"_currentBossHP = {_currentBossHP}");
-        Debug.Log($"_currentPlayerHP = {_currentPlayerHP}");
     }
 
     /// <summary>
