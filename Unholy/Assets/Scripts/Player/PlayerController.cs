@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public InputAction _unarmed;
     public InputAction _onehand;
     public InputAction _twohand;
+    public InputAction _targeting;
 
     [Header("Component")]
     public Transform _monsterObject;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Speed")]
     private float moveSpeed;
-    private float walkSpeed = 7.5f;
+    private float walkSpeed = 5f;
     private float sprintSpeed;
     private float rotationSpeed = 15f;
 
@@ -93,6 +94,8 @@ public class PlayerController : MonoBehaviour
         _onehand = _playerInput.actions.FindAction("OneHand");
         _twohand = _playerInput.actions.FindAction("TwoHand");
 
+        _targeting = _playerInput.actions.FindAction("Targeting");
+
         moveSpeed = walkSpeed;
         sprintSpeed = walkSpeed * 2f;
 
@@ -138,8 +141,6 @@ public class PlayerController : MonoBehaviour
         }
 
         CombatManager.CheckTime(isDefense);
-
-        if (!isTargeting) isTargeting = CombatManager._isIdle;
 
         ControlAnimation();
     }
@@ -278,6 +279,26 @@ public class PlayerController : MonoBehaviour
             isSwitchDone = true;
         };
         _twohand.canceled += context => weaponSwitch = false;
+
+        _targeting.started += context =>
+        {
+            isTargeting = !isTargeting;
+
+            if(_weaponSwitch.weaponIndex == (int)WeaponType.Unarmed)
+            {
+                GetComponent<WeaponSwitch>().GetIndexOfWeaponTypes(WeaponType.OneHand);
+                weaponSwitch = true;
+                isSwitchDone = true;
+            }
+            else
+            {
+                isTargeting = false;
+                GetComponent<WeaponSwitch>().GetIndexOfWeaponTypes(WeaponType.Unarmed);
+                weaponSwitch = true;
+                isSwitchDone = true;
+            }
+        };
+        _targeting.canceled += context => weaponSwitch = false;
     }
 
     private void PlayerMove(Vector3 moveDirection)

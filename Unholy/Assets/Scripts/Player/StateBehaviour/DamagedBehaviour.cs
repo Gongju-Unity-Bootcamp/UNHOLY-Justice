@@ -23,7 +23,7 @@ public class DamagedBehaviour : StateMachineBehaviour
             CombatManager.ConsumeStamina((float)StaminaValues.defenseHit);
         }
 
-        if (CombatManager._currentPlayerST <= (float)StaminaValues.defenseHit && animator.GetBool(PlayerAnimParameter.IsDefense))
+        if (animator.GetFloat(PlayerAnimParameter.PlayerST) <= (float)StaminaValues.defenseHit && animator.GetBool(PlayerAnimParameter.IsDefense))
         {
             _playerController.isStun = true;
             _playerController.isDefense = false;

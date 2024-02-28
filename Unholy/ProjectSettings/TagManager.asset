@@ -9,6 +9,8 @@ TagManager:
   - OneHand
   - TwoHand
   - MinoAxe
+  - MinoSlam
+  - Wall
   layers:
   - Default
   - TransparentFX

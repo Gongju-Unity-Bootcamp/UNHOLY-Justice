@@ -22,9 +22,6 @@ public class Portal : MonoBehaviour
             SoundManager.Instance.Play(SoundType.Bgm, "BattleBGM");
             gameObject.GetComponent<BoxCollider>().isTrigger = false;
             CombatManager._isIdle = true;
-            _playerController.weaponSwitch = true;
-            _playerController.isSwitchDone = true;
-            _playerController.GetComponent<WeaponSwitch>().GetIndexOfWeaponTypes(WeaponType.OneHand);
 
             _slider.gameObject.SetActive(true);
         }

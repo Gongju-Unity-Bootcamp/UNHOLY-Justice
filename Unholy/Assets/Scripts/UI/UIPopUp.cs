@@ -58,17 +58,12 @@ public class UIPopUp : MonoBehaviour
     public void EndProcess()
     {
         CanvasGroup _canvas = EndState();
-
-        if(_canvas != null)
-            StartCoroutine(FadeIn(_canvas, DELAYTIME));
-
+        
         if (coroutineFlag)
-        {
-            LoadingManager.Instance.LoadScene((int)SceneIndex.Title);
-            coroutineFlag = false;
-            CombatManager._isPlayerDead = false;
-            CombatManager._isBossDead = false;
-        }
+            return;
+
+        if (_canvas != null)
+            StartCoroutine(FadeIn(_canvas, DELAYTIME));
     }
 
     /// <summary>
@@ -92,5 +87,7 @@ public class UIPopUp : MonoBehaviour
 
         canvas.alpha = 1f;
         yield return coroutineFlag = true;
+
+        LoadingManager.Instance.LoadScene((int)SceneIndex.Title);
     }
 }

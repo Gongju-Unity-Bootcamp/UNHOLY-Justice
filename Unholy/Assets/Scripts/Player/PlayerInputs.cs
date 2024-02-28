@@ -107,6 +107,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Targeting"",
+                    ""type"": ""Button"",
+                    ""id"": ""d8af5f2a-7443-42a2-a579-1140ab4b6953"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -327,6 +336,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""TwoHand"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""030a808c-0f80-4226-83aa-070547cdee38"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Targeting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -943,6 +963,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_Unarmed = m_Player.FindAction("Unarmed", throwIfNotFound: true);
         m_Player_OneHand = m_Player.FindAction("OneHand", throwIfNotFound: true);
         m_Player_TwoHand = m_Player.FindAction("TwoHand", throwIfNotFound: true);
+        m_Player_Targeting = m_Player.FindAction("Targeting", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1026,6 +1047,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Unarmed;
     private readonly InputAction m_Player_OneHand;
     private readonly InputAction m_Player_TwoHand;
+    private readonly InputAction m_Player_Targeting;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1039,6 +1061,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Unarmed => m_Wrapper.m_Player_Unarmed;
         public InputAction @OneHand => m_Wrapper.m_Player_OneHand;
         public InputAction @TwoHand => m_Wrapper.m_Player_TwoHand;
+        public InputAction @Targeting => m_Wrapper.m_Player_Targeting;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1075,6 +1098,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @TwoHand.started += instance.OnTwoHand;
             @TwoHand.performed += instance.OnTwoHand;
             @TwoHand.canceled += instance.OnTwoHand;
+            @Targeting.started += instance.OnTargeting;
+            @Targeting.performed += instance.OnTargeting;
+            @Targeting.canceled += instance.OnTargeting;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1106,6 +1132,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @TwoHand.started -= instance.OnTwoHand;
             @TwoHand.performed -= instance.OnTwoHand;
             @TwoHand.canceled -= instance.OnTwoHand;
+            @Targeting.started -= instance.OnTargeting;
+            @Targeting.performed -= instance.OnTargeting;
+            @Targeting.canceled -= instance.OnTargeting;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1305,6 +1334,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnUnarmed(InputAction.CallbackContext context);
         void OnOneHand(InputAction.CallbackContext context);
         void OnTwoHand(InputAction.CallbackContext context);
+        void OnTargeting(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

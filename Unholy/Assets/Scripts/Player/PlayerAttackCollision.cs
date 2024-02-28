@@ -30,7 +30,7 @@ public class PlayerAttackCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        if (other.CompareTag("Ground") || other.CompareTag("Wall"))
         {
             var collisionPoint = other.ClosestPoint(transform.position);
             var surfaceNormal = other.ClosestPointOnBounds(transform.position) -    transform.position;
