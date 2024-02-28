@@ -30,6 +30,8 @@ public class UIHudManager : MonoBehaviour
         _quickSlots.InitializeColor();
         _uiPopUp.InitializeUI();
 
+        UIPopUp.coroutineFlag = false;
+
         SoundManager.Instance.Play(SoundType.Bgm, "ReadyBGM");
     }
 

@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Data;
-using TMPro;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CombatManager : MonoBehaviour
 {
@@ -45,6 +41,8 @@ public class CombatManager : MonoBehaviour
         InitializeStats();
 
         _isIdle = false;
+        _isBossDead = false;
+        _isPlayerDead = false;
     }
 
     void Update()

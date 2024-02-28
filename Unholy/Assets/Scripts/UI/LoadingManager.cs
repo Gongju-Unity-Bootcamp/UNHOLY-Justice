@@ -80,6 +80,8 @@ public class LoadingManager : MonoBehaviour
         float startAlpha = isFadeIn ? 0f : 1f;
         float targetAlpha = isFadeIn ? 1f : 0f;
 
+        canvasGroup.alpha = startAlpha;
+
         while (timer <= 1f)
         {
             yield return null;
